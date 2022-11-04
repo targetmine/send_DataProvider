@@ -1,0 +1,18 @@
+<mat-stepper
+	orientation="vertical"
+	[linear]="isLinear"
+	#parserStepper>
+
+	<mat-step [stepControl]="firstFormGroup">
+		<form [formGroup]="firstFormGroup">
+			<ng-template matStepLabel>Select the file to upload</ng-template>
+			<mat-form-field appareance="fill">
+				<mat-label>File</mat-label>
+				<input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+			</mat-form-field>
+			<div>
+				<button mat-button matStepperNext>Next</button>
+			</div>
+		</form>
+	</mat-step>
+</mat-stepper>
