@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,11 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./datareuse-parser.component.css']
 })
 export class DatareuseParserComponent {
+
+	@ViewChild('fileInput')
+	fileInput: any;
+
+	file: File | null = null;
 
 	firstFormGroup = this._formBuilder.group({
 		firstCtrl: ['', Validators.required],
@@ -18,5 +23,14 @@ export class DatareuseParserComponent {
 
   ngOnInit(): void {
   }
+
+	onClickFileInputButton(){
+		this.fileInput.nativeElement.click();
+	}
+
+	onChangeFileInput(){
+		const files: { [key: string]: File } = this.fileInput.nativeElement.files;
+    this.file = files[0];
+	}
 
 }

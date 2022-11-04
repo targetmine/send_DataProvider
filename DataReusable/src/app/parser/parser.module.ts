@@ -4,6 +4,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 import { DatareuseParserComponent } from './datareuse-parser/datareuse-parser.component';
 
@@ -17,6 +18,7 @@ import { DatareuseParserComponent } from './datareuse-parser/datareuse-parser.co
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatInputModule,
+		MatIconModule,
   ]
 })
 export class ParserModule { }
