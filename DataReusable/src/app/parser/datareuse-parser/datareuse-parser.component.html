@@ -3,22 +3,112 @@
 	[linear]="isLinear"
 	#parserStepper>
 
-	<mat-step [stepControl]="firstFormGroup">
-		<form [formGroup]="firstFormGroup">
-			<ng-template matStepLabel>Select the file to upload</ng-template>
-			<mat-form-field appareance="fill">
-				<mat-label>File</mat-label>
-				<input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+	<!-- Data Fields Step -->
+	<mat-step>
+		<form [formGroup]="dataFieldForm">
+			<ng-template matStepLabel>Add Data Fields</ng-template>	
+			<p>
+				<mat-form-field appareance="fill">
+					<mat-label>Field Name</mat-label>
+					<input matInput placeholder="Identifier" formControlName="fieldName">
+					<mat-hint>Column name in the database</mat-hint>
+				</mat-form-field>
+			</p>
+			<p>
+				<mat-form-field appearance="fill">
+					<mat-label>Field Type</mat-label>
+					<mat-select [formControlName] = "'fieldType'">
+						<mat-option *ngFor="let type of types" [value]="type.value">{{type.value}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</p>
+			<div>
+				<button 
+					mat-raised-button 
+					[disabled]="!dataFieldForm.valid"
+					(click)="addDataField()"
+					>Add</button>
+				<button 
+					mat-raised-button
+					[disabled]="!myDataFields.length" 
+					(click)="removeDataFields()">
+					Delete
+				</button>
+			</div>
+		</form>
 
-				<input type="file" style="display: none;" #fileInput accept="text/*" (change)="onChangeFileInput()">
-				<button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
+		<table mat-table [dataSource]="dataSource">
+			<!-- chekbox-column  -->
+			<ng-container matColumnDef="select">
+				<th mat-header-cell *matHeaderCellDef>
+					<mat-checkbox (change)="$event ? toggleAllRows() : null"
+						[checked]="selection.hasValue() && isAllSelected()"
+						[indeterminate]="selection.hasValue() && !isAllSelected()"
+						[aria-label]="checkboxLabel()">
+					</mat-checkbox>
+				</th>
+				<td mat-cell *matCellDef="let row">
+					<mat-checkbox (click)="$event.stopPropagation()"
+						(change)="$event ? selection.toggle(row) : null"
+						[checked]="selection.isSelected(row)"
+						[aria-label]="checkboxLabel(row)">
+					</mat-checkbox>
+				</td>
+			</ng-container>
+			<!-- name column -->
+			<ng-container matColumnDef="name">
+				<th mat-header-cell *matHeaderCellDef>Name</th>
+				<td mat-cell *matCellDef="let element">{{element.name}}</td>
+			</ng-container>
+			<!-- type column -->
+			<ng-container matColumnDef="type">
+				<th mat-header-cell *matHeaderCellDef>Type</th>
+				<td mat-cell *matCellDef="let element">{{element.type}}</td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"
+				(click)="selection.toggle(row)">
+			</tr>
+			
+		</table>
+
+		<div>
+			<button mat-raised-button matStepperNext>Next</button>
+		</div>
+	</mat-step>
+
+	<!-- Select File Step -->
+	<mat-step >
+		<form [formGroup]="fileForm">
+			<ng-template matStepLabel>Select the file to upload</ng-template>
+			<p>
+				<input #fileInput
+					hidden
+					type="file"
+					formControlName="fileName"
+					accept="text/*"
+					(change)="onChangeFileInput()"
+				>
+				<button mat-raised-button (click)="onClickFileInputButton()">
 					<mat-icon>attach_file</mat-icon>
 					Choose file
 				</button>
-			</mat-form-field>
+				<span style="padding: 5px;">{{fileName}}</span>	
+			</p>
 			<div>
-				<button mat-button matStepperNext>Next</button>
-			</div>
+				<button mat-raised-button matStepperPrevious>Back</button>
+				<button mat-raised-button matStepperNext>Next</button>
+			</div>		
 		</form>
+	</mat-step>
+
+	<!-- Upload Data to current model step -->
+	<mat-step>
+		<ng-template matStepLabel>Upload Data</ng-template>
+		
+		<button mat-raised-button>Upload</button>
+		<button mat-raised-button>Add another file</button>
+		<button mat-raised-button>Reset</button>
 	</mat-step>
 </mat-stepper>

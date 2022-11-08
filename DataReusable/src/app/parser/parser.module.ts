@@ -4,7 +4,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 
 import { DatareuseParserComponent } from './datareuse-parser/datareuse-parser.component';
 
@@ -19,6 +23,10 @@ import { DatareuseParserComponent } from './datareuse-parser/datareuse-parser.co
 		MatFormFieldModule,
 		MatInputModule,
 		MatIconModule,
+		MatSelectModule,
+		MatTableModule,
+		MatCheckboxModule,
+		MatButtonModule,
   ]
 })
 export class ParserModule { }
