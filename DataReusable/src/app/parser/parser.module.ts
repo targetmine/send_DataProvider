@@ -11,10 +11,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 
 import { DatareuseParserComponent } from './datareuse-parser/datareuse-parser.component';
+import { InfoFileLoaderComponent } from './info-file-loader/info-file-loader.component';
+import { ModelDisplayComponent } from './model-display/model-display.component';
 
 @NgModule({
   declarations: [
-    DatareuseParserComponent
+    DatareuseParserComponent,
+    InfoFileLoaderComponent,
+    ModelDisplayComponent
   ],
   imports: [
     CommonModule,
