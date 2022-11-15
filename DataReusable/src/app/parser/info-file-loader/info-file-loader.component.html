@@ -1,111 +1,13 @@
 <h1>Information File Loading</h1>
-<mat-stepper
-	orientation="vertical"
-	[linear]="isLinear"
-	#infoFileStepper>
 
-	<!-- Adding a new table to the current model or not -->
-	<mat-step>
-		<ng-template matStepLabel>Add/Modify Data Objects</ng-template>	
-		<form [formGroup]="objectForm">
-			<mat-form-field appearance="fill">
-				<mat-label>Select Object:</mat-label>
-				<mat-select [formControlName] = "'selectedObject'">
-					<mat-option *ngFor="let object of _dataModel" [value]="object.getName()">{{object.getName()}}</mat-option>
-					<mat-option [value]="'new'">Add new</mat-option>
-				</mat-select>
-			</mat-form-field>
-		</form>
-	</mat-step>
+
+
+
+	<!-- Then, we define if the meta-data (the details required to associate
+	the data to the current model) are already part of the model's description
+	or if they need to be added -->
 
 	<!-- Data Fields Step -->
-	<mat-step>
-		<!-- <form [formGroup]="dataFieldForm">
-			<ng-template matStepLabel>Add Data Fields</ng-template>	
-			<p>
-				<mat-form-field appareance="fill">
-					<mat-label>Field Name</mat-label>
-					<input matInput placeholder="Identifier" formControlName="fieldName">
-					<mat-hint>Column name in the database</mat-hint>
-				</mat-form-field>
-			</p>
-			<p>
-				<mat-form-field appearance="fill">
-					<mat-label>Field Type</mat-label>
-					<mat-select [formControlName] = "'fieldType'">
-						<mat-option *ngFor="let type of types" [value]="type.value">{{type.value}}</mat-option>
-					</mat-select>
-				</mat-form-field>
-			</p>
-			<div>
-				<button 
-					mat-raised-button 
-					[disabled]="!dataFieldForm.valid"
-					(click)="addDataField()"
-					>Add</button>
-				<button 
-					mat-raised-button
-					[disabled]="!myDataFields.length" 
-					(click)="removeDataFields()">
-					Delete
-				</button>
-			</div>
-		</form> -->
 
-			<!-- chekbox-column  -->
-			<!-- <ng-container matColumnDef="select">
-				<th mat-header-cell *matHeaderCellDef>
-					<mat-checkbox (change)="$event ? toggleAllRows() : null"
-						[checked]="selection.hasValue() && isAllSelected()"
-						[indeterminate]="selection.hasValue() && !isAllSelected()"
-						[aria-label]="checkboxLabel()">
-					</mat-checkbox>
-				</th>
-				<td mat-cell *matCellDef="let row">
-					<mat-checkbox (click)="$event.stopPropagation()"
-						(change)="$event ? selection.toggle(row) : null"
-						[checked]="selection.isSelected(row)"
-						[aria-label]="checkboxLabel(row)">
-					</mat-checkbox>
-				</td>
-			</ng-container> -->
 
-		<div>
-			<button mat-raised-button matStepperNext>Next</button>
-		</div>
-	</mat-step>
 
-	<!-- Select File Step -->
-	<!-- <mat-step >
-		<form [formGroup]="fileForm">
-			<ng-template matStepLabel>Select the file to upload</ng-template>
-			<p>
-				<input #fileInput
-					hidden
-					type="file"
-					formControlName="fileName"
-					accept="text/*"
-					(change)="onChangeFileInput()"
-				>
-				<button mat-raised-button (click)="onClickFileInputButton()">
-					<mat-icon>attach_file</mat-icon>
-					Choose file
-				</button>
-				<span style="padding: 5px;">{{fileName}}</span>	
-			</p>
-			<div>
-				<button mat-raised-button matStepperPrevious>Back</button>
-				<button mat-raised-button matStepperNext>Next</button>
-			</div>		
-		</form>
-	</mat-step> -->
-
-	<!-- Upload Data to current model step -->
-	<mat-step>
-		<!-- <ng-template matStepLabel>Upload Data</ng-template>
-		
-		<button mat-raised-button>Upload</button>
-		<button mat-raised-button>Add another file</button>
-		<button mat-raised-button>Reset</button> -->
-	</mat-step>
-</mat-stepper>
