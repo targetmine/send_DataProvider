@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { DataObject } from '../datareuse-parser/datamodel';
+import { DataObject } from '../../shared/models/datamodel';
 
 
 @Component({

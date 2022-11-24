@@ -6,19 +6,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 
-import { DatareuseParserComponent } from './datareuse-parser/datareuse-parser.component';
+import { ParserComponent } from './parser.component';
 import { InfoFileLoaderComponent } from './info-file-loader/info-file-loader.component';
-import { ModelDisplayComponent } from './model-display/model-display.component';
 
 @NgModule({
   declarations: [
-    DatareuseParserComponent,
+    ParserComponent,
     InfoFileLoaderComponent,
-    ModelDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +25,6 @@ import { ModelDisplayComponent } from './model-display/model-display.component';
 		MatInputModule,
 		MatIconModule,
 		MatSelectModule,
-		MatTableModule,
 		MatCheckboxModule,
 		MatButtonModule,
   ]

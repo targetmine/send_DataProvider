@@ -1,24 +1,24 @@
-import { DataObject, ELEMENT_DATA } from './datamodel';
+import { DataObject } from '../shared/models/datamodel';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-datareuse-parser',
-  templateUrl: './datareuse-parser.component.html',
-  styleUrls: ['./datareuse-parser.component.css']
+  selector: 'app-parser',
+  templateUrl: './parser.component.html',
+  styleUrls: ['./parser.component.css']
 })
-export class DatareuseParserComponent implements OnInit {
+export class ParserComponent implements OnInit {
+	// the model that represents the data to be stored in a particular instance
+	// of the application
+	public dataModel: DataObject[] = [];
 	
 	public infoFile: boolean = true;
 	public relFile: boolean = false;
 
-	public dataModel: DataObject[] = [];
-
 	// loading of information needs to be followed in a linear way
 	public isLinear: boolean = true;
 
-	// form used to control the selection of the uploading file and its
-	// type
+	// form used to control the selection of the uploading file and its type
 	fileForm = this.formBuilder.group({
 		fileName: ['', Validators.required],
 		fileType: ['info']
@@ -35,7 +35,7 @@ export class DatareuseParserComponent implements OnInit {
 
 	/** */
   ngOnInit(): void {
-		this.dataModel = ELEMENT_DATA;
+		// this.dataModel = ELEMENT_DATA;
 	}
 
 	/**
@@ -44,6 +44,7 @@ export class DatareuseParserComponent implements OnInit {
 	onChangeFileInput(): void {
 		const files: { [key: string]: File } = this.fileInput.nativeElement.files;
 		this.fileForm.get('fileName')?.setValue(files[0].name);
+		console.log(this.fileForm.value);
 	}
 
 	/**

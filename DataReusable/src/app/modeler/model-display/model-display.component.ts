@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { DataObject } from '../datareuse-parser/datamodel';
+import { DataObject } from '../../shared/models/datamodel';
 
 @Component({
   selector: 'app-model-display',

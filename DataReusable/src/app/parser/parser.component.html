@@ -1,7 +1,5 @@
 <!-- TODO -->
-<app-model-display *ngIf="dataModel"
-	[data]="dataModel">
-</app-model-display>
+
 
 <mat-stepper
 	orientation="vertical"
@@ -11,10 +9,12 @@
 	<!-- First we select the file where the data we want to add to our 
 	is located -->
 	<mat-step
-		[stepControl]="fileForm">
+		[stepControl]="fileForm"
+	>
+		<ng-template matStepLabel>Select the file to upload</ng-template>
 		<form 
-			[formGroup]="fileForm">
-			<ng-template matStepLabel>Select the file to upload</ng-template>
+			[formGroup]="fileForm"
+		>
 			<mat-form-field	appearance="fill">
 				<mat-label>File to upload</mat-label>
 				<input matInput 
@@ -22,7 +22,9 @@
 					formControlName="fileName"
 					(click)="onClickFileInput()">
 			</mat-form-field>
-			<input #fileInput
+			<input 
+				#fileInput
+				id="fileInput"
 				hidden
 				type="file"
 				accept="text/*"
@@ -45,21 +47,22 @@
 	</mat-step>
 
 	<mat-step>
+		<ng-template matStepLabel>Select elements to upload	</ng-template>
 
-	<!-- Depending on the type of file to upload, a table style (information
-	file) or relation type component should be displayed -->
-<div *ngIf="infoFile">
-	<app-info-file-loader
-		[data]="dataModel"
-		>
-	</app-info-file-loader>
-</div>
+		<!-- Depending on the type of file to upload, a table style (information
+		file) or relation type component should be displayed -->
+		<div *ngIf="infoFile">
+			<app-info-file-loader
+				[data]="dataModel"
+			>
+			</app-info-file-loader>
+		</div>
 
-<div *ngIf="relFile">
-	<!-- TO-DO -->
-	<!-- app-rels-file-loader component  -->
-</div>
-</mat-step>
+		<div *ngIf="relFile">
+			<!-- TO-DO -->
+			<!-- app-rels-file-loader component  -->
+		</div>
+	</mat-step>
 
 	<mat-step>
 		<ng-template matStepLabel>Upload Data</ng-template>	
