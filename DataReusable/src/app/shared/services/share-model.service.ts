@@ -12,10 +12,19 @@ export class ShareModelService {
 
 	constructor() { }
 
+	/**
+	 * Returns the list of entities and relations that make up the current data
+	 * model for the application
+	 * @returns the current data model
+	 */
 	public getDataModel(): BehaviorSubject<DataObject[]> {
 		return this.dataModel;
 	}
 
+	/**
+	 * Add a new Entity to the current data model
+	 * @param obj the Data object  to be added
+	 */
 	public addData(obj: DataObject): void {
 		const current = this.dataModel.value;
 		const updated = [...current, obj];

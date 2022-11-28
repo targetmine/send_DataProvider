@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ParserModule } from './parser/parser.module';
 import { ModelerModule } from './modeler/modeler.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -19,7 +18,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 		HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    ParserModule,
 		ModelerModule,
     BrowserAnimationsModule,
 		MatTabsModule,
