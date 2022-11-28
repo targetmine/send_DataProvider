@@ -5,19 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ParserModule } from './parser/parser.module';
-
-import { ModelDisplayComponent } from './modeler/model-display/model-display.component';
+import { ModelerModule } from './modeler/modeler.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ModelBuilderComponent } from './modeler/model-builder/model-builder.component';
 import { MatTabsModule } from '@angular/material/tabs';
-
-import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
-		ModelDisplayComponent,
-    ModelBuilderComponent
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -26,9 +20,9 @@ import { MatTableModule } from '@angular/material/table';
     BrowserModule,
     AppRoutingModule,
     ParserModule,
+		ModelerModule,
     BrowserAnimationsModule,
 		MatTabsModule,
-		MatTableModule,
   ]
 })
 export class AppModule { }

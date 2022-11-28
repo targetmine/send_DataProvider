@@ -1,1 +1,65 @@
-<p>model-builder works!</p>
+<form>
+	<mat-form-field appearance="fill">
+		<mat-label>Select action:</mat-label>
+		<mat-select 
+			[formControl]="actionType"
+			required
+			>
+			<mat-option value="add-ele">Add element</mat-option>
+			<mat-option value="add-rela">Add relation</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<div *ngIf="actionType.value == 'add-ele'">
+		<p>
+			<mat-form-field appearance="fill">
+				<mat-label>Element name:</mat-label>
+				<input matInput
+					required
+					type="text"
+					class="form-control"
+					[formControl]="newElementName"
+					placeholder="Ex. GeneID"
+				>
+				<mat-hint>Use only (non)capital letters.</mat-hint>
+			</mat-form-field>
+		</p>
+		<p>
+			<button 
+				mat-raised-button
+				(click)="onClickAddElement($event)"
+			>Add</button>
+		</p>
+	</div>
+
+	<div *ngIf="actionType.value == 'add-rela'">
+		<mat-form-field 
+			appearance="fill"
+			[formGroup]="relationForm"
+			>
+			<mat-label>Select source element:</mat-label>
+			<mat-select
+				name="source"
+				formControlName="source"
+				[disabled]="data.length == 0"
+				>
+				<mat-option *ngFor="let d of data">
+					{{d.getName()}}
+				</mat-option>
+			</mat-select>
+			<mat-label>Select target element:</mat-label>
+			<mat-select
+				name="target"
+				formControlName="target"
+				[disabled]="data.length == 0"
+				>
+				<mat-option *ngFor="let d of data">
+					{{d.getName()}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+</form>
+
+
+

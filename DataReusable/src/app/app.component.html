@@ -1,11 +1,8 @@
 <div class="content-outer-container">
 	<div class="content-inner-container">
-		<app-model-display *ngIf="dataModel"
-			[data]="dataModel">
-		</app-model-display>
+		<app-model-display></app-model-display> 
 		<nav mat-tab-nav-bar [tabPanel]="tabPanel">
-			<a mat-tab-link
-				*ngFor="let tab of tabs"
+			<a mat-tab-link *ngFor="let tab of tabs"
 				[routerLink]="tab.link"
 				routerLinkActive #rla="routerLinkActive"
 				[active]="rla.isActive"
@@ -16,15 +13,17 @@
 		</mat-tab-nav-panel>
 	</div>
 </div>
+
 <div class="footer-container">
 	<p class="footer-content">
-		©2022 Mizuguchilab.org. <br />
 		<a href="http://mizuguchilab.org/">
-			<!-- <img style="height: 26px;" src="assets/mizuguchilab.png" alt="mizuguchilab_logo"> -->
+			<img style="height: 26px;" src="assets/mizuguchilab.png" alt="mizuguchilab_logo">
 		</a>
 		<a href="https://www.nibiohn.go.jp/">
-			<!-- <img src="assets/nibiohn_logo_s.png" alt="nibiohn_logo"> -->
+			<img src="assets/nibiohn_logo_s.png" alt="nibiohn_logo">
 		</a>
+		<br />
+		©2022 Mizuguchilab.org. 
 	</p>
 </div>
 

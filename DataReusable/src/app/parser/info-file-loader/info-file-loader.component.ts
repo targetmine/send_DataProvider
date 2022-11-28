@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { DataObject } from '../../shared/models/datamodel';
 
 
@@ -11,8 +9,6 @@ import { DataObject } from '../../shared/models/datamodel';
   styleUrls: ['./info-file-loader.component.css']
 })
 export class InfoFileLoaderComponent implements OnInit {
-
-
 	// the current dataModel used for the database
 	@Input() data !: DataObject[];
 
