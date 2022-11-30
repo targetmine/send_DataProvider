@@ -6,7 +6,16 @@
 			required
 			>
 			<mat-option value="add-ele">Add element</mat-option>
-			<mat-option value="add-rela">Add relation</mat-option>
+			<mat-option 
+				[disabled]="dataLength == 0"
+				value="add-attr">
+				Add element's attribute
+			</mat-option>
+			<mat-option 
+				[disabled]="dataLength == 0"
+				value="add-rela">
+				Add relation
+			</mat-option>
 		</mat-select>
 	</mat-form-field>
 
@@ -18,7 +27,7 @@
 					required
 					type="text"
 					class="form-control"
-					[formControl]="newElementName"
+					[formControl]="newElement"
 					placeholder="Ex. GeneID"
 				>
 				<mat-hint>Use only (non)capital letters.</mat-hint>
@@ -32,6 +41,44 @@
 		</p>
 	</div>
 
+	<div *ngIf="actionType.value == 'add-attr'"
+		[formGroup]="attributeForm">
+		<mat-form-field appearance="fill">
+			<mat-label>Select Element:</mat-label>
+			<mat-select formControlName="selectedElement">
+				<mat-option *ngFor="let e of elements"
+					[value]="e">
+					{{e}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		
+		<mat-form-field appearance="fill" >
+			<mat-label>Attribute's Name</mat-label>
+			<input matInput
+				required
+				type="text"
+				class="form-control"
+				formControlName="newAttribute"
+				placeholder="Ex. value/significance"
+				>
+			<mat-hint>Use &lt;non&gt; capital letters and numbers</mat-hint>
+		</mat-form-field>
+
+	
+		
+			<mat-checkbox formControlName="isUnique">Are values unique?</mat-checkbox>
+		
+			
+		<p>
+			<button 
+				mat-raised-button
+				(click)="onClickAddAttribute($event)"
+			>Add</button>
+		</p>
+
+	</div>
+
 	<div *ngIf="actionType.value == 'add-rela'">
 		<mat-form-field 
 			appearance="fill"
@@ -41,20 +88,21 @@
 			<mat-select
 				name="source"
 				formControlName="source"
-				[disabled]="data.length == 0"
+				[disabled]="dataLength == 0"
 				>
-				<mat-option *ngFor="let d of data">
-					{{d.getName()}}
+				<mat-option *ngFor="let e of elements"
+					[value]="e">
+					{{e}}
 				</mat-option>
 			</mat-select>
 			<mat-label>Select target element:</mat-label>
 			<mat-select
 				name="target"
 				formControlName="target"
-				[disabled]="data.length == 0"
+				[disabled]="dataLength == 0"
 				>
-				<mat-option *ngFor="let d of data">
-					{{d.getName()}}
+				<mat-option *ngFor="let e of elements">
+					{{e}}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>

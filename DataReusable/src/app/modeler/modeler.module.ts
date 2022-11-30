@@ -8,6 +8,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
 	declarations: [
@@ -22,6 +24,8 @@ import { MatButtonModule } from "@angular/material/button";
 		MatSelectModule,
 		MatInputModule,
 		MatButtonModule,
+		MatSnackBarModule,
+		MatCheckboxModule,
 	],
 	exports: [
 		ModelDisplayComponent

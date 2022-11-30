@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataObject } from '../models/datamodel';
+import { DataObject, ObjectAttribute } from '../models/datamodel';
 
 
 @Injectable({
@@ -8,7 +8,7 @@ import { DataObject } from '../models/datamodel';
 })
 export class ShareModelService {
 	// the data model to be shared between components
-	private dataModel: BehaviorSubject<DataObject[]> = new BehaviorSubject<DataObject[]>([]);
+	private dataModel: BehaviorSubject<Record<string,DataObject>> = new BehaviorSubject<{[key: string]: DataObject}>({});
 
 	constructor() { }
 
@@ -17,7 +17,7 @@ export class ShareModelService {
 	 * model for the application
 	 * @returns the current data model
 	 */
-	public getDataModel(): BehaviorSubject<DataObject[]> {
+	public getDataModel(): BehaviorSubject<{[key: string]: DataObject}> {
 		return this.dataModel;
 	}
 
@@ -25,11 +25,15 @@ export class ShareModelService {
 	 * Add a new Entity to the current data model
 	 * @param obj the Data object  to be added
 	 */
-	public addData(obj: DataObject): void {
-		const current = this.dataModel.value;
-		const updated = [...current, obj];
+	public addData(obj: string): void {
+		let updated = this.dataModel.value;
+		updated[obj] = new DataObject(obj);
 		this.dataModel.next(updated);
 
 		console.log(`service ${this.dataModel}`);
+	}
+
+	public addAttribute(obj: string, opts: ObjectAttribute):void {
+		this.dataModel.value[obj].addAtribute(opts);
 	}
 }
