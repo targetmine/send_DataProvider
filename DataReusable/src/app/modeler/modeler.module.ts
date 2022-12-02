@@ -10,6 +10,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
 	declarations: [
@@ -26,6 +27,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 		MatButtonModule,
 		MatSnackBarModule,
 		MatCheckboxModule,
+		MatIconModule,
 	],
 	exports: [
 		ModelDisplayComponent

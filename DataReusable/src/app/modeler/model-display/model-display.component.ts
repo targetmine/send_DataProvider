@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
-import { DataObject } from '../../shared/models/datamodel';
+import { Element } from '../../shared/models/element';
 
 @Component({
   selector: 'app-model-display',
@@ -11,11 +11,11 @@ import { DataObject } from '../../shared/models/datamodel';
 export class ModelDisplayComponent implements OnInit{
 
 	// elements required for table display
-	@ViewChild(MatTable, {static: true}) paginator!: MatTable<DataObject>;
+	@ViewChild(MatTable, {static: true}) paginator!: MatTable<Element>;
 	
-	public dataModel!: Record<string, DataObject>;
-	dataSource = new MatTableDataSource<DataObject>();
-  displayedColumns: string[] = ['name'];
+	public dataModel!: Record<string, Element>;
+	dataSource = new MatTableDataSource<Element>();
+  displayedColumns: string[] = ['name', 'attributes'];
 
 	constructor(
 		private readonly modelServ: ShareModelService
@@ -25,7 +25,7 @@ export class ModelDisplayComponent implements OnInit{
 		this.modelServ.getDataModel().subscribe( data => {
 			this.dataModel = data;
 			console.log(`model-display ${Object.keys(this.dataModel).length}`);
-			this.dataSource = new MatTableDataSource<DataObject>(Object.values(this.dataModel));
+			this.dataSource = new MatTableDataSource<Element>(Object.values(this.dataModel));
 		})
 	}
 

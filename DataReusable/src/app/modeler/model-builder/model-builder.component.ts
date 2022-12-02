@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DataObject, ObjectAttribute, AttributeType } from 'src/app/shared/models/datamodel';
+import { Element } from 'src/app/shared/models/element'; 
+import { Attribute, AttributeType, ATTRIBUTE_TYPES } from 'src/app/shared/models/attribute';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
-
 
 @Component({
   selector: 'app-model-builder',
@@ -12,8 +12,9 @@ import { ShareModelService } from 'src/app/shared/services/share-model.service';
 	changeDetection: ChangeDetectionStrategy.Default
 })
 export class ModelBuilderComponent implements OnInit {
+	protected AttributeTypes: string[] = ATTRIBUTE_TYPES;
 	// the current dataModel used for the database
-	private data!: Record<string, DataObject>;
+	private data!: Record<string, Element>;
 	protected dataLength: number = 0;
 	protected elements: string[] = [];
 
@@ -37,12 +38,9 @@ export class ModelBuilderComponent implements OnInit {
 			])
 		}),
 		attributeType: new FormControl('', { validators: Validators.required }),
-		isUnique: new FormControl(true),
+		isUnique: new FormControl(false),
 	});
-	
-	
-	
-	// elementForm;
+	//
 	relationForm = this.formBuilder.group({
 		source: new FormControl(null,{ 
 			validators: Validators.required
@@ -71,7 +69,7 @@ export class ModelBuilderComponent implements OnInit {
 	onClickAddElement(event: any) {
 		event.preventDefault(); // don't refresh the page ?
 		if( this.newElement.valid )
-			this.modelServ.addData(this.newElement.value);
+			this.modelServ.addElement(this.newElement.value);
 		else
 			this.snackBar.open('The name for the new element is invalid', 'Close');
 	}
@@ -81,8 +79,17 @@ export class ModelBuilderComponent implements OnInit {
 	 * @param event 
 	 */
 	onClickAddAttribute(event:any){
-		const newAttr = new ObjectAttribute('otro', AttributeType.STRING);
-		this.modelServ.addAttribute('otro', newAttr);
 		event.preventDefault();
+		if( this.attributeForm.valid ){
+			const parent = this.attributeForm.get('selectedElement')?.value;
+			const name = this.attributeForm.get('newAttribute')?.value;
+			const type = this.attributeForm.get('attributeType')?.value;
+			const unique = this.attributeForm.get('isUnique')?.value;
+			const newAttr = new Attribute(name!, <AttributeType>type!, unique!);
+			this.modelServ.addAttribute(parent!, newAttr);
+		}
+		else
+			this.snackBar.open('Some elements of the attribute definition are invalid', 'Close');
+
 	}
 }

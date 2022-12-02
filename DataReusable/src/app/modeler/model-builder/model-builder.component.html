@@ -65,7 +65,15 @@
 			<mat-hint>Use &lt;non&gt; capital letters and numbers</mat-hint>
 		</mat-form-field>
 
-	
+		<mat-form-field appearance="fill">
+			<mat-label>Attribute's Type</mat-label>
+			<mat-select formControlName="attributeType">
+				<mat-option *ngFor="let at of AttributeTypes"
+					[value]="at">
+					{{at}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 		
 			<mat-checkbox formControlName="isUnique">Are values unique?</mat-checkbox>
 		
