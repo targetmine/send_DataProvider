@@ -18,12 +18,15 @@ export class Element {
 
 	getName(): string{ return this.name; }
 
-	getAttributes(): Record<string, Attribute>{ return this.attributes; }
-	addAtribute(name: string, att: Attribute){
+	getAttributes(): Record<string, Attribute>{ 
+		return this.attributes; 
+	}
+	addAtribute(name: string, att: Attribute): void{
 		this.attributes[name] = att;
 	}
 	removeAttribute(att: string): boolean{
-		if (att in Object.keys(this.attributes)){
+		console.log(this.attributes);
+		if (att in this.attributes){
 			delete this.attributes[att];
 			return true;
 		}
