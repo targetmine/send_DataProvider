@@ -1,42 +1,31 @@
 import { Attribute } from "./attribute";
 
 describe('Class: Attribute', () => {
-	let attribute: Attribute | null;
+	let attribute: Attribute;
 
 	beforeEach(() => {
-		attribute = new Attribute('test', 'string');
+		attribute = new Attribute('number');
 	});
 
-	afterEach(() => {
-		attribute = null;
-	});
-
-	it(`should have 'test' as the name of the attribute`, () => {
-		expect(attribute?.getName()).toEqual('test');
-	});
+	it(`should create`, () => {
+		expect(attribute).toBeTruthy();
+	})
 
 	it(`should have 'string' as the default `, () => {
-		expect(attribute?.getType()).toEqual('string');
+		expect(attribute.type).toEqual('number');
 	});
 
 	it(`should update the type of an attribute`, () => {
-		attribute?.setType('number');
-		expect(attribute?.getType()).toEqual('number');
+		attribute.type = 'string';
+		expect(attribute.type).toEqual('string');
 	});
 
 	it(`should not be unique by default`, () => {
-		expect(attribute?.isUnique()).toBeFalsy();
+		expect(attribute.unique).toBeFalsy();
 	});
 
-	it(`should be set unique when using setUnique`, () => {
-		attribute?.setUnique();
-		expect(attribute?.isUnique()).toBeTruthy();
+	it(`should update the unique value when requested`, () => {
+		attribute.unique = true;
+		expect(attribute.unique).toBeTruthy();
 	});
-
-	it(`should be set to non unique when using setNonUnique`, () => {
-		attribute = new Attribute('test', 'string', true);
-		attribute?.setNonUnique();
-		expect(attribute?.isUnique()).toBeFalsy();
-	});
-
 });

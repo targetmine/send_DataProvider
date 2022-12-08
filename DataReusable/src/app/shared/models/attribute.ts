@@ -6,22 +6,17 @@ export const ATTRIBUTE_TYPES = ['string', 'number'];
  * in the data model contains
  */
 export class Attribute {
-	private name: string;
-	private type: AttributeType;
-	private unique: boolean;
+	protected _type: AttributeType;
+	protected _unique: boolean;
 
-	constructor(name: string, type: AttributeType, unique: boolean = false){
-		this.name = name;
-		this.type = type;
-		this.unique = unique;
+	constructor(type: AttributeType, unique: boolean = false){
+		this._type = type;
+		this._unique = unique;
 	}
 
-	getName(): string { return this.name; }
+	get type(): AttributeType { return this._type; }
+	set type(t: AttributeType) { this._type = t; }
 	
-	getType(): string { return this.type; }
-	setType(t: AttributeType): void { this.type = t; }
-	
-	isUnique(): boolean { return this.unique; }
-	setUnique(): void { this.unique = true; }
-	setNonUnique(): void { this.unique = false; }
+	get unique(): boolean { return this._unique; }
+	set unique(u: boolean) { this._unique = u; }
 }

@@ -6,19 +6,23 @@ describe('Class: Element', () => {
 	let attr: Attribute;
 
 	beforeEach(() => {
-		element = new Element('test');
-		attr = new Attribute('attr1', 'string');
+		element = new Element();
+		attr = new Attribute('number');
 		element.addAtribute('attr1', attr);
 	});
 
-	it(`should have <name> as the name of the element when provided`, () =>{
-		element = new Element('name');
-		expect(element.getName()).toEqual('name');
+	it(`should create`, () => {
+		expect(element).toBeTruthy();
+	})
+
+	it(`should have an empty list of attributes by default`, () => {
+		element = new Element();
+		expect(element.attributes).toEqual({});
 	});
 
 	it(`should add an attribute when one is provided`, () => {
-		element.addAtribute('test', new Attribute('test', 'number'));
-		expect(Object.keys(element.getAttributes())).toContain('test');
+		element.addAtribute('test', attr);
+		expect(element.attributes).toEqual(jasmine.objectContaining({'test': attr}));
 	});
 
 	it(`should return true after removing an attribute `, () => {
@@ -26,8 +30,8 @@ describe('Class: Element', () => {
 	});
 
 	it(`should not include a removed element in its list of attributes`, () => {
-		element.addAtribute('test', new Attribute('test', 'number'));
-		expect(element.getAttributes()).not.toContain('test');
+		element.removeAttribute('attr1');
+		expect(element.attributes).not.toEqual(jasmine.objectContaining({'attr1': attr}));
 	});
 
 	it(`should return false when removal of attribute is not possible`, () => {
@@ -35,13 +39,9 @@ describe('Class: Element', () => {
 	});
 
 	it(`should have an unaltered list of attributes after an unsuccesful removal`, () => {
-		let attr = new Attribute('test', 'string');
-		element.addAtribute('test', attr);
-		let blist = element.getAttributes();
-		element.removeAttribute('empty');
-		let alist = element.getAttributes();
-		expect(alist).toEqual(blist);
-		
+	 	let alist = element.attributes;
+		element.removeAttribute('test');
+		let blist = element.attributes;
+		expect(alist).toEqual(blist);	
 	});
-
 });
