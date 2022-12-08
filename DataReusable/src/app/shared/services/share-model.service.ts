@@ -1,48 +1,64 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Element } from '../models/element';
-import { Attribute, AttributeType } from '../models/attribute';
+import { Attribute } from '../models/attribute';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShareModelService {
 	// the data model to be shared between components
-	private dataModel: BehaviorSubject<Record<string,Element>> = new BehaviorSubject<{[key: string]: Element}>({});
+	protected _dataModel: BehaviorSubject<Record<string,Element>> = new BehaviorSubject<{[key: string]: Element}>({});
 
 	constructor() { }
 
-	/**
-	 * Returns the list of entities and relations that make up the current data
-	 * model for the application
-	 * @returns the current data model
-	 */
-	public getDataModel(): BehaviorSubject<{[key: string]: Element}> {
-		return this.dataModel;
+	get dataModel(): BehaviorSubject<{[key: string]: Element}> {
+		return this._dataModel;
 	}
 
 	/**
-	 * Add a new Entity to the current data model
-	 * @param obj the entity to be added
+	 * Add a new Element to the current data model
+	 * @param obj the element to be added
 	 */
-	public addElement(obj: string): void {
-		let updated = this.dataModel.value;
-		updated[obj] = new Element(obj);
-		this.dataModel.next(updated);
+	public addElement(name: string, obj: Element): void {
+		let updated = this._dataModel.value;
+		updated[name] = obj;
+		this._dataModel.next(updated);
 	}
 
-	public renameElement(oldName: string, newName: string){
-
+	public removeElement(name: string): void {
+		let updated = this._dataModel.value;
+		if (name in updated){
+			delete updated[name];
+			this._dataModel.next(updated);
+		}
 	}
 
-	public removeElement(obj: string): void {
-
+	public renameElement(name: string, newName: string): void {
+		let updated = this._dataModel.value;
+		if (name in updated){
+			updated[newName] = updated[name];
+			delete updated[name];
+			this._dataModel.next(updated);
+		}
 	}
 
-	public addAttribute(obj: string, opts: Attribute):void {
-		let updated = this.dataModel.value;
-		updated[obj].addAtribute(opts.getName(), opts);
-		this.dataModel.next(updated);
+	public addAttribute(eleName: string, attName: string, attr: Attribute):void {
+		let updated = this._dataModel.value;
+		updated[eleName].addAtribute(attName, attr);
+		this._dataModel.next(updated);
+	}
+
+	public renameAttribute(eleName: string, attName: string, newName: string): void {
+		let updated = this._dataModel.value;
+		updated[eleName].renameAttribute(attName, newName);
+		this._dataModel.next(updated);
+	}
+
+	public updateAttribute(eleName: string, attName: string, attr: Attribute): void {
+		let updated = this._dataModel.value;
+		updated[eleName].updateAttribute(attName, attr);
+		this._dataModel.next(updated);
 	}
 
 	/**
@@ -51,10 +67,11 @@ export class ShareModelService {
 	 * @param attr the attribute to be removed
 	 * @returns true if attribute was remove, false otherwise
 	 */
-	public removeAttribute(ele: string, attr: string): boolean{
-		let updated = this.dataModel.value;
-		let result = updated[ele].removeAttribute(attr);
-		this.dataModel.next(updated);
-		return result;
+	public removeAttribute(ele: string, attr: string): void{
+		let updated = this._dataModel.value;
+		updated[ele].removeAttribute(attr);
+		this._dataModel.next(updated);
 	}
+
+	
 }
