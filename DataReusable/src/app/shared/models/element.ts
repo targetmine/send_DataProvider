@@ -17,6 +17,20 @@ export class Element {
 	addAtribute(name: string, att: Attribute): void{
 		this.attributes[name] = att;
 	}
+
+	renameAttribute(name: string, newName: string): void {
+		if (name in this.attributes){
+			this.attributes[newName] = this.attributes[name];
+			delete this.attributes[name];
+		}
+	} 
+
+	updateAttribute(name: string, att: Attribute): void {
+		if (name in this.attributes){
+			this.attributes[name] = att;
+		}
+	}
+
 	removeAttribute(att: string): boolean{
 		if (att in this.attributes){
 			delete this.attributes[att];

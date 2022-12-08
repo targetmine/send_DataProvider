@@ -25,6 +25,18 @@ describe('Class: Element', () => {
 		expect(element.attributes).toEqual(jasmine.objectContaining({'test': attr}));
 	});
 
+	it(`should rename an existing attribute`, () => {
+		element.renameAttribute('attr1', 'newName');
+		expect(element.attributes).toEqual(jasmine.objectContaining({'newName': attr}));
+		expect(element.attributes).not.toEqual(jasmine.objectContaining({'attr1': attr}));
+	});
+
+	it('should update an existing attribute', () => {
+		attr.type = 'string'
+		element.updateAttribute('attr1', attr);
+		expect(element.attributes['attr1'].type).toBe('string');
+	});
+
 	it(`should return true after removing an attribute `, () => {
 		expect(element.removeAttribute('attr1')).toBeTrue();
 	});
