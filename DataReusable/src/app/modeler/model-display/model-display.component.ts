@@ -9,24 +9,26 @@ import { Element } from '../../shared/models/element';
   styleUrls: ['./model-display.component.css']
 })
 export class ModelDisplayComponent implements OnInit{
+	// the current model 
+	protected _model!: Record<string, Element>;
+	get model(): Record<string, Element> { return this._model; }
 
 	// elements required for table display
-	@ViewChild(MatTable, {static: true}) paginator!: MatTable<Element>;
-	
-	public dataModel!: Record<string, Element>;
-	dataSource = new MatTableDataSource<Element>();
-  displayedColumns: string[] = ['name', 'attributes'];
+	@ViewChild(MatTable, {static: true}) modelTable!: MatTable<Element>;
+	protected _modelTableSource = new MatTableDataSource<string>();
+	get modelTableSource(): MatTableDataSource<string> {return this._modelTableSource; }
+  protected _displayedColumns: string[] = ['name', 'attributes'];
+	get displayedColumns(): string[] { return this._displayedColumns; }
 
 	constructor(
 		private readonly modelServ: ShareModelService
 	) { }
 
   ngOnInit(): void {
-		this.modelServ.getDataModel().subscribe( data => {
-			this.dataModel = data;
-			console.log(`model-display ${Object.keys(this.dataModel).length}`);
-			this.dataSource = new MatTableDataSource<Element>(Object.values(this.dataModel));
-		})
+		this.modelServ.dataModel.subscribe(data => {
+			this._model = data;
+			this._modelTableSource = new MatTableDataSource<string>(Object.keys(this._model));
+		});
 	}
 
 }

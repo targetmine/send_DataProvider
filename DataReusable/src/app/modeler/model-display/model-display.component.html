@@ -1,17 +1,17 @@
 <h1>Current Model</h1>
-<table mat-table [dataSource]="dataSource">
+<table mat-table [dataSource]="_modelTableSource">
 
 	<!-- Name Column -->
 	<ng-container matColumnDef="name">
 		<th mat-header-cell *matHeaderCellDef> Name </th>
-		<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+		<td mat-cell *matCellDef="let element"> {{element}} </td>
 	</ng-container>
 
 	<ng-container matColumnDef="attributes">
 		<th mat-header-cell *matHeaderCellDef> Attributes </th>
 		<td mat-cell *matCellDef="let element">
-			<div *ngFor="let at of element.attributes">
-				<span>{{at.name}}</span>
+			<div *ngFor="let e of element">
+				<span>{{_model[e]}}</span>
 				<mat-icon>edit</mat-icon>
 				<mat-icon>remove_circle_outline</mat-icon>
 				<mat-icon>vpn_key</mat-icon>
