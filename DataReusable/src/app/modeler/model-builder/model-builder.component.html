@@ -1,11 +1,9 @@
 <form>
-	<mat-form-field appearance="fill">
+	<mat-form-field appearance="outline">
 		<mat-label>Select action:</mat-label>
 		<mat-select 
-			[(value)]="actionValue"
 			[formControl]="actionType"
 			required
-			(selectionChange)="pantallazo($event)"
 			>
 			<mat-option value="add-element">Add new Element</mat-option>
 			<mat-option value="add-relation" [disabled]="_modelLength == 0">Add new Relation</mat-option>
@@ -17,6 +15,79 @@
 		</mat-select>
 	</mat-form-field>
 
+	<mat-form-field 
+		*ngIf="actionType.value == 'add-element'"
+		appearance="outline"
+		id="elementName"
+		>
+		<mat-label>Element name:</mat-label>
+		<input matInput
+			required
+			type="text"
+			class="form-control"
+			[formControl]="elementName"
+			placeholder="Ex. GeneID"
+		>
+		<mat-hint>Use only (non)capital letters.</mat-hint>
+	</mat-form-field>
+		
+	<button 
+		*ngIf="actionType.value == 'add-element'"
+		mat-raised-button
+		type="submit"
+		(click)="onClickAddElement($event)"
+		[disabled]="!elementName.valid"
+		id="elementSubmit"
+		>
+		Submit
+	</button>
+
+	<mat-form-field
+		*ngIf="actionType.value == 'add-relation'"
+		appearance="outline"
+		>
+		<mat-label>Select source element:</mat-label>
+		<mat-select
+			id="sourceElement"
+			[formControl]="sourceElement"
+			required
+			>
+			<mat-option 
+				*ngFor="let e of elements"
+				[value]="e">
+				{{e}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+	
+	<mat-form-field
+		*ngIf="actionType.value == 'add-relation'"
+		appearance="outline"
+		>
+		<mat-label>Select target element:</mat-label>
+		<mat-select
+			id="targetElement"
+			[formControl]="targetElement"
+			required
+			>
+			<mat-option 
+				*ngFor="let e of elements"
+				[value]="e">
+				{{e}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<button 
+		*ngIf="actionType.value == 'add-relation'"
+		mat-raised-button
+		type="submit"
+		(click)="onClickAddElement($event)"
+		[disabled]="!(sourceElement.valid && targetElement.valid)"
+		id="relationSubmit"
+		>
+		Submit
+	</button>	
 
 </form>
 

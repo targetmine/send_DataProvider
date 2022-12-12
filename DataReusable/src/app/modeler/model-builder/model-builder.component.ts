@@ -26,18 +26,16 @@ export class ModelBuilderComponent implements OnInit {
 
 	// elements for the form used in model's field definition/manipulation
 	actionType: FormControl = new FormControl('', Validators.required);
-	actionValue: string = '';
 	// control used for the addition of a new Entity (element) to the data model
-	newElement: FormControl = new FormControl('',
+	elementName: FormControl = new FormControl('',
 		Validators.compose([
 			Validators.required, 
 			Validators.pattern('[a-zA-Z]*')
 		])
 	);
 	
-
-	// // controls used for the addition of a single attribute to an Entity that is 
-	// // already part of the data model
+	// controls used for the addition of a single attribute to an Entity that is 
+	// already part of the data model
 	// attributeForm = this.formBuilder.group({
 	// 	selectedElement: new FormControl('', { validators: Validators.required }),
 	// 	newAttribute: new FormControl('', { 
@@ -49,17 +47,14 @@ export class ModelBuilderComponent implements OnInit {
 	// 	attributeType: new FormControl('', { validators: Validators.required }),
 	// 	isUnique: new FormControl(false),
 	// });
-	// //
-	// relationForm = this.formBuilder.group({
-	// 	source: new FormControl(null,{ 
-	// 		validators: Validators.required
-	// 	}),
-	// 	target: [null, Validators.required]
-	// })
+	//
+	sourceElement: FormControl = new FormControl(null, Validators.required);
+	targetElement: FormControl = new FormControl(null, Validators.required);
+	
 
   constructor(
 		private readonly modelServ: ShareModelService,
-		private formBuilder: FormBuilder,
+		// private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -70,18 +65,18 @@ export class ModelBuilderComponent implements OnInit {
 		})
   }
 
-	// /**
-	//  * handle the request for addition of a single element to the current data 
-	//  * model
-	//  * @param event 
-	//  */
-	// onClickAddElement(event: any) {
-	// 	event.preventDefault(); // don't refresh the page ?
-	// 	if( this.newElement.valid )
-	// 		this.modelServ.addElement('test',this.newElement.value);
-	// 	else
-	// 		this.snackBar.open('The name for the new element is invalid', 'Close');
-	// }
+	/**
+	 * handle the request for addition of a single element to the current data 
+	 * model
+	 * @param event 
+	 */
+	onClickAddElement(event: any) {
+		event.preventDefault(); // don't refresh the page ?
+		if( this.elementName.valid )
+			this.modelServ.addElement('test',this.elementName.value);
+		else
+			this.snackBar.open('The name for the new element is invalid', 'Close');
+	}
 
 	// /**
 	//  * handle the addition of a single attribute to the selected element
@@ -101,8 +96,4 @@ export class ModelBuilderComponent implements OnInit {
 	// 		this.snackBar.open('Some elements of the attribute definition are invalid', 'Close');
 
 	// }
-
-	pantallazo(event: any){
-		console.log(event);
-	}
 }

@@ -57,18 +57,28 @@ describe('ModelBuilderComponent: integration test', () => {
 	});
 });
 
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
+
 fdescribe('ModelBuilderComponent: unit test', () => {
   let component: ModelBuilderComponent;
   let fixture: ComponentFixture<ModelBuilderComponent>;
 	let service: ShareModelService;
+	let loader: HarnessLoader;
+
 	let e1: Element = new Element(), e2: Element = new Element();
 	let a1: Attribute = new Attribute('number', true), a2: Attribute = new Attribute('string', true);
 	e1.addAtribute('id', a1);
 	e2.addAtribute('name', a2);
 
-	beforeEach(async () => {
+	beforeEach(async() => {
     await TestBed.configureTestingModule({
-			imports:[ AppModule	],
+			imports:[
+				AppModule,
+			],
       declarations: [	ModelBuilderComponent	]
     })
 		.compileComponents();
@@ -77,12 +87,8 @@ fdescribe('ModelBuilderComponent: unit test', () => {
 		service = TestBed.inject(ShareModelService);
     component = fixture.componentInstance;
 		component.ngOnInit();
-
-		spyOnProperty(service, 'dataModel', 'get')
-			.and
-			.returnValue(new BehaviorSubject<{[key:string]: Element}>({'ele1': e1,	'ele2': e2}));
-    
 		fixture.detectChanges();
+		loader = TestbedHarnessEnvironment.loader(fixture);
 	});
 
 	it('should create', () => {
@@ -96,37 +102,80 @@ fdescribe('ModelBuilderComponent: unit test', () => {
 		expect(component.actionType.valid).toBeTruthy();
 	})
 
-	it('actionType value is binded to select element on template', fakeAsync(()=>{
+	it('actionType value is binded to select action on template', async() => {
 		expect(component.actionType.value).toBe('');
-		component.actionType.setValue('add-element', {emitEvent: true});
+		component.actionType.patchValue('add-element');
 		expect(component.actionType.value).toBe('add-element');
+		
+		const select = await loader.getHarness(MatSelectHarness);
+		let value = await select.getValueText();
+		expect(value).toEqual('Add new Element');
+	});
 
+	it('should display elementName input only when corresponding action is selected', async()=>{
+		let ff = await loader.getHarnessOrNull(MatFormFieldHarness.with({selector: '#elementName'}));
+		expect(ff).toBeFalsy();
+
+		component.actionType.patchValue('add-element');
+		ff = await loader.getHarnessOrNull(MatFormFieldHarness.with({selector: '#elementName'}));
+		expect(ff).toBeTruthy();
+	});
+
+	it('should display element submit button only when corresponding action is selected', ()=>{
+		let button = fixture.debugElement.query(By.css('button#elementSubmit'));
+		expect(button).toBeFalsy();
+		component.actionType.patchValue('add-element');
 		fixture.detectChanges();
-		let select = fixture.debugElement.query(By.css('mat-select')).nativeElement;
-		console.log(select.selected);
-		// expect(select.value).toBeFalsy();
-		// expect(component.actionType.value).toBeFalsy();
+		button = fixture.debugElement.query(By.css('button#elementSubmit'));
+		expect(button).toBeTruthy();
+	});
 
-		// select.value = 'add-element';
-		// select.dispatchEvent(new Event('change'));
-		// fixture.detectChanges();
-		// tick();
+	it('element submit button should be available only on a valid element name', async()=>{
+		let button = await loader.getHarnessOrNull(MatButtonHarness.with({selector: 'button#elementSubmit'}));
+		expect(button).toBeNull();
+		component.actionType.patchValue('add-element', {emitEvent: true});
+		spyOnProperty(component.elementName, 'valid','get').and.returnValue(true);
 		
-		// expect(select.value).toEqual(component.actionType.value);
-		// select.triggerEventHandler('selectionChange', {value: 'add-element'});
-		
-		
-		
+		button = await loader.getHarness(MatButtonHarness.with({selector: 'button#elementSubmit'}));
+		let disabled = await button.isDisabled();
+		expect(disabled).toBeFalse();
+	})
 
+	it('should display source element input only when add relation action is selected', async()=>{
+		let select = await loader.getHarnessOrNull(MatSelectHarness.with({selector: '#sourceElement'}));
+		expect(select).toBeFalsy();
+		component.actionType.patchValue('add-relation');
+		select = await loader.getHarness(MatSelectHarness.with({selector: '#sourceElement'}));
+		expect(select).toBeTruthy();
+	});
 
-	// 	console.log(el.nativeElement);
-	}));
-	
+	it('should display target element input only when add relation action is selected', async()=>{
+		let select = await loader.getHarnessOrNull(MatSelectHarness.with({selector: '#targetElement'}));
+		expect(select).toBeFalsy();
+		component.actionType.patchValue('add-relation');
+		select = await loader.getHarness(MatSelectHarness.with({selector: '#targetElement'}));
+		expect(select).toBeTruthy();
+	});
+
+	it('should display relation submit button only add relation action is selected', ()=>{
+		let button = fixture.debugElement.query(By.css('button#relationSubmit'));
+		expect(button).toBeFalsy();
+		component.actionType.patchValue('add-relation');
+		fixture.detectChanges();
+		button = fixture.debugElement.query(By.css('button#relationSubmit'));
+		expect(button).toBeTruthy();
+	});
+
+	it('relation submit button should be available when valid source and target are selected', async()=>{
+		component.actionType.patchValue('add-relation', {emitEvent: true});
+		let button = await loader.getHarness(MatButtonHarness.with({selector: 'button#relationSubmit'}));
+		let disabled = await button.isDisabled();
+		expect(disabled).toBeTrue();
+		
+		spyOnProperty(component.sourceElement, 'valid', 'get').and.returnValue(true);
+		spyOnProperty(component.targetElement, 'valid', 'get').and.returnValue(true);
+		button = await loader.getHarness(MatButtonHarness.with({selector: 'button#relationSubmit'}));
+		disabled = await button.isDisabled();
+		expect(disabled).toBeFalse();
+	})
 });
-
-
-// spy = spyOnProperty(service, 'dataModel', 'get').and.callThrough();
-// 			// .returnValue(new BehaviorSubject<{[key: string]: Element}>({}));
-// 		expect(spy).toHaveBeenCalled();
-
-
