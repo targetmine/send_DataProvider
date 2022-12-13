@@ -1,11 +1,9 @@
-import { BehaviorSubject } from 'rxjs';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModelBuilderComponent } from './model-builder.component';
 import { ShareModelService } from '../../shared/services/share-model.service';
 import { AppModule } from 'src/app/app.module';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
-import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('ModelBuilderComponent: integration test', () => {
@@ -17,12 +15,8 @@ describe('ModelBuilderComponent: integration test', () => {
 	
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-			imports:[
-				AppModule
-			],
-      declarations: [
-				ModelBuilderComponent,
-			]
+			imports:[ AppModule	],
+      declarations: [ ModelBuilderComponent ]
     })
 		.compileComponents();
     
@@ -63,7 +57,7 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
-fdescribe('ModelBuilderComponent: unit test', () => {
+describe('ModelBuilderComponent: unit test', () => {
   let component: ModelBuilderComponent;
   let fixture: ComponentFixture<ModelBuilderComponent>;
 	let service: ShareModelService;
