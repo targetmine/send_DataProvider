@@ -6,7 +6,7 @@ describe('Class: Element', () => {
 	let attr: Attribute;
 
 	beforeEach(() => {
-		element = new Element();
+		element = new Element('ele1');
 		attr = new Attribute('number');
 		element.addAtribute('attr1', attr);
 	});
@@ -16,7 +16,7 @@ describe('Class: Element', () => {
 	})
 
 	it(`should have an empty list of attributes by default`, () => {
-		element = new Element();
+		element = new Element('ele1');
 		expect(element.attributes).toEqual({});
 	});
 

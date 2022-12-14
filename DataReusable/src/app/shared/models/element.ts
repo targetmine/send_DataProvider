@@ -5,13 +5,18 @@ import { Attribute } from "./attribute";
  * in the context of a relational database
  */
 export class Element {
+	protected _name: string;
 	protected _attributes: Record<string, Attribute>;
 	// private relations: string[];
 	// private key: string;
 	
-	constructor(){
+	constructor(name: string){
+		this._name = name;
 		this._attributes = {};
 	}
+
+	get name(): string { return this._name; }
+	set name(n: string) { this._name = n};
 
 	get attributes(): Record<string, Attribute> { return this._attributes };
 	addAtribute(name: string, att: Attribute): void{

@@ -9,7 +9,7 @@ describe('Service: ShareModelService', () => {
 
   beforeEach(() => {
     service = new ShareModelService();
-		e = new Element();
+		e = new Element('ele1');
 		a = new Attribute('number');
 		e.addAtribute('attr1', a);
 		service.addElement('ele1', e);
@@ -43,6 +43,7 @@ describe('Service: ShareModelService', () => {
 
 	it('should be able to rename an <element> from the model', ()=>{
 		service.renameElement('ele1', 'newName');
+		e.name = 'newName';
 		expect(service.dataModel.getValue()).toEqual(jasmine.objectContaining({'newName': e}));
 	});
 
