@@ -24,7 +24,7 @@ describe('ModelBuilderComponent: integration test', () => {
 		service = TestBed.inject(ShareModelService);
     component = fixture.componentInstance;
 
-		e = new Element();
+		e = new Element('ele1');
 		a = new Attribute('number');
 		e.addAtribute('attr1', a);
 		service.addElement('ele1', e);
@@ -37,7 +37,7 @@ describe('ModelBuilderComponent: integration test', () => {
 	});
 
 	it('should add an element to the model', () => {
-		e = new Element();
+		e = new Element('ele2');
 		service.addElement('ele2', e);
 		fixture.detectChanges();
 		expect(component.model).toEqual(service.dataModel.getValue());
@@ -63,7 +63,7 @@ describe('ModelBuilderComponent: unit test', () => {
 	let service: ShareModelService;
 	let loader: HarnessLoader;
 
-	let e1: Element = new Element(), e2: Element = new Element();
+	let e1: Element = new Element('ele1'), e2: Element = new Element('ele2');
 	let a1: Attribute = new Attribute('number', true), a2: Attribute = new Attribute('string', true);
 	e1.addAtribute('id', a1);
 	e2.addAtribute('name', a2);

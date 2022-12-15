@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Element } from 'src/app/shared/models/element'; 
-import { Attribute, AttributeType, ATTRIBUTE_TYPES } from 'src/app/shared/models/attribute';
+import { ATTRIBUTE_TYPES } from 'src/app/shared/models/attribute';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 
 @Component({
@@ -72,28 +72,14 @@ export class ModelBuilderComponent implements OnInit {
 	 */
 	onClickAddElement(event: any) {
 		event.preventDefault(); // don't refresh the page ?
-		if( this.elementName.valid )
-			this.modelServ.addElement('test',this.elementName.value);
+		if( this.elementName.valid ){
+			let newEle = new Element(this.elementName.value);
+			this.modelServ.addElement(this.elementName.value, newEle);
+		}
+			
 		else
 			this.snackBar.open('The name for the new element is invalid', 'Close');
 	}
 
-	// /**
-	//  * handle the addition of a single attribute to the selected element
-	//  * @param event 
-	//  */
-	// onClickAddAttribute(event:any){
-	// 	event.preventDefault();
-	// 	if( this.attributeForm.valid ){
-	// 		const parent = this.attributeForm.get('selectedElement')?.value;
-	// 		const name = this.attributeForm.get('newAttribute')?.value;
-	// 		const type = this.attributeForm.get('attributeType')?.value;
-	// 		const unique = this.attributeForm.get('isUnique')?.value;
-	// 		const newAttr = new Attribute(<AttributeType>type!, unique!);
-	// 		this.modelServ.addAttribute(parent!, name!, newAttr);
-	// 	}
-	// 	else
-	// 		this.snackBar.open('Some elements of the attribute definition are invalid', 'Close');
 
-	// }
 }

@@ -28,6 +28,7 @@ import { MatIconModule } from "@angular/material/icon";
 		MatSnackBarModule,
 		MatCheckboxModule,
 		MatIconModule,
+		MatButtonModule,
 	],
 	exports: [
 		ModelDisplayComponent

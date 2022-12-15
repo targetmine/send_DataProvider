@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { ModelerModule } from './modeler/modeler.module';
 
 @Component({selector: 'router-outlet', template: ''})
 class RouterOutletStubComponent {}
@@ -13,6 +15,8 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+				ModelerModule,
+				MatTabsModule,
         RouterTestingModule
       ],
       declarations: [
