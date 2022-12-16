@@ -1,24 +1,27 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ModelBuilderComponent } from "./model-builder/model-builder.component";
-import { ModelDisplayComponent } from "./model-display/model-display.component";
+import { ElementRenameDialog, ModelDisplayComponent } from "./model-display/model-display.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTableModule } from "@angular/material/table";
 import { MatSelectModule } from "@angular/material/select";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
 	declarations: [
 		ModelBuilderComponent,
-		ModelDisplayComponent
+		ModelDisplayComponent,
+		ElementRenameDialog,
 	],
 	imports: [
 		CommonModule,
+		FormsModule,
 		MatFormFieldModule,
 		ReactiveFormsModule,
 		MatTableModule,
@@ -29,6 +32,7 @@ import { MatIconModule } from "@angular/material/icon";
 		MatCheckboxModule,
 		MatIconModule,
 		MatButtonModule,
+		MatDialogModule,
 	],
 	exports: [
 		ModelDisplayComponent

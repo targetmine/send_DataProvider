@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Rename element:</h1>
+<div mat-dialog-content>
+	<p>Select the new name for the Element:</p>
+	<mat-form-field appearance="outline">
+		<mat-label>New name:</mat-label>
+		<input matInput
+			required
+			type="text"
+			placeholder="Ex. NewName"
+			[(ngModel)]="name"
+		>
+		<mat-hint>Use only (non)captital letters</mat-hint>
+	</mat-form-field>
+	<div mat-dialog-actions>
+		<button mat-button (click)="onCancel()">Cancel</button>
+		<button mat-button [mat-dialog-close]="name" cdkFocusInitial>Submit</button>
+	</div>
+</div>

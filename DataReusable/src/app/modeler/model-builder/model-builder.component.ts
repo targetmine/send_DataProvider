@@ -76,10 +76,7 @@ export class ModelBuilderComponent implements OnInit {
 			let newEle = new Element(this.elementName.value);
 			this.modelServ.addElement(this.elementName.value, newEle);
 		}
-			
 		else
 			this.snackBar.open('The name for the new element is invalid', 'Close');
 	}
-
-
 }

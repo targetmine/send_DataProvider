@@ -1,3 +1,14 @@
 table{
 	width: 100%;
 }
+
+span {
+	width: 70%;
+	float: left;
+	line-height: 3em;
+}
+
+.table-button{
+	width: 10%;
+	float: right;
+}
