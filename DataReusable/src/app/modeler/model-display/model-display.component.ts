@@ -57,9 +57,10 @@ export class ModelDisplayComponent implements OnInit{
 	 * @param name the name of the element being edited 
 	 */
 	displayRenameElement(name: string){
-		const dialogRef = this.dialog.open(ElementRenameDialog, <MatDialogConfig<any>>{	name: name });
+		const dialogRef = this.dialog.open(ElementRenameDialog, <MatDialogConfig<any>>{	name: name, restoreFocus: false });
 		dialogRef.afterClosed().subscribe(result => {
-			this.modelServ.renameElement(name, result);
+			if( result !== undefined )
+				this.modelServ.renameElement(name, result);
 		});
 	}
 
@@ -93,12 +94,21 @@ export class ModelDisplayComponent implements OnInit{
 	templateUrl: 'element-rename-dialog.html',
 })
 export class ElementRenameDialog {
+	newName: FormControl = new FormControl('', 
+		Validators.compose([
+			Validators.required,
+			Validators.pattern('[a-zA-Z]*')
+		])
+	);
+
 	constructor(
 		public dialogRef: MatDialogRef<ElementRenameDialog>,
 		@Inject(MAT_DIALOG_DATA) public name: string
-	){}
+	){
+		this.newName.setValue(name);
+	}
 
 	onCancel(): void{
-		this.dialogRef.close();
+		this.dialogRef.close(undefined);
 	}
 }

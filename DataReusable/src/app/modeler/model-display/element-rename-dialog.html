@@ -7,12 +7,14 @@
 			required
 			type="text"
 			placeholder="Ex. NewName"
-			[(ngModel)]="name"
+			[formControl]="newName"
 		>
 		<mat-hint>Use only (non)captital letters</mat-hint>
 	</mat-form-field>
 	<div mat-dialog-actions>
 		<button mat-button (click)="onCancel()">Cancel</button>
-		<button mat-button [mat-dialog-close]="name" cdkFocusInitial>Submit</button>
+		<button mat-button 
+			[disabled]="!newName.valid"
+			[mat-dialog-close]="newName.value">Submit</button>
 	</div>
 </div>
