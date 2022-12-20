@@ -42,6 +42,21 @@ describe('ModelDisplayComponent: integration test', () => {
 		expect(component.model).not.toEqual(jasmine.objectContaining({'ele1': e}));
 	});
 
+	it('should not rename an element with the name of an existing element from the model', ()=>{
+		let nn = 'newName';
+		let ne = new Element(nn);
+		ne.addAtribute('attr1', a);
+		service.addElement(nn, ne);
+		fixture.detectChanges();
+		expect(component.model).toEqual(jasmine.objectContaining({'newName': ne}));
+		expect(component.model).toEqual(jasmine.objectContaining({'ele1': e}));
+
+		service.renameElement('ele1', nn);
+		fixture.detectChanges();
+		expect(component.model[nn]).toEqual(ne);
+		expect(component.model['ele1']).toEqual(e);
+	});
+
 	it('should remove an element from the model', ()=>{
 		service.removeElement('ele1');
 		fixture.detectChanges();

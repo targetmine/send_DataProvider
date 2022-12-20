@@ -36,7 +36,7 @@ export class ShareModelService {
 
 	public renameElement(name: string, newName: string): void {
 		let updated = this._dataModel.value;
-		if (name in updated){
+		if (name in updated && !(newName in updated) ){
 			updated[name].name = newName;
 			updated[newName] = updated[name];
 			delete updated[name];
