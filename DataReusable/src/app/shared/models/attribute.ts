@@ -1,11 +1,16 @@
 export type AttributeType = 'string' | 'number';
 export const ATTRIBUTE_TYPES = ['string', 'number'];
 
+interface IAttribute{
+	type: AttributeType;
+	unique: boolean;
+}
+
 /**
  * Convenience class used to manage the definition of the attributes an element
  * in the data model contains
  */
-export class Attribute {
+export class Attribute implements IAttribute {
 	protected _type: AttributeType;
 	protected _unique: boolean;
 

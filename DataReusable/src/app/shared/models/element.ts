@@ -1,10 +1,15 @@
 import { Attribute } from "./attribute";
 
+interface IElement{
+	name: string;
+	attributes: Record<string, Attribute>;
+}
+
 /**
  * A basic element of a data model, it can be thought of as a table
  * in the context of a relational database
  */
-export class Element {
+export class Element implements IElement{
 	protected _name: string;
 	protected _attributes: Record<string, Attribute>;
 	// private relations: string[];
@@ -21,6 +26,10 @@ export class Element {
 	get attributes(): Record<string, Attribute> { return this._attributes };
 	addAtribute(name: string, att: Attribute): void{
 		this.attributes[name] = att;
+	}
+	getAttributesArray(): any[]{
+		let atts = Object.keys(this._attributes).map((key) => [key, this._attributes[key]]);
+		return atts;
 	}
 
 	renameAttribute(name: string, newName: string): void {

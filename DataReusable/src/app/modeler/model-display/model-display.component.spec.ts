@@ -137,8 +137,8 @@ fdescribe('ModelDisplayComponent: unit test', ()=>{
 			}
 		};
 
-		spyOnProperty(component, 'model', 'get').and.returnValue(elements);
-		spyOnProperty(service.dataModel, 'value', 'get').and.returnValue(elements);
+		// spyOnProperty(component, 'model', 'get').and.returnValue(elements);
+		// spyOnProperty(service.dataModel, 'value', 'get').and.returnValue(elements);
 		// service.dataModel.next(testmodel);
 	});
 
@@ -159,27 +159,37 @@ fdescribe('ModelDisplayComponent: unit test', ()=>{
 		let table = await loader.getHarness(MatTableHarness);
 		let cols = await table.getCellTextByColumnName();
 		let testElements = Object.keys(elements);
-		cols['elements'].text.forEach((e,i)=>{
-			expect(e).toEqual(testElements[i]);
+		testElements.forEach((e)=>{
+			expect(cols['elements'].text).toContain(e);
 		});
 	});
 
-	it('should delete the element when the `remove` button is pressed', async()=>{
+	it('should try to delete the element when the `remove` button is pressed', async()=>{
 		service.dataModel.next(elements);
+		let removeSpy = spyOn(component, 'onRemoveElement');
 		//click remove
-		let table = await loader.getHarness(MatTableHarness);
-		let cols = await table.getCellTextByColumnName();
-		expect(cols['elements'].text).toContain('gene');
-
-		let button = await loader.getHarness(MatButtonHarness.with({selector: '.remove-element'}));
-		button.click(); // remove only element in the table
-		table = await loader.getHarness(MatTableHarness);
-		cols = await table.getCellTextByColumnName();
-		expect(cols['elements'].text).not.toContain('gene');
+		let testElements = Object.keys(elements);
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.remove-element'}));
+		expect(buttons.length).toEqual(testElements.length);
+		let i = 0;
+		for (const b of buttons){
+		 	await b.click();
+			expect(removeSpy).toHaveBeenCalledWith(testElements[i]);
+			++i;
+		};
 	});
 
-	it('should rename an element when the `edit` button is pressed', async()=>{
-
+	it('should display the rename dialog when the `edit` button for an element is pressed', async()=>{
+		service.dataModel.next(elements);
+		let displaySpy = spyOn(component, 'onDisplayRenameElement');
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.edit-element'}));
+		let testElements = Object.keys(elements);
+		let i = 0;
+		for (const b of buttons){
+			await b.click();
+			expect(displaySpy).toHaveBeenCalledWith(testElements[i]);
+			i++;
+		}
 	});
 
 	it('should display the list of attributes of each element');

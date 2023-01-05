@@ -11,14 +11,14 @@
 				<mat-icon fontIcon="clear"></mat-icon>
 			</button>		
 			<button mat-icon-button
-			class="table-button"
+			class="table-button add-attribute"
 			(click)="onAddAttribute(element.name)"
 			>
 				<mat-icon fontIcon="add_circle_outline"></mat-icon>
 			</button>	
 			<button mat-icon-button 
-				class="table-button"
-				(click)="displayRenameElement(element.name)"
+				class="table-button edit-element"
+				(click)="onDisplayRenameElement(element.name)"
 				>
 				<mat-icon fontIcon="edit"></mat-icon>
 			</button>
@@ -28,12 +28,27 @@
 	<ng-container matColumnDef="attributes">
 		<th mat-header-cell *matHeaderCellDef> Attributes </th>
 		<td mat-cell *matCellDef="let element">
-			<!-- <div *ngFor="let a of element.attributes">
-				<span>{{a}}</span>
-				<mat-icon>edit</mat-icon>
-				<mat-icon>remove_circle_outline</mat-icon>
-				<mat-icon>vpn_key</mat-icon>
-			</div> -->
+			<div *ngFor="let attr of element.attributes | keyvalue">
+				<span>{{attr.value.type}}</span>
+				<button mat-icon-button
+					class="table-button remove-attribute"
+					(click)="onRemoveAttribute(attr.key)"
+					>
+					<mat-icon fontIcon="clear"></mat-icon>
+				</button>
+				<button mat-icon-button
+					class="table-button edit-attribute"
+					(click)="onDisplayEditAttribute(attr.key)"
+					>
+					<mat-icon fontIcon="edit"></mat-icon>
+				</button>
+				<!-- <button mat-icon-button
+					[ngClass]="{'unique': !isUnique(attr.value.unique)}"
+					class="table-button"
+					>
+					<mat-icon fontIcon="vpn_key"></mat-icon>
+				</button> -->
+			</div>
 		</td>
 	</ng-container>
 
