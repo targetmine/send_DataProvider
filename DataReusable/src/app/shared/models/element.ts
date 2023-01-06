@@ -1,56 +1,50 @@
 import { Attribute } from "./attribute";
 
-interface IElement{
-	name: string;
-	attributes: Record<string, Attribute>;
-}
-
-/**
- * A basic element of a data model, it can be thought of as a table
- * in the context of a relational database
- */
-export class Element implements IElement{
+/** A basic element of a data model, it can be thought of as a table
+ * in the context of a relational database */
+export class Element{
 	protected _name: string;
-	protected _attributes: Record<string, Attribute>;
+	protected _attributes: Attribute[];
 	// private relations: string[];
 	// private key: string;
 	
 	constructor(name: string){
 		this._name = name;
-		this._attributes = {};
+		this._attributes = [];
 	}
 
 	get name(): string { return this._name; }
 	set name(n: string) { this._name = n};
 
-	get attributes(): Record<string, Attribute> { return this._attributes };
-	addAtribute(name: string, att: Attribute): void{
-		this.attributes[name] = att;
-	}
-	getAttributesArray(): any[]{
-		let atts = Object.keys(this._attributes).map((key) => [key, this._attributes[key]]);
-		return atts;
-	}
+	get attributes(): Attribute[] { return this._attributes };
 
+	addAtribute(att: Attribute): void{
+		let names = this._attributes.map((v) => v.name);
+		if (names.indexOf(att.name) !== -1 )
+			return;
+		this._attributes.push(att);
+	}
+	
 	renameAttribute(name: string, newName: string): void {
-		if (name in this.attributes){
-			this.attributes[newName] = this.attributes[name];
-			delete this.attributes[name];
-		}
+		this._attributes = this._attributes.map((v) => {
+			if(v.name == name)
+				v.name = newName;
+			return v;
+		});
 	} 
 
 	updateAttribute(name: string, att: Attribute): void {
-		if (name in this.attributes){
-			this.attributes[name] = att;
-		}
+		this._attributes = this._attributes.map((v) => {
+			if(v.name == name){
+				v.type = att.type;
+				v.unique = att.unique;
+			}
+			return v;
+		});
 	}
 
-	removeAttribute(att: string): boolean{
-		if (att in this.attributes){
-			delete this.attributes[att];
-			return true;
-		}
-		return false;
+	removeAttribute(name: string): void{
+		this._attributes = this._attributes.filter(v => v.name !== name);
 	}
 	
 }
