@@ -7,72 +7,66 @@ import { Attribute } from '../models/attribute';
   providedIn: 'root'
 })
 export class ShareModelService {
-	// the data model to be shared between components
-	protected _dataModel: BehaviorSubject<Record<string,Element>> = new BehaviorSubject<{[key: string]: Element}>({});
+	protected _dataModel: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
+	get dataModel(): BehaviorSubject<Element[]> { return this._dataModel; }
 
-	constructor() { }
-
-	get dataModel(): BehaviorSubject<{[key: string]: Element}> {
-		return this._dataModel;
-	}
-
-	/**
-	 * Add a new Element to the current data model
-	 * @param obj the element to be added
-	 */
-	public addElement(name: string, obj: Element): void {
+	public addElement(ele: Element): void {
 		let updated = this._dataModel.value;
-		updated[name] = obj;
+		let eles = updated.map(v => v.name);
+		if (eles.indexOf(ele.name) !== -1 )
+			return;
+		
+		updated.push(ele);
 		this._dataModel.next(updated);
 	}
 
-	public removeElement(name: string): void {
-		let updated = this._dataModel.value;
-		if (name in updated){
-			delete updated[name];
-			this._dataModel.next(updated);
-		}
-	}
-
 	public renameElement(name: string, newName: string): void {
-		let updated = this._dataModel.value;
-		if (name in updated && !(newName in updated) ){
-			updated[name].name = newName;
-			updated[newName] = updated[name];
-			delete updated[name];
-			this._dataModel.next(updated);
-		}
+		let updated = this._dataModel.value.map(v => {
+			if( v.name === name )
+				v.name = newName;
+			return v;
+		});
+		this._dataModel.next(updated);
+	}
+	
+	public removeElement(name: string): void {
+		let updated = this._dataModel.value.filter(v => v.name !== name);
+		this._dataModel.next(updated);
 	}
 
-	public addAttribute(eleName: string, attName: string, attr: Attribute):void {
-		let updated = this._dataModel.value;
-		updated[eleName].addAtribute(attName, attr);
+	public addAttribute(eleName: string, attr: Attribute):void {
+		let updated = this._dataModel.value.map(v => {
+			if( v.name === eleName )
+				v.addAtribute(attr);
+			return v;
+		});
 		this._dataModel.next(updated);
 	}
 
 	public renameAttribute(eleName: string, attName: string, newName: string): void {
-		let updated = this._dataModel.value;
-		updated[eleName].renameAttribute(attName, newName);
+		let updated = this._dataModel.value.map(v =>{
+			if( v.name === eleName)
+				v.renameAttribute(attName, newName);
+			return v;
+		});
 		this._dataModel.next(updated);
 	}
 
 	public updateAttribute(eleName: string, attName: string, attr: Attribute): void {
-		let updated = this._dataModel.value;
-		updated[eleName].updateAttribute(attName, attr);
+		let updated = this._dataModel.value.map(v => {
+			if( v.name === eleName )
+				v.updateAttribute(attName, attr);
+			return v;
+		});
 		this._dataModel.next(updated);
 	}
 
-	/**
-	 * 
-	 * @param ele the element whose attribute we are trying to remove
-	 * @param attr the attribute to be removed
-	 * @returns true if attribute was remove, false otherwise
-	 */
-	public removeAttribute(ele: string, attr: string): void{
-		let updated = this._dataModel.value;
-		updated[ele].removeAttribute(attr);
+	public removeAttribute(eleName: string, attrName: string): void{
+		let updated = this._dataModel.value.map(v =>{
+			if( v.name === eleName )
+				v.removeAttribute(attrName);
+			return v;
+		});
 		this._dataModel.next(updated);
-	}
-
-	
+	}	
 }

@@ -45,6 +45,5 @@ export class Element{
 
 	removeAttribute(name: string): void{
 		this._attributes = this._attributes.filter(v => v.name !== name);
-	}
-	
+	}	
 }

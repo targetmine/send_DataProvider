@@ -1,7 +1,7 @@
 import { Attribute } from "./attribute";
 import { Element } from "./element";
 
-fdescribe('Class: Element', () => {
+describe('Class: Element', () => {
 	let element: Element;
 	let attr: Attribute;
 
