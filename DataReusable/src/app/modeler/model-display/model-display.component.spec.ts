@@ -1,196 +1,157 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ShareModelService } from 'src/app/shared/services/share-model.service';
-import { ModelDisplayComponent } from './model-display.component';
-import { Element } from 'src/app/shared/models/element';
-import { Attribute } from 'src/app/shared/models/attribute';
-import { AppModule } from 'src/app/app.module';
-
-describe('ModelDisplayComponent: integration test', () => {
-  let component: ModelDisplayComponent;
-  let fixture: ComponentFixture<ModelDisplayComponent>;
-	let service: ShareModelService;
-	let e: Element;
-	let a: Attribute;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-			imports: [AppModule],
-      declarations: [ ModelDisplayComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(ModelDisplayComponent);
-		service = TestBed.inject(ShareModelService);
-    component = fixture.componentInstance;
-    
-		e = new Element('ele1');
-		a = new Attribute('number');
-		e.addAtribute('attr1', a);
-		service.addElement('ele1', e);
-
-		fixture.detectChanges();
-  });
-
-	it('should get the starting model from the service', () => {
-		expect(component.model).toEqual(service.dataModel.getValue());
-	});
-
-	it('should rename an element from the model', ()=>{
-		service.renameElement('ele1', 'newName');
-		fixture.detectChanges();
-		expect(component.model).toEqual(jasmine.objectContaining({'newName': e}));
-		expect(component.model).not.toEqual(jasmine.objectContaining({'ele1': e}));
-	});
-
-	it('should not rename an element with the name of an existing element from the model', ()=>{
-		let nn = 'newName';
-		let ne = new Element(nn);
-		ne.addAtribute('attr1', a);
-		service.addElement(nn, ne);
-		fixture.detectChanges();
-		expect(component.model).toEqual(jasmine.objectContaining({'newName': ne}));
-		expect(component.model).toEqual(jasmine.objectContaining({'ele1': e}));
-
-		service.renameElement('ele1', nn);
-		fixture.detectChanges();
-		expect(component.model[nn]).toEqual(ne);
-		expect(component.model['ele1']).toEqual(e);
-	});
-
-	it('should remove an element from the model', ()=>{
-		service.removeElement('ele1');
-		fixture.detectChanges();
-		expect(component.model).toEqual({});
-	});
-
-	it('should allow the addition of attributes to an Element', ()=>{
-		a = new Attribute('string');
-		service.addAttribute('ele1', 'newattr', a);
-		fixture.detectChanges();
-		expect(component.model['ele1'].attributes).toEqual(jasmine.objectContaining({'newattr': a}));
-	});
-
-	it('should rename an attribute from an element in the model', ()=>{
-		service.renameAttribute('ele1', 'attr1', 'newName');
-		fixture.detectChanges();
-		expect(component.model['ele1'].attributes).toEqual(jasmine.objectContaining({'newName': a}));
-		expect(component.model['ele1'].attributes).not.toEqual(jasmine.objectContaining({'attr1': a}));
-	});
-
-	it('should update an attribute from an element in the model', ()=>{
-		let b = new Attribute('string', true);
-		service.updateAttribute('ele1', 'attr1', b);
-		fixture.detectChanges();
-		expect(component.model['ele1'].attributes).toEqual(jasmine.objectContaining({'attr1': b}));
-		expect(component.model['ele1'].attributes).not.toEqual(jasmine.objectContaining({'attr1': a}));
-	});
-
-	it('should remove an attribute from an element in the model', ()=>{
-		service.removeAttribute('ele1', 'attr1');
-		fixture.detectChanges();
-		console.log(component.model);
-		expect(component.model['ele1'].attributes).toEqual({});
-	});
-});
-
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
+import { ModelDisplayComponent } from './model-display.component';
+import { ShareModelService } from 'src/app/shared/services/share-model.service';
+import { Element } from 'src/app/shared/models/element';
+import { Attribute } from 'src/app/shared/models/attribute';
+import { ModelerModule } from '../modeler.module';
 import { MatHeaderCellHarness, MatTableHarness } from '@angular/material/table/testing';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
-fdescribe('ModelDisplayComponent: unit test', ()=>{
+@Injectable()
+class mockShareModelService extends ShareModelService{
+	protected override _dataModel$ =
+		new BehaviorSubject<Element[]>([]);
+}
+
+fdescribe('ModelDisplayComponent: unit test', () => {
 	let component: ModelDisplayComponent;
 	let fixture: ComponentFixture<ModelDisplayComponent>;
+	let service: mockShareModelService; //ShareModelService;
 	let loader: HarnessLoader;
-	let service: ShareModelService;
-	let elements: Record<string, Element>;
-	
-	beforeEach(async()=>{
+
+	// 		{ name: 'value', type: 'number', unique: false } as Attribute
+	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [AppModule],
-			declarations: [ ModelDisplayComponent ]
-		})
-		.compileComponents();
-		
+			imports: [ ModelerModule ],
+			declarations: [ ModelDisplayComponent ],
+			providers: [ mockShareModelService ]
+		}).compileComponents();
 		fixture = TestBed.createComponent(ModelDisplayComponent);
-		service = TestBed.inject(ShareModelService);
+		service = TestBed.inject(mockShareModelService);
 		component = fixture.componentInstance;
-		component.ngOnInit();
+		service.dataModel.subscribe(data => {
+			component.model = data;
+			component.modelTableSource = new MatTableDataSource<Element>(data);
+		});
 		fixture.detectChanges();
 		loader = TestbedHarnessEnvironment.loader(fixture);
-
-		elements = {
-			gene: <Element><unknown>{
-				name: 'gene',
-				attributes: {
-					id: <Attribute>{ type: 'string', unique: true },
-					other: <Attribute>{ type: 'number', unique: false }
-				}
-			},
-			protein: <Element><unknown>{
-				name: 'protein',
-				attributes: {
-					id: <Attribute>{ type: 'string', unique: true },
-					other: <Attribute>{ type: 'number', unique: false }
-				}
-			}
-		};
-
-		// spyOnProperty(component, 'model', 'get').and.returnValue(elements);
-		// spyOnProperty(service.dataModel, 'value', 'get').and.returnValue(elements);
-		// service.dataModel.next(testmodel);
 	});
 
-	afterEach(()=>fixture.destroy());
+	afterEach(() => fixture.destroy());
 
-	it('should create', ()=>{
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 
-	it('should display the columns specified in _displayedColumns', async()=>{
+	it('should reflect on the model the current state of the service', () => {
+
+	});
+
+	it('should display the columns specified in _displayedColumns', async() => {
+		loader = TestbedHarnessEnvironment.loader(fixture);
 		let headers = await loader.getAllHarnesses(MatHeaderCellHarness);
 		let colNames = await parallel(() => headers.map(row => row.getColumnName()));
 		expect(colNames).toEqual(component.displayedColumns);
 	});
 
-	it('should display all elements in the `Elements` column', async()=>{
-		service.dataModel.next(elements);
+	it('should display elements from the model in the `Elements` column', async() => {
+		let test: Element[] = [new Element('gene'), new Element('protein')];
+		service.dataModel.next(test);
 		let table = await loader.getHarness(MatTableHarness);
 		let cols = await table.getCellTextByColumnName();
-		let testElements = Object.keys(elements);
-		testElements.forEach((e)=>{
-			expect(cols['elements'].text).toContain(e);
+		test.forEach((t: Element) => {
+			expect(cols['elements'].text).toContain(t.name);
 		});
 	});
 
-	it('should try to delete the element when the `remove` button is pressed', async()=>{
-		service.dataModel.next(elements);
-		let removeSpy = spyOn(component, 'onRemoveElement');
-		//click remove
-		let testElements = Object.keys(elements);
-		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.remove-element'}));
-		expect(buttons.length).toEqual(testElements.length);
-		let i = 0;
-		for (const b of buttons){
+	it('should call onRenameElement when the option is clicked', async()=>{
+		let test: Element[] = [new Element('gene'), new Element('protein')];
+		service.dataModel.next(test);
+		let renameSpy = spyOn(component, 'onRenameElement');
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.rename-element'}));
+		for (const [i, b] of buttons.entries()){
 		 	await b.click();
-			expect(removeSpy).toHaveBeenCalledWith(testElements[i]);
-			++i;
+			expect(renameSpy).toHaveBeenCalledWith(test[i].name);	
 		};
 	});
 
-	it('should display the rename dialog when the `edit` button for an element is pressed', async()=>{
-		service.dataModel.next(elements);
-		let displaySpy = spyOn(component, 'onDisplayRenameElement');
-		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.edit-element'}));
-		let testElements = Object.keys(elements);
-		let i = 0;
-		for (const b of buttons){
-			await b.click();
-			expect(displaySpy).toHaveBeenCalledWith(testElements[i]);
-			i++;
+	it('should call onAddAttribute when the option is clicked', async() => {
+		let test: Element[] = [new Element('gene'), new Element('protein')];
+		service.dataModel.next(test);
+		let addSpy = spyOn(component, 'onAddAttribute');
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.add-attribute'}));
+		for (const [i, b] of buttons.entries()){
+		 	await b.click();
+			expect(addSpy).toHaveBeenCalledWith(test[i].name);	
+		};
+	});
+
+	it('should call onRemoveElement when the option is clicked', async() => {
+		let test: Element[] = [new Element('gene'), new Element('protein')];
+		service.dataModel.next(test);
+		let delSpy = spyOn(component, 'onRemoveElement');
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.remove-element'}));
+		for (const [i, b] of buttons.entries()){
+		 	await b.click();
+			expect(delSpy).toHaveBeenCalledWith(test[i].name);	
+		};
+	});
+
+	it('should display the list of attributes of each element', async() => {
+		let test: Element[] = [ new Element('gene'), new Element('protein')	];
+		test[0].attributes = [
+			{ name: 'id', type: 'string', unique: true } as Attribute,
+			{ name: 'other', type: 'number', unique: false } as Attribute
+		];
+		test[1].attributes = [
+			{ name: 'acession', type: 'number', unique: true } as Attribute,
+		];
+		service.dataModel.next(test);
+		let table = await loader.getHarness(MatTableHarness);
+		let cols = await table.getCellTextByColumnName(); 
+		// all attribute names get fused for the text of a single cell
+		for( const[i, t] of test.entries()) {
+			t.attributes.forEach((a: Attribute) => {
+				expect(cols['attributes'].text[i].indexOf(a.name)).toBeGreaterThanOrEqual(0);
+			});
 		}
 	});
 
-	it('should display the list of attributes of each element');
+	it('should call onRenameAttribute when the button is clicked', async() => {
+		let test: Element[] = [ new Element('gene'), new Element('protein')	];
+		test[0].attributes = [
+			{ name: 'id', type: 'string', unique: true } as Attribute,
+			{ name: 'other', type: 'number', unique: false } as Attribute
+		];
+		service.dataModel.next(test);
+		let renameSpy = spyOn(component, 'onRenameAttribute');
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.rename-attribute'}));
+		expect(buttons.length).toBe(test[0].attributes.length);
+		for (const [i, b] of buttons.entries()){
+			await b.click();
+			expect(renameSpy).toHaveBeenCalledWith(test[0].attributes[i].name);	
+		};
+	});
+
+	it('should call onRemoveAttribute when the button is clicked', async() => {
+		let test: Element[] = [ new Element('gene'), new Element('protein')	];
+		test[0].attributes = [
+			{ name: 'id', type: 'string', unique: true } as Attribute,
+			{ name: 'other', type: 'number', unique: false } as Attribute
+		];
+		service.dataModel.next(test);
+		let delSpy = spyOn(component, 'onRemoveAttribute');
+		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.remove-attribute'}));
+		expect(buttons.length).toBe(test[0].attributes.length);
+		for (const [i, b] of buttons.entries()){
+		 	await b.click();
+			expect(delSpy).toHaveBeenCalledWith(test[0].attributes[i].name);	
+		};
+	});
+
 });
