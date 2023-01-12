@@ -4,7 +4,13 @@ import { Attribute } from "./attribute";
  * in the context of a relational database */
 export class Element{
 	protected _name: string;
+	get name(): string { return this._name; }
+	set name(n: string) { this._name = n};
+
 	protected _attributes: Attribute[];
+	get attributes(): Attribute[] { return this._attributes };
+	set attributes(atts: Attribute[]) { this._attributes = atts };
+
 	// private relations: string[];
 	// private key: string;
 	
@@ -12,11 +18,6 @@ export class Element{
 		this._name = name;
 		this._attributes = [];
 	}
-
-	get name(): string { return this._name; }
-	set name(n: string) { this._name = n};
-
-	get attributes(): Attribute[] { return this._attributes };
 
 	addAtribute(att: Attribute): void{
 		let names = this._attributes.map((v) => v.name);
