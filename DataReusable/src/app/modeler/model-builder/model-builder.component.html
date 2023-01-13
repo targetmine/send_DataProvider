@@ -1,51 +1,56 @@
 <form>
+
 	<mat-form-field appearance="outline">
 		<mat-label>Select action:</mat-label>
-		<mat-select 
+		<mat-select
+			
 			[formControl]="actionType"
 			required
 			>
-			<mat-option value="add-element">Add new Element</mat-option>
-			<mat-option value="add-relation" [disabled]="_modelLength == 0">Add new Relation</mat-option>
-			<!-- <mat-option value="add-attribute"
-				[disabled]="_modelLength == 0"
-				>
-				Add element's attribute
-			</mat-option> -->
+			<mat-option *ngIf="model.length === 0"
+				value="Load Model">
+				Load Model
+			</mat-option>
+			<mat-option *ngIf="model.length > 0"
+				(click)="onSaveModel($event)"
+				value="Save Model">
+				Save Model
+			</mat-option>
+			<mat-option 
+				value="Add Element"
+				>Add Element
+			</mat-option>
+			<mat-option 
+				value="Add Relation" 
+				[disabled]="model.length == 0"
+				>Add Relation
+			</mat-option>
 		</mat-select>
 	</mat-form-field>
 
-	<mat-form-field 
-		*ngIf="actionType.value == 'add-element'"
-		appearance="outline"
-		id="elementName"
-		>
-		<mat-label>Element name:</mat-label>
+	<div *ngIf="actionType.value == 'add-element'">
+		<mat-form-field appearance="outline">
+			<mat-label>Element name:</mat-label>
 		<input matInput
 			required
 			type="text"
-			class="form-control"
 			[formControl]="elementName"
 			placeholder="Ex. GeneID"
 		>
-		<mat-hint>Use only (non)capital letters.</mat-hint>
-	</mat-form-field>
-		
-	<button 
-		*ngIf="actionType.value == 'add-element'"
-		mat-raised-button
-		type="submit"
-		(click)="onClickAddElement($event)"
-		[disabled]="!elementName.valid"
-		id="elementSubmit"
-		>
-		Submit
-	</button>
+		<mat-hint>Start with letter. Use only alpha-numeric characters.</mat-hint>
+		</mat-form-field>
 
-	<mat-form-field
-		*ngIf="actionType.value == 'add-relation'"
-		appearance="outline"
+		<button mat-raised-button
+			type="submit"
+			(click)="onAddElement($event)"
+			[disabled]="!elementName.valid"
 		>
+		Add
+		</button>
+	</div>
+	
+	<!-- <div *ngIf="actionType.value == 'add-relation'">
+		<mat-form-field	appearance="outline">
 		<mat-label>Select source element:</mat-label>
 		<mat-select
 			id="sourceElement"
@@ -53,7 +58,7 @@
 			required
 			>
 			<mat-option 
-				*ngFor="let e of elements"
+				*ngFor="let e of model"
 				[value]="e">
 				{{e}}
 			</mat-option>
@@ -71,7 +76,7 @@
 			required
 			>
 			<mat-option 
-				*ngFor="let e of elements"
+				*ngFor="let e of model"
 				[value]="e">
 				{{e}}
 			</mat-option>
@@ -86,8 +91,9 @@
 		[disabled]="!(sourceElement.valid && targetElement.valid)"
 		id="relationSubmit"
 		>
-		Submit
-	</button>	
+		Add
+	</button>	 
+</div> -->
 
 </form>
 

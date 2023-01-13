@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ModelerModule } from './modeler/modeler.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
@@ -19,8 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     BrowserModule,
     AppRoutingModule,
 		ModelerModule,
-    BrowserAnimationsModule,
-		MatTabsModule,
+    MatTabsModule,
   ]
 })
 export class AppModule { }
