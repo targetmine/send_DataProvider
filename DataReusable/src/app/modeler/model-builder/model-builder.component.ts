@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
@@ -16,22 +16,10 @@ export class ModelBuilderComponent implements OnInit {
 	get model() { return this._model; }
 	set model(eles: Element[]) { this._model = eles; }
 	
-	// control to select the addition of an element or relation to the model
-	// const actions = [
-	// 	{ value: 'load-model', text: 'Load model', disabled: false },
-	// 	{ value: 'save-model', text: 'Save model', disabled: true },
-	// </mat-option>
-	// <mat-option 
-	// 	value="add-element"
-	// 	>Add new Element
-	// </mat-option>
-	// <mat-option 
-	// 	value="add-relation" 
-	// 	[disabled]="model.length == 0"
-	// 	>Add new Relationvalue: text: disabled: true
-	// 	}
-	// ];
 	actionType: FormControl = new FormControl('', Validators.required);
+
+	@ViewChild('modelFileInput')
+	modelFileInput!: ElementRef;
 
 	// control to add new Element to the model
 	elementName: FormControl = new FormControl('',
@@ -55,26 +43,27 @@ export class ModelBuilderComponent implements OnInit {
 		});
   }
 
-	onActionChange(event:any){
-		console.log(`AT ${this.actionType}`);
-		switch(this.actionType.value){
-			case 'save-model':
-				console.log('savemodel');
-				this.onSaveModel(event);
+	onLoadModel(event:any){
+		event.preventDefault();
+		// display the loading file dialog
+		this.modelFileInput.nativeElement.click();
+	}
+
+	onFileSelected(event: any){
+		if (typeof (FileReader) !== 'undefined') {
+		 	const reader = new FileReader();
+			reader.onload = (e: any) => {
+				let text = JSON.parse(e.target.result);
+				this.modelServ.dataModel.next(text);
+			};
+			reader.readAsText(this.modelFileInput.nativeElement.files[0]);
 		}
 	}
 
-	onAddElement(event: any) {
-		event.preventDefault(); // don't refresh the page
-		if( this.elementName.valid )
-			this.modelServ.addElement(new Element(this.elementName.value));
-		else
-			this.snackBar.open('The name for the new element is invalid', 'Close');
-	}
-
 	onSaveModel(event:any){
+		event.preventDefault();
 		/* convert model to text */
-		let modelText = JSON.stringify(this._model);//.toString();
+		let modelText = JSON.stringify(this._model);
 		const a = document.createElement('a');
 		let objectUrl;
 	
@@ -86,9 +75,11 @@ export class ModelBuilderComponent implements OnInit {
 		URL.revokeObjectURL(objectUrl);	
 	}
 
-	selectedFile: any = null;
-	onFileSelected(event: any):void {
-		this.selectedFile = event.target.files[0];
-		
+	onAddElement(event: any) {
+		event.preventDefault(); // don't refresh the page
+		if( this.elementName.valid )
+			this.modelServ.addElement(new Element(this.elementName.value));
+		else
+			this.snackBar.open('The name for the new element is invalid', 'Close');
 	}
 }

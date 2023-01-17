@@ -14,17 +14,15 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 class mockShareModelService extends ShareModelService{
-	protected override _dataModel$ =
-		new BehaviorSubject<Element[]>([]);
+	protected override _dataModel$ = new BehaviorSubject<Element[]>([]);
 }
 
-fdescribe('ModelDisplayComponent: unit test', () => {
+describe('ModelDisplayComponent: unit test', () => {
 	let component: ModelDisplayComponent;
 	let fixture: ComponentFixture<ModelDisplayComponent>;
-	let service: mockShareModelService; //ShareModelService;
+	let service: mockShareModelService;
 	let loader: HarnessLoader;
 
-	// 		{ name: 'value', type: 'number', unique: false } as Attribute
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [ ModelerModule ],

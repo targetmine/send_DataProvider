@@ -3,11 +3,11 @@
 	<mat-form-field appearance="outline">
 		<mat-label>Select action:</mat-label>
 		<mat-select
-			
 			[formControl]="actionType"
 			required
 			>
 			<mat-option *ngIf="model.length === 0"
+				(click)="onLoadModel($event)"
 				value="Load Model">
 				Load Model
 			</mat-option>
@@ -28,7 +28,15 @@
 		</mat-select>
 	</mat-form-field>
 
-	<div *ngIf="actionType.value == 'add-element'">
+	<div hidden>
+		<input 
+			(change)="onFileSelected($event)"
+			#modelFileInput
+			type="file"
+			>
+	</div>
+
+	<div *ngIf="actionType.value == 'Add Element'">
 		<mat-form-field appearance="outline">
 			<mat-label>Element name:</mat-label>
 		<input matInput

@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
-import { Attribute } from 'src/app/shared/models/attribute';
 
 @Component({
   selector: 'app-model-display',
@@ -13,7 +12,7 @@ import { Attribute } from 'src/app/shared/models/attribute';
 export class ModelDisplayComponent implements OnInit{
 	// the current model 
 	protected _model: Element[] = [];
-	set model(eles: Element[]) { this._model = eles; };
+	set model(eles: Element[]) { this._model = eles; }
 	
 	// elements required for table display
 	@ViewChild(MatTable, {static: true}) modelTable!: MatTable<Element[]>;
