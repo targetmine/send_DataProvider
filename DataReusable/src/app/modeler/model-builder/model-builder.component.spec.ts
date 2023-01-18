@@ -15,7 +15,7 @@ class mockShareModelService extends ShareModelService{
 	protected override _dataModel$: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
 }
 
-fdescribe('ModelBuilderComponent: unit test', () => {
+describe('ModelBuilderComponent: unit test', () => {
   let component: ModelBuilderComponent;
   let fixture: ComponentFixture<ModelBuilderComponent>;
 	let service: mockShareModelService;

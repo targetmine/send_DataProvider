@@ -45,8 +45,7 @@ export class ModelBuilderComponent implements OnInit {
 
 	onLoadModel(event:any){
 		event.preventDefault();
-		// display the loading file dialog
-		this.modelFileInput.nativeElement.click();
+		this.modelFileInput.nativeElement.click(); // loading file dialog
 	}
 
 	onFileSelected(event: any){
@@ -64,12 +63,9 @@ export class ModelBuilderComponent implements OnInit {
 		event.preventDefault();
 		/* convert model to text */
 		let modelText = JSON.stringify(this._model);
+		let objectUrl = URL.createObjectURL(new Blob([modelText], {type: "text/text"}));
 		const a = document.createElement('a');
-		let objectUrl;
-	
-		objectUrl = URL.createObjectURL(new Blob([modelText], {type: "text/text"}));
 		a.download = `model.txt`;
-		
 		a.href = objectUrl;
 		a.click();
 		URL.revokeObjectURL(objectUrl);	

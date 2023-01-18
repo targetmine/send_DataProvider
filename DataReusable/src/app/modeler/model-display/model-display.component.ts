@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
 
 @Component({
   selector: 'app-model-display',
@@ -23,7 +25,7 @@ export class ModelDisplayComponent implements OnInit{
 	
 	constructor(
 		protected readonly _modelServ: ShareModelService,
-		// public dialog: MatDialog
+		public dialog: MatDialog
 	) { }
 
 	get modelServ(): ShareModelService { return this._modelServ; }
@@ -33,38 +35,16 @@ export class ModelDisplayComponent implements OnInit{
 			this._model = data;
 			this._modelTableSource = new MatTableDataSource<Element>(data);
 		});
-		
-		/* use this only for testing */
-		// this._model = [
-		// 	{
-		// 		_name: 'gene',
-		// 		_attributes: [
-		// 			{ name: 'id', type: 'string', unique: true } as Attribute,
-		// 			{ name: 'other', type: 'number', unique: false } as Attribute
-		// 		]
-		// 	} as unknown as Element,
-		// 	{
-		// 		_name: 'ab40',
-		// 		_attributes: [
-		// 			{name: 'value', type: 'number', unique: false } as Attribute
-		// 		]
-		// 	} as unknown as Element,
-		// ];
-
 		this._modelTableSource = new MatTableDataSource<Element>(this._model);
 	}
 
-
-
-	/**
-	 * @param name the name of the element being edited 
-	 */
 	onRenameElement(name: string){
-	// 	const dialogRef = this.dialog.open(ElementRenameDialog, <MatDialogConfig<any>>{	name: name, restoreFocus: false });
-	// 	dialogRef.afterClosed().subscribe(result => {
-	// 		if( result !== undefined )
-	// 			this._modelServ.renameElement(name, result);
-	// 	});
+		const dialogRef = this.dialog.open(ElementRenameDialogComponent, <MatDialogConfig<any>>{	name: name, restoreFocus: false });
+		dialogRef.afterClosed().subscribe(result => {
+			if( result !== undefined ){
+				this._modelServ.renameElement(name, result);
+			}		
+		});
 	}
 
 	onAddAttribute(name: string){
@@ -108,28 +88,4 @@ export class ModelDisplayComponent implements OnInit{
 	}
 
 }
-
-// @Component({
-// 	selector: 'element-rename-dialog',
-// 	templateUrl: 'element-rename-dialog.html',
-// })
-// export class ElementRenameDialog {
-// 	newName: FormControl = new FormControl('', 
-// 		Validators.compose([
-// 			Validators.required,
-// 			Validators.pattern('[a-zA-Z]*')
-// 		])
-// 	);
-
-// 	constructor(
-// 		public dialogRef: MatDialogRef<ElementRenameDialog>,
-// 		@Inject(MAT_DIALOG_DATA) public name: string
-// 	){
-// 		this.newName.setValue(name);
-// 	}
-
-// 	onCancel(): void{
-// 		this.dialogRef.close(undefined);
-// 	}
-// }
 
