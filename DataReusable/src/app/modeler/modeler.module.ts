@@ -10,11 +10,13 @@ import { MatSelectModule } from "@angular/material/select";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddAttributeDialogComponent } from './add-attribute-dialog/add-attribute-dialog.component';
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		ModelBuilderComponent,
 		ModelDisplayComponent,
 	  ElementRenameDialogComponent,
+   	AddAttributeDialogComponent,
 	],
 	imports: [
 		CommonModule,
@@ -32,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		MatSelectModule,
 		MatInputModule,
 		MatButtonModule,
+		MatCheckboxModule,
 		MatSnackBarModule,
 		MatIconModule,
 		MatDialogModule,

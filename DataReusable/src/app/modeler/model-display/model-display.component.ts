@@ -4,6 +4,7 @@ import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
+import { AddAttributeDialogComponent } from '../add-attribute-dialog/add-attribute-dialog.component';
 
 @Component({
   selector: 'app-model-display',
@@ -39,7 +40,10 @@ export class ModelDisplayComponent implements OnInit{
 	}
 
 	onRenameElement(name: string){
-		const dialogRef = this.dialog.open(ElementRenameDialogComponent, <MatDialogConfig<any>>{	name: name, restoreFocus: false });
+		const dialogRef = this.dialog.open(
+			ElementRenameDialogComponent, 
+			<MatDialogConfig<any>>{	name: name, restoreFocus: false }
+		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
 				this._modelServ.renameElement(name, result);
@@ -48,7 +52,15 @@ export class ModelDisplayComponent implements OnInit{
 	}
 
 	onAddAttribute(name: string){
-
+		const dialogRef = this.dialog.open(
+			AddAttributeDialogComponent, 
+			<MatDialogConfig<any>>{ element: name, restoreFocus: false }
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if( result !== undefined ){
+				this._modelServ.addAttribute(name, result);
+			}
+		})
 	}
 
 	onRemoveElement(name: string){
@@ -62,26 +74,6 @@ export class ModelDisplayComponent implements OnInit{
 	onRemoveAttribute(name: any){
 	// 	let s = name as string;
 	}
-
-
-		// /**
-	//  * handle the addition of a single attribute to the selected element
-	//  * @param event 
-	//  */
-	// onClickAddAttribute(event:any){
-	// 	event.preventDefault();
-	// 	if( this.attributeForm.valid ){
-	// 		const parent = this.attributeForm.get('selectedElement')?.value;
-	// 		const name = this.attributeForm.get('newAttribute')?.value;
-	// 		const type = this.attributeForm.get('attributeType')?.value;
-	// 		const unique = this.attributeForm.get('isUnique')?.value;
-	// 		const newAttr = new Attribute(<AttributeType>type!, unique!);
-	// 		this.modelServ.addAttribute(parent!, name!, newAttr);
-	// 	}
-	// 	else
-	// 		this.snackBar.open('Some elements of the attribute definition are invalid', 'Close');
-
-	// }
 
 	onToggleUnique(name: string){
 
