@@ -33,6 +33,8 @@ export class ModelDisplayComponent implements OnInit{
 	ngOnInit(): void {
 		this.modelServ.dataModel.subscribe(data => {
 			this._model = data;
+			if(this._model.length > 0) this.modelTable.renderRows();
+			
 		});
 	}
 
