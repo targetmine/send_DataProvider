@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element'; 
+import { Attribute } from 'src/app/shared/models/attribute';
 
 @Component({
   selector: 'app-model-builder',
@@ -53,7 +54,13 @@ export class ModelBuilderComponent implements OnInit {
 		 	const reader = new FileReader();
 			reader.onload = (e: any) => {
 				let text = JSON.parse(e.target.result);
-				this.modelServ.dataModel.next(text);
+				let eles: Element[] = [];
+				text.forEach((value: any) => {
+					let t:Element = new Element(value._name);
+					value._attributes.forEach((a:any) => t.addAtribute(a as unknown as Attribute));
+					eles.push(t);
+				});
+				this.modelServ.dataModel.next(eles);
 			};
 			reader.readAsText(this.modelFileInput.nativeElement.files[0]);
 		}

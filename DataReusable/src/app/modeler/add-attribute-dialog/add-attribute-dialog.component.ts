@@ -32,28 +32,11 @@ export class AddAttributeDialogComponent {
 
 	onSubmit(): void{
 		this.dialogRef.close(
-			{ name: this.attName, type: this.attType, unique: this.unique } as unknown as Attribute
+			{ 
+				name: this.attName.value, 
+				type: this.attType.value, 
+				unique: this.unique.value
+			} as unknown as Attribute
 		);
 	}
-  
-	
-			// /**
-	//  * handle the addition of a single attribute to the selected element
-	//  * @param event 
-	//  */
-	// onClickAddAttribute(event:any){
-	// 	event.preventDefault();
-	// 	if( this.attributeForm.valid ){
-	// 		const parent = this.attributeForm.get('selectedElement')?.value;
-	// 		const name = this.attributeForm.get('newAttribute')?.value;
-	// 		const type = this.attributeForm.get('attributeType')?.value;
-	// 		const unique = this.attributeForm.get('isUnique')?.value;
-	// 		const newAttr = new Attribute(<AttributeType>type!, unique!);
-	// 		this.modelServ.addAttribute(parent!, name!, newAttr);
-	// 	}
-	// 	else
-	// 		this.snackBar.open('Some elements of the attribute definition are invalid', 'Close');
-
-	// }
-
 }

@@ -19,8 +19,7 @@ export class ModelDisplayComponent implements OnInit{
 	
 	// elements required for table display
 	@ViewChild(MatTable, {static: true}) modelTable!: MatTable<Element[]>;
-	protected _modelTableSource = new MatTableDataSource<Element>();
-	set modelTableSource(source: MatTableDataSource<Element>) { this._modelTableSource = source; }
+	
 	protected _displayedColumns: string[] = ['elements','attributes','relations'];
 	get displayedColumns(): string[]{ return this._displayedColumns; }
 	
@@ -31,12 +30,10 @@ export class ModelDisplayComponent implements OnInit{
 
 	get modelServ(): ShareModelService { return this._modelServ; }
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 		this.modelServ.dataModel.subscribe(data => {
 			this._model = data;
-			this._modelTableSource = new MatTableDataSource<Element>(data);
 		});
-		this._modelTableSource = new MatTableDataSource<Element>(this._model);
 	}
 
 	onRenameElement(name: string){

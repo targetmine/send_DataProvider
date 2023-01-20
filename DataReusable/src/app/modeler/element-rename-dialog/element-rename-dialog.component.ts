@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-element-rename-dialog',
@@ -8,7 +8,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./element-rename-dialog.component.css']
 })
 export class ElementRenameDialogComponent {
-	newName: FormControl = new FormControl('', 
+	protected newName: FormControl = new FormControl('', 
 		Validators.compose([
 			Validators.required,
 			Validators.pattern('^[a-zA-Z][a-zA-Z0-9]*')
