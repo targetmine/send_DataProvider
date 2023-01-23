@@ -41,7 +41,10 @@ export class ModelDisplayComponent implements OnInit{
 	onRenameElement(name: string){
 		const dialogRef = this.dialog.open(
 			ElementRenameDialogComponent, 
-			<MatDialogConfig<any>>{	name: name, restoreFocus: false }
+			<MatDialogConfig<any>>{	
+				data: ['Element', name],
+				restoreFocus: false 
+			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
@@ -74,8 +77,19 @@ export class ModelDisplayComponent implements OnInit{
 		});
 	}
 
-	onRenameAttribute(name: any){
-
+	onRenameAttribute(elementName: string, attributeName: string){
+		const dialogRef = this.dialog.open(
+			ElementRenameDialogComponent,
+			<MatDialogConfig<any>>{
+				data: ['Attribute', attributeName],
+				restoreFocus: false
+			}
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if(result !== undefined){
+				this._modelServ.renameAttribute(elementName, attributeName, result);
+			}
+		})
 	}
 
 	onRemoveAttribute(name: any){
@@ -87,10 +101,10 @@ export class ModelDisplayComponent implements OnInit{
 	}
 
 	onAddRelation(srcEle:string ){
-		const dialogRef = this.dialog.open(
-			AddRelationDialogComponent, 
-			<MatDialogConfig<any>>{ src_element: srcEle, restoreFocus: false }
-		);
+		// const dialogRef = this.dialog.open(
+		// 	AddRelationDialogComponent, 
+		// 	<MatDialogConfig<any>>{ src_element: srcEle, restoreFocus: false }
+		// );
 		// dialogRef.afterClosed().subscribe(result => {
 		// 	if( result !== undefined ){
 		// 		this._modelServ.addRelation();

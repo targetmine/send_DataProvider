@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./element-rename-dialog.component.css']
 })
 export class ElementRenameDialogComponent {
+	protected type: string = 'Element';
 	protected newName: FormControl = new FormControl('', 
 		Validators.compose([
 			Validators.required,
@@ -17,9 +18,10 @@ export class ElementRenameDialogComponent {
 
 	constructor(
 		public dialogRef: MatDialogRef<ElementRenameDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public name: string
+		@Inject(MAT_DIALOG_DATA) public data: string[]
 	){
-		this.newName.setValue(name);
+		this.type = data[0];
+		this.newName.setValue(data[1]);//name);
 	}
 
 	onCancel(): void{

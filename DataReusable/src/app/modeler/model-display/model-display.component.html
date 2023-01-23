@@ -1,5 +1,7 @@
 <h1>Current Model</h1>
-<table mat-table [dataSource]="_model">
+<table mat-table 
+	[dataSource]="_model"
+	multiTemplateDataRows>
 
 	<ng-container matColumnDef="elements">
 		<th mat-header-cell *matHeaderCellDef> Element </th>
@@ -47,7 +49,7 @@
 				<button mat-icon-button
 					class="table-button rename-attribute"
 					matTooltip="Rename"
-					(click)="onRenameAttribute(attr.name)">
+					(click)="onRenameAttribute(element.name, attr.name)">
 					<mat-icon fontIcon="edit"></mat-icon>
 				</button>
 			</div>
