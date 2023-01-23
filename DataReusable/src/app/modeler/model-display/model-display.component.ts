@@ -86,9 +86,8 @@ export class ModelDisplayComponent implements OnInit{
 			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if(result !== undefined){
+			if(result !== undefined)
 				this._modelServ.renameAttribute(elementName, attributeName, result);
-			}
 		})
 	}
 
@@ -96,8 +95,8 @@ export class ModelDisplayComponent implements OnInit{
 	// 	let s = name as string;
 	}
 
-	onToggleUnique(name: string){
-
+	onToggleUnique(elementName: string, attributeName: string){
+		this._modelServ.toggleUnique(elementName, attributeName);
 	}
 
 	onAddRelation(srcEle:string ){

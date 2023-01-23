@@ -11,9 +11,6 @@ export class Element{
 	get attributes(): Attribute[] { return this._attributes };
 	set attributes(atts: Attribute[]) { this._attributes = atts };
 
-	// private relations: string[];
-	// private key: string;
-	
 	constructor(name: string){
 		this._name = name;
 		this._attributes = [];
@@ -39,6 +36,15 @@ export class Element{
 			if(v.name == name){
 				v.type = att.type;
 				v.unique = att.unique;
+			}
+			return v;
+		});
+	}
+
+	toogleAttributeUniqueness(name: string): void{
+		this._attributes = this._attributes.map(v => {
+			if(v.name === name){
+				v.unique = !v.unique;
 			}
 			return v;
 		});

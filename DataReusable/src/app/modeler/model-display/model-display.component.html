@@ -43,7 +43,7 @@
 				class="table-button"
 				[ngClass]="{'unique': !attr.unique}"
 				matTooltip="is Unique"
-				(click)="onToggleUnique(attr.name)">
+				(click)="onToggleUnique(element.name, attr.name)">
 				<mat-icon fontIcon="vpn_key"></mat-icon>
 			</button>
 				<button mat-icon-button

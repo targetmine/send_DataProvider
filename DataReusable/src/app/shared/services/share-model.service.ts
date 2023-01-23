@@ -61,6 +61,15 @@ export class ShareModelService {
 		this._dataModel$.next(updated);
 	}
 
+	public toggleUnique(eleName: string, attName: string): void {
+		let updated = this._dataModel$.value.map(v=>{
+			if( v.name === eleName )
+				v.toogleAttributeUniqueness(attName);
+			return v;
+		});
+		this._dataModel$.next(updated);
+	}
+
 	public removeAttribute(eleName: string, attrName: string): void{
 		let updated = this._dataModel$.value.map(v =>{
 			if( v.name === eleName )
