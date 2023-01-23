@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
 import { AddAttributeDialogComponent } from '../add-attribute-dialog/add-attribute-dialog.component';
+import { AddRelationDialogComponent } from '../add-relation-dialog/add-relation-dialog.component';
 
 @Component({
   selector: 'app-model-display',
@@ -34,7 +35,6 @@ export class ModelDisplayComponent implements OnInit{
 		this.modelServ.dataModel.subscribe(data => {
 			this._model = data;
 			if(this._model.length > 0) this.modelTable.renderRows();
-			
 		});
 	}
 
@@ -63,7 +63,15 @@ export class ModelDisplayComponent implements OnInit{
 	}
 
 	onRemoveElement(name: string){
-	// 	this._modelServ.removeElement(name);
+		const dialogRef = this.dialog.open(
+			RemoveElementDialogComponent,
+			<MatDialogConfig<any>>{restoreFocus: false}
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if( result ){ //true
+				this._modelServ.removeElement(name);
+			}
+		});
 	}
 
 	onRenameAttribute(name: any){
@@ -78,5 +86,45 @@ export class ModelDisplayComponent implements OnInit{
 
 	}
 
+	onAddRelation(srcEle:string ){
+		const dialogRef = this.dialog.open(
+			AddRelationDialogComponent, 
+			<MatDialogConfig<any>>{ src_element: srcEle, restoreFocus: false }
+		);
+		// dialogRef.afterClosed().subscribe(result => {
+		// 	if( result !== undefined ){
+		// 		this._modelServ.addRelation();
+		// 	}
+		// })
+	}
+
 }
 
+
+@Component({
+	selector: 'remove-element-dialog',
+	template: `<h1 mat-dialog-title>Remove Element:</h1>
+	<div mat-dialog-content>
+		<p>Do you really want to remove the element and all of its attributes and 
+			relations?
+		</p>
+		<div mat-dialog-actions>
+			<button mat-button
+				(click)="this.dialogRef.close(false)"
+			>Cancel
+			</button>
+			<button mat-button
+				(click)="this.dialogRef.close(true)"
+			>OK
+			</button>
+		</div>
+	</div>
+	`
+})
+export class RemoveElementDialogComponent{
+	constructor(
+		public dialogRef: MatDialogRef<RemoveElementDialogComponent>
+	){}
+
+
+}

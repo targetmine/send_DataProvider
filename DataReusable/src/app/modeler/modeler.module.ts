@@ -1,8 +1,10 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ModelBuilderComponent } from "./model-builder/model-builder.component";
-import { ModelDisplayComponent } from "./model-display/model-display.component";
+import { ModelDisplayComponent, RemoveElementDialogComponent } from "./model-display/model-display.component";
 import { ElementRenameDialogComponent } from './element-rename-dialog/element-rename-dialog.component';
+import { AddAttributeDialogComponent } from './add-attribute-dialog/add-attribute-dialog.component';
+import { AddRelationDialogComponent } from './add-relation-dialog/add-relation-dialog.component';
 
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTableModule } from "@angular/material/table";
@@ -16,7 +18,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddAttributeDialogComponent } from './add-attribute-dialog/add-attribute-dialog.component';
 
 
 @NgModule({
@@ -25,6 +26,8 @@ import { AddAttributeDialogComponent } from './add-attribute-dialog/add-attribut
 		ModelDisplayComponent,
 	  ElementRenameDialogComponent,
    	AddAttributeDialogComponent,
+    AddRelationDialogComponent,
+		RemoveElementDialogComponent
 	],
 	imports: [
 		CommonModule,
