@@ -11,10 +11,11 @@
 		>
 		<mat-hint>Start with letter. Use only alpha-numeric characters.</mat-hint>
 	</mat-form-field>
-	<div mat-dialog-actions>
-		<button mat-button (click)="onCancel()">Cancel</button>
-		<button mat-button 
-			[disabled]="!newName.valid"
-			[mat-dialog-close]="newName.value">Submit</button>
-	</div>
+
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="onCancel()">Cancel</button>
+	<button mat-button 
+		[disabled]="!newName.valid"
+		[mat-dialog-close]="newName.value">Submit</button>
 </div>

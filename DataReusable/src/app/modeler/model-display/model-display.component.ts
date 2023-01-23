@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
 import { AddAttributeDialogComponent } from '../add-attribute-dialog/add-attribute-dialog.component';
 import { AddRelationDialogComponent } from '../add-relation-dialog/add-relation-dialog.component';
@@ -68,7 +68,9 @@ export class ModelDisplayComponent implements OnInit{
 	onRemoveElement(name: string){
 		const dialogRef = this.dialog.open(
 			RemoveElementDialogComponent,
-			<MatDialogConfig<any>>{restoreFocus: false}
+			<MatDialogConfig<any>>{
+				data: 'Element',
+				restoreFocus: false}
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result ){ //true
@@ -91,14 +93,25 @@ export class ModelDisplayComponent implements OnInit{
 		})
 	}
 
-	onRemoveAttribute(name: any){
-	// 	let s = name as string;
+	onRemoveAttribute(elementName: string, attributeName: string){
+		const dialogRef = this.dialog.open(
+			RemoveElementDialogComponent,
+			<MatDialogConfig<any>>{
+				data: 'Attribute',
+				restoreFocus: false
+			}
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if(result) //true
+				this._modelServ.removeAttribute(elementName, attributeName);
+		})
 	}
 
 	onToggleUnique(elementName: string, attributeName: string){
 		this._modelServ.toggleUnique(elementName, attributeName);
 	}
 
+	/** TODO */
 	onAddRelation(srcEle:string ){
 		// const dialogRef = this.dialog.open(
 		// 	AddRelationDialogComponent, 
@@ -116,12 +129,17 @@ export class ModelDisplayComponent implements OnInit{
 
 @Component({
 	selector: 'remove-element-dialog',
-	template: `<h1 mat-dialog-title>Remove Element:</h1>
+	template: `<h1 mat-dialog-title>Remove {{type}}:</h1>
 	<div mat-dialog-content>
-		<p>Do you really want to remove the element and all of its attributes and 
+		<p *ngIf="type === 'Element'">
+			Do you really want to remove the element and all of its attributes and 
 			relations?
 		</p>
-		<div mat-dialog-actions>
+		<p *ngIf="type === 'Attribute'">
+			Do you really want to remove the attribute and all of its relations?
+		</p>
+	</div>
+	<div mat-dialog-actions>
 			<button mat-button
 				(click)="this.dialogRef.close(false)"
 			>Cancel
@@ -131,13 +149,14 @@ export class ModelDisplayComponent implements OnInit{
 			>OK
 			</button>
 		</div>
-	</div>
 	`
 })
 export class RemoveElementDialogComponent{
+	protected type!: string;
 	constructor(
-		public dialogRef: MatDialogRef<RemoveElementDialogComponent>
-	){}
-
-
+		public dialogRef: MatDialogRef<RemoveElementDialogComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: string
+	){
+		this.type = data;
+	}
 }

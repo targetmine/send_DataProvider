@@ -32,16 +32,17 @@
 		Attribute is unique
 	</mat-checkbox>
 	
-	<div mat-dialog-actions>
-		<button mat-button 
-			(click)="onCancel()"
-			>Cancel
-		</button>
-		<button mat-button 
-			[disabled]="!attName.valid"
-			(click)="onSubmit()"
-			>Submit
-		</button>
-	</div>
+
 	</form>
+</div>
+<div mat-dialog-actions>
+	<button mat-button 
+		(click)="onCancel()"
+		>Cancel
+	</button>
+	<button mat-button 
+		[disabled]="!attName.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
 </div>
