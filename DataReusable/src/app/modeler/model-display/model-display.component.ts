@@ -112,16 +112,29 @@ export class ModelDisplayComponent implements OnInit{
 	}
 
 	/** TODO */
-	onAddRelation(srcEle:string ){
-		// const dialogRef = this.dialog.open(
-		// 	AddRelationDialogComponent, 
-		// 	<MatDialogConfig<any>>{ src_element: srcEle, restoreFocus: false }
-		// );
-		// dialogRef.afterClosed().subscribe(result => {
-		// 	if( result !== undefined ){
-		// 		this._modelServ.addRelation();
-		// 	}
-		// })
+	onAddRelation(srcEle:string, srcAttribute: string ){
+		let data: any = {};
+		data['srcEle'] = srcEle; data['srcAttr'] = srcAttribute;
+		data.targets = [];
+		this._model.forEach(v => {
+			let t = { name: v.name, attributes: [] as string[] };
+			v.attributes.forEach(a => {
+				if (a.unique)
+					t['attributes'].push(a.name);
+			})
+			if (t['attributes'].length > 0)
+				data.targets.push(t);
+		});
+		const dialogRef = this.dialog.open(
+			AddRelationDialogComponent, 
+			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if( result !== undefined ){
+				this._modelServ.addRelation(srcEle, result.element, srcAttribute, result.attribute, result.cardinality);
+				console.log(this._modelServ.relations.value);
+			}
+		})
 	}
 
 }

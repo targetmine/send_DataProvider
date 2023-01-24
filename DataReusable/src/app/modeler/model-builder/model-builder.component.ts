@@ -29,11 +29,8 @@ export class ModelBuilderComponent implements OnInit {
 			Validators.pattern('^[a-zA-Z][a-zA-Z0-9]*')
 		])
 	);
-	// controls to add a new Relation to the model
-	sourceElement: FormControl = new FormControl(null, Validators.required);
-	targetElement: FormControl = new FormControl(null, Validators.required);
 	
-  constructor(
+	constructor(
 		private readonly modelServ: ShareModelService,
 		private snackBar: MatSnackBar
 	) { }
