@@ -8,79 +8,96 @@ import { Cardinality, Relation } from '../models/relation';
   providedIn: 'root'
 })
 export class ShareModelService {
-	protected _dataModel$: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
-	get dataModel(): BehaviorSubject<Element[]> { return this._dataModel$; }
+	protected _elements$: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
+	get elements(): BehaviorSubject<Element[]> { return this._elements$; }
 
 	protected _relations$: BehaviorSubject<Relation[]> = new BehaviorSubject<Relation[]>([]);
 	get relations(): BehaviorSubject<Relation[]> { return this._relations$; }
 
 	public addElement(ele: Element): void {
-		let updated = this._dataModel$.value;
+		let updated = this._elements$.value;
 		let eles = updated.map(v => v.name);
 		if (eles.indexOf(ele.name) !== -1 )
 			return;
 		
 		updated.push(ele);
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}
 
 	public renameElement(name: string, newName: string): void {
-		let updated = this._dataModel$.value.map(v => {
+		let updated = this._elements$.value.map(v => {
 			if( v.name === name )
 				v.name = newName;
 			return v;
 		});
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}
 	
 	public removeElement(name: string): void {
-		let updated = this._dataModel$.value.filter(v => v.name !== name);
-		this._dataModel$.next(updated);
+		let updated = this._elements$.value.filter(v => v.name !== name);
+		this._elements$.next(updated);
 	}
 
-	public addAttribute(eleName: string, attr: Attribute):void {
-		let updated = this._dataModel$.value.map(v => {
-			if( v.name === eleName )
-				v.addAtribute(attr);
+	public addAttribute(elementName: string, attribute: Attribute):void {
+		let updated = this._elements$.value.map(v => {
+			if( v.name === elementName ){
+				let atts = v.attributes.map(a => { return a.name; });
+				if (atts.indexOf(attribute.name) !== -1 ) // dont overwrited attributes
+					v.attributes.push(attribute);
+			}
 			return v;
 		});
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}
 
-	public renameAttribute(eleName: string, attName: string, newName: string): void {
-		let updated = this._dataModel$.value.map(v =>{
-			if( v.name === eleName)
-				v.renameAttribute(attName, newName);
+	public renameAttribute(elementName: string, attributeName: string, newName: string): void {
+		let updated = this._elements$.value.map(v =>{
+			if( v.name === elementName)
+				v.attributes = v.attributes.map(a => {
+					if(a.name === attributeName)
+						a.name = newName;
+					return a;
+				});
 			return v;
 		});
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}
 
-	public updateAttribute(eleName: string, attName: string, attr: Attribute): void {
-		let updated = this._dataModel$.value.map(v => {
-			if( v.name === eleName )
-				v.updateAttribute(attName, attr);
+	public updateAttribute(elementName: string, attributeName: string, attribute: Attribute): void {
+		let updated = this._elements$.value.map(v => {
+			if( v.name === elementName )
+				v.attributes = v.attributes.map(a => {
+					if(a.name == attributeName){
+						a.type = attribute.type;
+						a.unique = attribute.unique;
+					}
+					return a;
+				});
 			return v;
 		});
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}
 
-	public toggleUnique(eleName: string, attName: string): void {
-		let updated = this._dataModel$.value.map(v=>{
-			if( v.name === eleName )
-				v.toogleAttributeUniqueness(attName);
+	public toggleUnique(elementName: string, attributeName: string): void {
+		let updated = this._elements$.value.map(v=>{
+			if( v.name === elementName )
+				v.attributes = v.attributes.map(a => {
+					if(a.name === attributeName)
+						a.unique = !a.unique;
+					return a;
+				});
 			return v;
 		});
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}
 
-	public removeAttribute(eleName: string, attrName: string): void{
-		let updated = this._dataModel$.value.map(v =>{
-			if( v.name === eleName )
-				v.removeAttribute(attrName);
+	public removeAttribute(elementName: string, attributeName: string): void{
+		let updated = this._elements$.value.map(v =>{
+			if( v.name === elementName )
+				v.attributes = v.attributes.filter(a => a.name !== attributeName);
 			return v;
 		});
-		this._dataModel$.next(updated);
+		this._elements$.next(updated);
 	}	
 
 	public addRelation(srcEle: string, trgEle: string, srcAttr: string, trgAttr: string, card: Cardinality){

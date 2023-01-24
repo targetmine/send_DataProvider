@@ -14,7 +14,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 class mockShareModelService extends ShareModelService{
-	protected override _dataModel$ = new BehaviorSubject<Element[]>([]);
+	protected override _elements$ = new BehaviorSubject<Element[]>([]);
 }
 
 describe('ModelDisplayComponent: unit test', () => {
@@ -32,9 +32,8 @@ describe('ModelDisplayComponent: unit test', () => {
 		fixture = TestBed.createComponent(ModelDisplayComponent);
 		service = TestBed.inject(mockShareModelService);
 		component = fixture.componentInstance;
-		service.dataModel.subscribe(data => {
+		service.elements.subscribe(data => {
 			component.model = data;
-			component.modelTableSource = new MatTableDataSource<Element>(data);
 		});
 		fixture.detectChanges();
 		loader = TestbedHarnessEnvironment.loader(fixture);
@@ -58,8 +57,11 @@ describe('ModelDisplayComponent: unit test', () => {
 	});
 
 	it('should display elements from the model in the `Elements` column', async() => {
-		let test: Element[] = [new Element('gene'), new Element('protein')];
-		service.dataModel.next(test);
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
+		service.elements.next(test);
 		let table = await loader.getHarness(MatTableHarness);
 		let cols = await table.getCellTextByColumnName();
 		test.forEach((t: Element) => {
@@ -68,8 +70,11 @@ describe('ModelDisplayComponent: unit test', () => {
 	});
 
 	it('should call onRenameElement when the option is clicked', async()=>{
-		let test: Element[] = [new Element('gene'), new Element('protein')];
-		service.dataModel.next(test);
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
+		service.elements.next(test);
 		let renameSpy = spyOn(component, 'onRenameElement');
 		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.rename-element'}));
 		for (const [i, b] of buttons.entries()){
@@ -79,8 +84,11 @@ describe('ModelDisplayComponent: unit test', () => {
 	});
 
 	it('should call onAddAttribute when the option is clicked', async() => {
-		let test: Element[] = [new Element('gene'), new Element('protein')];
-		service.dataModel.next(test);
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
+		service.elements.next(test);
 		let addSpy = spyOn(component, 'onAddAttribute');
 		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.add-attribute'}));
 		for (const [i, b] of buttons.entries()){
@@ -90,8 +98,11 @@ describe('ModelDisplayComponent: unit test', () => {
 	});
 
 	it('should call onRemoveElement when the option is clicked', async() => {
-		let test: Element[] = [new Element('gene'), new Element('protein')];
-		service.dataModel.next(test);
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
+		service.elements.next(test);
 		let delSpy = spyOn(component, 'onRemoveElement');
 		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.remove-element'}));
 		for (const [i, b] of buttons.entries()){
@@ -101,7 +112,10 @@ describe('ModelDisplayComponent: unit test', () => {
 	});
 
 	it('should display the list of attributes of each element', async() => {
-		let test: Element[] = [ new Element('gene'), new Element('protein')	];
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
 		test[0].attributes = [
 			{ name: 'id', type: 'string', unique: true } as Attribute,
 			{ name: 'other', type: 'number', unique: false } as Attribute
@@ -109,7 +123,7 @@ describe('ModelDisplayComponent: unit test', () => {
 		test[1].attributes = [
 			{ name: 'acession', type: 'number', unique: true } as Attribute,
 		];
-		service.dataModel.next(test);
+		service.elements.next(test);
 		let table = await loader.getHarness(MatTableHarness);
 		let cols = await table.getCellTextByColumnName(); 
 		// all attribute names get fused for the text of a single cell
@@ -121,34 +135,40 @@ describe('ModelDisplayComponent: unit test', () => {
 	});
 
 	it('should call onRenameAttribute when the button is clicked', async() => {
-		let test: Element[] = [ new Element('gene'), new Element('protein')	];
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
 		test[0].attributes = [
 			{ name: 'id', type: 'string', unique: true } as Attribute,
 			{ name: 'other', type: 'number', unique: false } as Attribute
 		];
-		service.dataModel.next(test);
+		service.elements.next(test);
 		let renameSpy = spyOn(component, 'onRenameAttribute');
 		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.rename-attribute'}));
 		expect(buttons.length).toBe(test[0].attributes.length);
 		for (const [i, b] of buttons.entries()){
 			await b.click();
-			expect(renameSpy).toHaveBeenCalledWith(test[0].attributes[i].name);	
+			expect(renameSpy).toHaveBeenCalledWith(test[0].name, test[0].attributes[i].name);	
 		};
 	});
 
 	it('should call onRemoveAttribute when the button is clicked', async() => {
-		let test: Element[] = [ new Element('gene'), new Element('protein')	];
+		let test: Element[] = [
+			{ name: 'gene', attributes: [] },
+			{ name: 'protein', attributes: [] }
+		];
 		test[0].attributes = [
 			{ name: 'id', type: 'string', unique: true } as Attribute,
 			{ name: 'other', type: 'number', unique: false } as Attribute
 		];
-		service.dataModel.next(test);
+		service.elements.next(test);
 		let delSpy = spyOn(component, 'onRemoveAttribute');
 		let buttons = await loader.getAllHarnesses(MatButtonHarness.with({selector: '.remove-attribute'}));
 		expect(buttons.length).toBe(test[0].attributes.length);
 		for (const [i, b] of buttons.entries()){
 		 	await b.click();
-			expect(delSpy).toHaveBeenCalledWith(test[0].attributes[i].name);	
+			expect(delSpy).toHaveBeenCalledWith(test[0].name, test[0].attributes[i].name);	
 		};
 	});
 

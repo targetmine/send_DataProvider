@@ -36,7 +36,7 @@ export class ModelBuilderComponent implements OnInit {
 	) { }
 
   ngOnInit(): void {
-		this.modelServ.dataModel.subscribe(data => {
+		this.modelServ.elements.subscribe(data => {
 			this._model = data;
 		});
   }
@@ -53,11 +53,11 @@ export class ModelBuilderComponent implements OnInit {
 				let text = JSON.parse(e.target.result);
 				let eles: Element[] = [];
 				text.forEach((value: any) => {
-					let t:Element = new Element(value._name);
-					value._attributes.forEach((a:any) => t.addAtribute(a as unknown as Attribute));
+					let t: Element = { name: value.name, attributes: [] } as Element;
+					value.attributes.forEach((a:any) => t.attributes.push(a as unknown as Attribute));
 					eles.push(t);
 				});
-				this.modelServ.dataModel.next(eles);
+				this.modelServ.elements.next(eles);
 			};
 			reader.readAsText(this.modelFileInput.nativeElement.files[0]);
 		}
@@ -78,7 +78,7 @@ export class ModelBuilderComponent implements OnInit {
 	onAddElement(event: any) {
 		event.preventDefault(); // don't refresh the page
 		if( this.elementName.valid )
-			this.modelServ.addElement(new Element(this.elementName.value));
+			this.modelServ.addElement({ name: this.elementName.value, attributes: [] });
 		else
 			this.snackBar.open('The name for the new element is invalid', 'Close');
 	}

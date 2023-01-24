@@ -32,7 +32,7 @@ export class ModelDisplayComponent implements OnInit{
 	get modelServ(): ShareModelService { return this._modelServ; }
 
 	ngOnInit(): void {
-		this.modelServ.dataModel.subscribe(data => {
+		this.modelServ.elements.subscribe(data => {
 			this._model = data;
 			if(this._model.length > 0) this.modelTable.renderRows();
 		});

@@ -12,7 +12,7 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 
 @Injectable()
 class mockShareModelService extends ShareModelService{
-	protected override _dataModel$: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
+	protected override _elements$: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
 }
 
 describe('ModelBuilderComponent: unit test', () => {
@@ -31,7 +31,7 @@ describe('ModelBuilderComponent: unit test', () => {
     fixture = TestBed.createComponent(ModelBuilderComponent);
 		service = TestBed.inject(mockShareModelService);
     component = fixture.componentInstance;
-		service.dataModel.subscribe(data => {
+		service.elements.subscribe(data => {
 			component.model = data;
 		});
     fixture.detectChanges();
