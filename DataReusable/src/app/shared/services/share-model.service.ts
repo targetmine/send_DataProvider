@@ -42,8 +42,9 @@ export class ShareModelService {
 		let updated = this._elements$.value.map(v => {
 			if( v.name === elementName ){
 				let atts = v.attributes.map(a => { return a.name; });
-				if (atts.indexOf(attribute.name) !== -1 ) // dont overwrited attributes
+				if (atts.indexOf(attribute.name) === -1 ){// dont overwrited attributes
 					v.attributes.push(attribute);
+				} 
 			}
 			return v;
 		});
@@ -100,28 +101,27 @@ export class ShareModelService {
 		this._elements$.next(updated);
 	}	
 
-	public addRelation(srcEle: string, trgEle: string, srcAttr: string, trgAttr: string, card: Cardinality){
-		if (trgEle < srcEle){
-			let ae = srcEle; srcEle = trgEle; trgEle = ae; 
-			let aa = srcAttr; srcAttr = trgAttr; trgAttr = aa;
-		}
-		
-		let rname = srcEle+srcAttr+trgEle+trgAttr;
-		let updated = this._relations$.value;
-		let rels = updated.map(v => v.name);
-		if (rels.indexOf(rname) !== -1)
-			return;
-		updated.push({
-			name:rname,
-			srcElement: srcEle, srcAttribute: srcAttr,
-			trgElement: trgEle, trgAttribute: trgAttr,
-			cardinality: card
-		} as Relation);
+	public addRelation(relation: Relation){
+		let names = this._relations$.value.map(r => r.name);
+		if( names.indexOf(relation.name)!==-1 ) // dont override relations
+			return; 
+		let updated = this._relations$.getValue();
+		updated.push(relation);
 		this._relations$.next(updated);
 	}
 
-	public removeRelation(){
+	public removeRelationElement(elementName: string){
+		let updated = this._relations$.getValue().filter(r => 
+			r.srcElement !== elementName && r.trgElement !== elementName 
+		);
+		this._relations$.next(updated);
+	}
 
+	public removeRelationAttribute(attributeName: string){
+		let updated = this._relations$.getValue().filter(r => 
+			r.srcAttribute !== attributeName && r.trgAttribute !== attributeName
+		);
+		this._relations$.next(updated);
 	}
 
 }
