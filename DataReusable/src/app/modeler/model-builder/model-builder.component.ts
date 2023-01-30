@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
+import { Relation } from 'src/app/shared/models/relation';
 
 @Component({
   selector: 'app-model-builder',
@@ -13,9 +14,11 @@ import { Attribute } from 'src/app/shared/models/attribute';
 })
 export class ModelBuilderComponent implements OnInit {
 	// the current model used for the database
-	protected _model: Element[] = [];
-	get model() { return this._model; }
-	set model(eles: Element[]) { this._model = eles; }
+	protected _elements: Element[] = [];
+	get model() { return this._elements; }
+	set model(eles: Element[]) { this._elements = eles; }
+
+	protected _relations!: Relation[];
 	
 	actionType: FormControl = new FormControl('', Validators.required);
 
@@ -36,9 +39,8 @@ export class ModelBuilderComponent implements OnInit {
 	) { }
 
   ngOnInit(): void {
-		this.modelServ.elements.subscribe(data => {
-			this._model = data;
-		});
+		this.modelServ.elements.subscribe(data => this._elements = data );
+		this.modelServ.relations.subscribe(data => this._relations = data );
   }
 
 	onLoadModel(event:any){
@@ -51,13 +53,28 @@ export class ModelBuilderComponent implements OnInit {
 		 	const reader = new FileReader();
 			reader.onload = (e: any) => {
 				let text = JSON.parse(e.target.result);
+				// parse elements
 				let eles: Element[] = [];
-				text.forEach((value: any) => {
+				text[0].forEach((value: any) => {
 					let t: Element = { name: value.name, attributes: [] } as Element;
 					value.attributes.forEach((a:any) => t.attributes.push(a as unknown as Attribute));
 					eles.push(t);
 				});
 				this.modelServ.elements.next(eles);
+				// parse relations
+				let rels: Relation[] = [];
+				text[1].forEach((value: any) => {
+					let r: Relation = { 
+						name: value.name, 
+						srcElement: value.srcElement,
+						srcAttribute: value.srcAttribute,
+						trgElement: value.trgElement,
+						trgAttribute: value.trgAttribute,
+						cardinality: value.cardinality
+					} as Relation;
+					rels.push(r);
+				});
+				this.modelServ.relations.next(rels);
 			};
 			reader.readAsText(this.modelFileInput.nativeElement.files[0]);
 		}
@@ -66,8 +83,9 @@ export class ModelBuilderComponent implements OnInit {
 	onSaveModel(event:any){
 		event.preventDefault();
 		/* convert model to text */
-		let modelText = JSON.stringify(this._model);
-		let objectUrl = URL.createObjectURL(new Blob([modelText], {type: "text/text"}));
+		let elementsText = JSON.stringify(this._elements);
+		let relationTexs = JSON.stringify(this._relations);
+		let objectUrl = URL.createObjectURL(new Blob([`[${elementsText}],[${relationTexs}`], {type: "text/text"}));
 		const a = document.createElement('a');
 		a.download = `model.txt`;
 		a.href = objectUrl;
