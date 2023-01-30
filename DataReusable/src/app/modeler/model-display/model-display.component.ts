@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
 import { AddAttributeDialogComponent } from '../add-attribute-dialog/add-attribute-dialog.component';
 import { AddRelationDialogComponent } from '../add-relation-dialog/add-relation-dialog.component';
+import { Relation } from 'src/app/shared/models/relation';
 
 @Component({
   selector: 'app-model-display',
@@ -15,15 +16,19 @@ import { AddRelationDialogComponent } from '../add-relation-dialog/add-relation-
 })
 export class ModelDisplayComponent implements OnInit{
 	// the current model 
-	protected _model: Element[] = [];
-	set model(eles: Element[]) { this._model = eles; }
+	protected _elements: Element[] = [];
+	set elements(eles: Element[]) { this._elements = eles; };
+	protected _relations: Relation[] = [];
+	set relations(rels: Relation[]) { this._relations = rels; };
 	
-	// elements required for table display
-	@ViewChild(MatTable, {static: true}) modelTable!: MatTable<Element[]>;
+	// elements required for Element display
+	@ViewChild('elementsTable') elementTable!: MatTable<Element[]>;
+	protected _elementTableColumns: string[] = ['elements','attributes'];
+	get displayedColumns(): string[]{ return this._elementTableColumns; }
 	
-	protected _displayedColumns: string[] = ['elements','attributes','relations'];
-	get displayedColumns(): string[]{ return this._displayedColumns; }
-	
+	@ViewChild('relationsTable') relationTable!: MatTable<Relation[]>;
+	protected _relationTableColumns: string[] = ['source', 'target', 'cardinality'];
+
 	constructor(
 		protected readonly _modelServ: ShareModelService,
 		public dialog: MatDialog
@@ -33,9 +38,13 @@ export class ModelDisplayComponent implements OnInit{
 
 	ngOnInit(): void {
 		this.modelServ.elements.subscribe(data => {
-			this._model = data;
-			if(this._model.length > 0) this.modelTable.renderRows();
+			this._elements = data;
+			if(this._elements.length > 0) this.elementTable.renderRows();
 		});
+		this.modelServ.relations.subscribe(data => {
+			this._relations = data;
+			if(this._relations.length > 0) this.relationTable.renderRows();
+		})
 	}
 
 	onRenameElement(name: string){
@@ -75,6 +84,7 @@ export class ModelDisplayComponent implements OnInit{
 		dialogRef.afterClosed().subscribe(result => {
 			if( result ){ //true
 				this._modelServ.removeElement(name);
+				this._modelServ.removeRelationElement(name);
 			}
 		});
 	}
@@ -102,21 +112,22 @@ export class ModelDisplayComponent implements OnInit{
 			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if(result) //true
+			if(result){ //true
 				this._modelServ.removeAttribute(elementName, attributeName);
-		})
+				this._modelServ.removeRelationAttribute(attributeName);
+			}
+		});
 	}
 
 	onToggleUnique(elementName: string, attributeName: string){
 		this._modelServ.toggleUnique(elementName, attributeName);
 	}
 
-	/** TODO */
 	onAddRelation(srcEle:string, srcAttribute: string ){
 		let data: any = {};
 		data['srcEle'] = srcEle; data['srcAttr'] = srcAttribute;
 		data.targets = [];
-		this._model.forEach(v => {
+		this._elements.forEach(v => {
 			let t = { name: v.name, attributes: [] as string[] };
 			v.attributes.forEach(a => {
 				if (a.unique)
@@ -130,11 +141,31 @@ export class ModelDisplayComponent implements OnInit{
 			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
 		);
 		dialogRef.afterClosed().subscribe(result => {
+			console.log(result);
 			if( result !== undefined ){
-				this._modelServ.addRelation(srcEle, result.element, srcAttribute, result.attribute, result.cardinality);
-				console.log(this._modelServ.relations.value);
+				this._modelServ.addRelation({
+					name: srcEle+result.element, 
+					srcElement: srcEle, 
+					srcAttribute: srcAttribute, 
+					trgElement: result.element,
+					trgAttribute: result.attribute, 
+					cardinality: result.cardinality}
+					);
 			}
 		})
+	}
+
+	onRemoveRelation(name: string){
+		const dialogRef = this.dialog.open(
+			RemoveElementDialogComponent,
+			<MatDialogConfig<any>>{
+				data: 'Relation',
+				restoreFocus: false
+			}
+		);
+		dialogRef.afterClosed().subscribe(result =>{
+			if(result) this._modelServ.removeRelation(name);
+		});
 	}
 
 }
@@ -150,6 +181,9 @@ export class ModelDisplayComponent implements OnInit{
 		</p>
 		<p *ngIf="type === 'Attribute'">
 			Do you really want to remove the attribute and all of its relations?
+		</p>
+		<p *ngIf="type === 'Relation'">
+			Really remove the relation?
 		</p>
 	</div>
 	<div mat-dialog-actions>

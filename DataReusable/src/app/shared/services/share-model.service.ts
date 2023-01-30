@@ -110,6 +110,13 @@ export class ShareModelService {
 		this._relations$.next(updated);
 	}
 
+	public removeRelation(name: string){
+		let updated = this._relations$.getValue().filter(r => 
+			r.name !== name
+		);
+		this._relations$.next(updated);
+	}
+
 	public removeRelationElement(elementName: string){
 		let updated = this._relations$.getValue().filter(r => 
 			r.srcElement !== elementName && r.trgElement !== elementName 

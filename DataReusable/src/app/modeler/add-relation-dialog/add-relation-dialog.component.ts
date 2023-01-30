@@ -2,17 +2,18 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { CARDINALITY } from 'src/app/shared/models/relation';
 @Component({
   selector: 'app-add-relation-dialog',
   templateUrl: './add-relation-dialog.component.html',
   styleUrls: ['./add-relation-dialog.component.css']
 })
 export class AddRelationDialogComponent{
-	protected input: any;
+	protected CARDINALITY = CARDINALITY;
 	protected eles: string[];
 	protected atts: string[] = [];
 
-	protected trgElement: FormControl = new FormControl('', Validators.required);
+	protected trgElement: FormControl<string|null> = new FormControl<string|null>(null, Validators.required);
 	protected trgAttribute: FormControl = new FormControl('', Validators.required);
 	protected cardinality: FormControl = new FormControl('', Validators.required);
 
@@ -20,15 +21,12 @@ export class AddRelationDialogComponent{
 		public dialogRef: MatDialogRef<AddRelationDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) { 
-		this.input = data.targets;
-		console.log(this.input);
-		this.eles = this.input.map((v:any) => v.name);
-		console.log(this.eles);
-		
+		this.eles = this.data.targets.map((v:any) => v.name);
+
 	}
 
 	refreshAtts(ele: string){
-		for(const v of this.input){
+		for(const v of this.data.targets){
 			if(v['name'] === ele){
 				this.atts = v['attributes'];
 				return;
@@ -37,7 +35,7 @@ export class AddRelationDialogComponent{
 	}
 
 	onCancel(): void{
-
+		this.dialogRef.close(undefined);
 	}
 
 	onSubmit(): void{

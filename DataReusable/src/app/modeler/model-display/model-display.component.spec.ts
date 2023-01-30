@@ -33,7 +33,7 @@ describe('ModelDisplayComponent: unit test', () => {
 		service = TestBed.inject(mockShareModelService);
 		component = fixture.componentInstance;
 		service.elements.subscribe(data => {
-			component.model = data;
+			component.elements = data;
 		});
 		fixture.detectChanges();
 		loader = TestbedHarnessEnvironment.loader(fixture);

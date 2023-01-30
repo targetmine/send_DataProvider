@@ -5,6 +5,7 @@ form {
 	max-width: 100%;
 }
 
-mat-form-field {
+.mat-form-field{
+	display: flex;
 	padding-bottom: 10px;
 }
