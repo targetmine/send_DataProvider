@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 		// initialize navigation tabs
 		this.tabs = [
 			{ label: 'Model Builder', link: './builder', index: 0 },
-			//{ label: 'File Parser', link: './parser', index: 1 },
+			{ label: 'Data Loader', link: './loader', index: 1 },
 		];
 	}
 
