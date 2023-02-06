@@ -37,14 +37,9 @@ export class DockerService {
 	// 	return p;
 	// }
 
-	public startPostgresContainer() {
+	public createPostgresContainer(eles: Element[], rels: Relation[]) {
 		console.log('start: startPostgresContainer');
 		const url = `${environment.serverURL}/container/`;
-		return this.http.get(url, {observe: 'response'});
-	}
-
-	public createTables(eles: Element[], rels: Relation[]){
-		const url =`${environment.serverURL}/tables/`;
 		const body = `[${JSON.stringify(eles)}, ${JSON.stringify(rels)}]`;
 		return this.http.post(url, body, {
 				headers: {

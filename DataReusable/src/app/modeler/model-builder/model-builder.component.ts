@@ -100,16 +100,9 @@ export class ModelBuilderComponent implements OnInit {
 	onFinishModel(event:any){
 		event.preventDefault();
 		/* run container with postgres database */
-		this.dockerService.startPostgresContainer().pipe(
-			tap((data) => {
-				console.log('step1',data);
-				// return this.dockerService.createTables(this._elements, this._relations)
-			// }),
-			// tap((data) => {
-			// 	console.log('step2', data);
-			})
-		).subscribe((data) => {
-			console.log('subscribe', data);
+		this.dockerService.createPostgresContainer(this._elements, this._relations)
+		.subscribe((data) => {
+			console.log('step1',data);
 		});
 
 
