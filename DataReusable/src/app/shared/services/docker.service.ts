@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Element } from '../models/element';
 import { Relation } from '../models/relation';
@@ -33,7 +32,7 @@ export class DockerService {
 	}
 
 	public createTables(eles: Element[], rels: Relation[]): Promise<string>{
-		const url =`${environment.serverURL}/tables`;
+		const url =`${environment.serverURL}/tables/`;
 		const body = `[${JSON.stringify(eles)}, ${JSON.stringify(rels)}]`;
 		return new Promise((resolve, reject) => {
 			const tables = this.http.post(url, body, {
