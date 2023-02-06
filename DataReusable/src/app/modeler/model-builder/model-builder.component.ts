@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } fro
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
+import { DockerService } from 'src/app/shared/services/docker.service';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
 import { Relation } from 'src/app/shared/models/relation';
@@ -35,6 +36,7 @@ export class ModelBuilderComponent implements OnInit {
 	
 	constructor(
 		private readonly modelServ: ShareModelService,
+		private readonly dockerService: DockerService,
 		private snackBar: MatSnackBar
 	) { }
 
@@ -95,10 +97,20 @@ export class ModelBuilderComponent implements OnInit {
 
 	onFinishModel(event:any){
 		event.preventDefault();
-		/* TO-DO 
-		create database
-		move to file loader
-		*/
+		/* run container with postgres database */
+		this.dockerService.startPostgresContainer()
+		.then(data =>{
+			console.log(data);
+			this.dockerService.createTables(this._elements, this._relations);
+		})
+		.then(data =>{
+			console.log(data);
+		})
+		.catch(error => {
+			console.log(error);
+		});
+
+		// this.dockerService.createTables(this._elements, this._relations);
 	}
 
 	onAddElement(event: any) {

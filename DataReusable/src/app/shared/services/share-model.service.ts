@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Element } from '../models/element';
 import { Attribute } from '../models/attribute';
-import { Cardinality, Relation } from '../models/relation';
+import { Relation } from '../models/relation';
 
 @Injectable({
   providedIn: 'root'
