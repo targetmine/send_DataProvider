@@ -7,6 +7,8 @@ import { Element } from 'src/app/shared/models/element';
 import { Attribute } from 'src/app/shared/models/attribute';
 import { Relation } from 'src/app/shared/models/relation';
 
+import { catchError, flatMap, switchMap, tap } from 'rxjs';
+
 @Component({
   selector: 'app-model-builder',
   templateUrl: './model-builder.component.html',
@@ -98,17 +100,31 @@ export class ModelBuilderComponent implements OnInit {
 	onFinishModel(event:any){
 		event.preventDefault();
 		/* run container with postgres database */
-		this.dockerService.startPostgresContainer()
-		.then(data =>{
-			console.log(data);
-			this.dockerService.createTables(this._elements, this._relations);
-		})
-		.then(data =>{
-			console.log(data);
-		})
-		.catch(error => {
-			console.log(error);
+		this.dockerService.startPostgresContainer().pipe(
+			tap((data) => {
+				console.log('step1',data);
+				// return this.dockerService.createTables(this._elements, this._relations)
+			// }),
+			// tap((data) => {
+			// 	console.log('step2', data);
+			})
+		).subscribe((data) => {
+			console.log('subscribe', data);
 		});
+
+
+		// .then(data =>{
+		// 	console.log('Start progres container finished');
+		// 	console.log(data);
+		// 	return this.dockerService.createTables(this._elements, this._relations);
+		// })
+		// // .then(() =>{
+		// // 	this.dockerService.commitDataContainer();
+		// // })
+		// .then((data) => console.log(data))
+		// .catch(error => {
+		// 	console.log(error);
+		// });
 
 		// this.dockerService.createTables(this._elements, this._relations);
 	}
