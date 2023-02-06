@@ -93,6 +93,14 @@ export class ModelBuilderComponent implements OnInit {
 		URL.revokeObjectURL(objectUrl);	
 	}
 
+	onFinishModel(event:any){
+		event.preventDefault();
+		/* TO-DO 
+		create database
+		move to file loader
+		*/
+	}
+
 	onAddElement(event: any) {
 		event.preventDefault(); // don't refresh the page
 		if( this.elementName.valid )

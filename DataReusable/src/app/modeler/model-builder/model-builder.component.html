@@ -14,7 +14,12 @@
 			<mat-option *ngIf="model.length > 0"
 				(click)="onSaveModel($event)"
 				value="Save Model">
-				Save Model
+				Save Model to File
+			</mat-option>
+			<mat-option *ngIf="model.length > 0"
+				(click)="onFinishModel($event)"
+				value="Finish Model">
+				Finish Model and Upload Data
 			</mat-option>
 			<mat-option 
 				value="Add Element"
