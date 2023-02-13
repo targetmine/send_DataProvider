@@ -35,7 +35,7 @@
 				formControlName="type"
 			>
 				<mat-option 
-					*ngFor="let t of TYPES"
+					*ngFor="let t of attributeTypes"
 					[value]="t"
 					>
 					{{t}}
@@ -46,7 +46,44 @@
 			formControlName="unique">
 			Attribute is unique
 		</mat-checkbox>
-	</form> 
+	</form>
+	<!-- new Relation form -->
+	<form *ngIf="itemType === 'Relation'"
+		[formGroup]="relationForm"
+		>
+		<mat-form-field	appearance="outline">
+			<mat-label>Select target element:</mat-label>
+			<mat-select	formControlName="trgElement">
+				<mat-option 
+					*ngFor="let e of eles"
+					[value]="e"
+					(click)="refreshAtts(e)">
+					{{e}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field	appearance="outline">
+			<mat-label>Select target attribute:</mat-label>
+			<mat-select formControlName="trgAttribute">
+				<mat-option 
+					*ngFor="let e of atts"
+					[value]="e">
+					{{e}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label> Select cardinality</mat-label>
+			<mat-select formControlName="cardinality">
+				<mat-option
+					*ngFor="let c of cardinalities"
+					[value]="c"
+					>
+					{{c}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</form>
 </div>
 
 <div mat-dialog-actions>
@@ -63,6 +100,12 @@
 	<button *ngIf="itemType === 'Attribute'"
 		mat-button
 		[disabled]="!attributeForm.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+	<button *ngIf="itemType === 'Relation'"
+		mat-button
+		[disabled]="!relationForm.valid"
 		(click)="onSubmit()"
 		>Submit
 	</button>

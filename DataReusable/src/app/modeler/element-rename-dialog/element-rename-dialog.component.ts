@@ -21,7 +21,7 @@ export class ElementRenameDialogComponent {
 		@Inject(MAT_DIALOG_DATA) public data: string[]
 	){
 		this.type = data[0];
-		this.newName.setValue(data[1]);//name);
+		this.newName.setValue(data[1]);
 	}
 
 	onCancel(): void{

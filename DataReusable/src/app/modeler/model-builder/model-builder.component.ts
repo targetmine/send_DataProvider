@@ -125,13 +125,12 @@ export class ModelBuilderComponent implements OnInit {
 		const dialogRef = this.dialog.open(
 			AddItemDialogComponent,
 			<MatDialogConfig<any>>{
-				data: ['Element'],
+				data: { type: 'Element' },
 				restoreFocus: false
 			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === undefined) return;
-			console.log(result);
 			this.modelServ.addElement(result);	
 		});
 	}

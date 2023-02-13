@@ -5,7 +5,6 @@ import { Element } from 'src/app/shared/models/element';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ElementRenameDialogComponent } from 'src/app/modeler/element-rename-dialog/element-rename-dialog.component';
 import { AddItemDialogComponent } from 'src/app/modeler/add-item-dialog/add-item-dialog.component';
-import { AddRelationDialogComponent } from 'src/app/modeler/add-relation-dialog/add-relation-dialog.component';
 import { Relation } from 'src/app/shared/models/relation';
 
 @Component({
@@ -68,7 +67,10 @@ export class ModelDisplayComponent implements OnInit{
 	onAddAttribute(name: string){
 		const dialogRef = this.dialog.open(
 			AddItemDialogComponent, 
-			<MatDialogConfig<any>>{ element: name, restoreFocus: false }
+			<MatDialogConfig<any>>{ 
+				data: { type: 'Attribute'},
+				restoreFocus: false 
+			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
@@ -116,6 +118,8 @@ export class ModelDisplayComponent implements OnInit{
 
 	onAddRelation(srcEle:string, srcAttribute: string ){
 		let data: any = {};
+		// data['type'] = 'Relation';
+		data.type = 'Relation';
 		data['srcEle'] = srcEle; 
 		data['srcAttr'] = srcAttribute;
 		data.targets = [];
@@ -129,7 +133,7 @@ export class ModelDisplayComponent implements OnInit{
 				data.targets.push(t);
 		});
 		const dialogRef = this.dialog.open(
-			AddRelationDialogComponent, 
+			AddItemDialogComponent, 
 			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
 		);
 		dialogRef.afterClosed().subscribe(result => {
