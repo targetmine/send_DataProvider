@@ -1,3 +1,11 @@
+<div hidden>
+	<input 
+		(change)="onFileSelected($event)"
+		#modelFileInput
+		type="file"
+		>
+</div>
+
 <mat-toolbar>
 	<button mat-button [mat-menu-trigger-for]="modelMenu">Model</button>
 	<mat-menu #modelMenu="matMenu">
@@ -8,6 +16,20 @@
 			>
 			Load Model
 		</button>
+		<button mat-menu-item
+			type="submit"
+			(click)="onExportModel($event)"
+			[disabled]="model.length === 0"
+			>
+			Export Model to File
+		</button>
+		<button mat-menu-item
+			type="submit"
+			(click)="onFinishModel($event)"
+			[disabled]="model.length === 0"
+			>
+			Finish Model and Upload Data
+		</button>
 	</mat-menu>
 
 	<button mat-button [mat-menu-trigger-for]="elementMenu">Element</button>
@@ -15,49 +37,13 @@
 		<button mat-menu-item
 			type="submit"
 			(click)="onAddElement($event)"
-			[disabled]="true"
 			>
 			Add Element
 		</button>
 	</mat-menu>
 </mat-toolbar>
-<form>
 
-	<mat-form-field appearance="outline">
-		<mat-label>Select action:</mat-label>
-		<mat-select
-			[formControl]="actionType"
-			required
-			>
-			<mat-option *ngIf="model.length === 0"
-				(click)="onLoadModel($event)"
-				value="Load Model">
-				Load Model
-			</mat-option>
-			<mat-option *ngIf="model.length > 0"
-				(click)="onSaveModel($event)"
-				value="Save Model">
-				Save Model to File
-			</mat-option>
-			<mat-option *ngIf="model.length > 0"
-				(click)="onFinishModel($event)"
-				value="Finish Model">
-				Finish Model and Upload Data
-			</mat-option>
-			<mat-option 
-				value="Add Element"
-				>Add Element
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
-
-	<div hidden>
-		<input 
-			(change)="onFileSelected($event)"
-			#modelFileInput
-			type="file"
-			>
-	</div>
+<!-- 
 
 	<div *ngIf="actionType.value == 'Add Element'">
 		<mat-form-field appearance="outline">
@@ -78,8 +64,8 @@
 		>
 		Add
 		</button>
-	</div>
-</form>
+	</div> -->
+
 
 <app-model-display
 	[editing]="true">
