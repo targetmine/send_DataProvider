@@ -1,0 +1,25 @@
+table{
+	width: 100%;
+}
+
+.table-text-span {
+	width: 60%;
+	height: 40px;
+	float: left;
+	line-height: 40px;
+}
+
+.button-span{
+	width: 40%;
+	float: right;
+	display: flex;
+	justify-content: center;
+}
+
+.table-button{
+	width: auto;
+}
+
+.unique{
+	color: darkgrey;
+}

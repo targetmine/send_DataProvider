@@ -1,0 +1,151 @@
+<h1>Model</h1>
+<h2>Elements:</h2>
+<table mat-table 
+	[dataSource]="_elements"
+	#elementsTable
+	>
+	<ng-container matColumnDef="elements">
+		<th mat-header-cell *matHeaderCellDef> Element </th>
+		<td mat-cell *matCellDef="let element">
+			<span
+				class="table-text-span" 
+				>{{element.name}}
+			</span>
+			<span *ngIf="editing" 
+				class="button-span">
+				<button mat-icon-button 
+					class="table-button"
+					matTooltip="Rename"
+					(click)="onRenameElement(element.name)">
+					<mat-icon fontIcon="edit"></mat-icon>
+				</button>
+				<button mat-icon-button
+					class="table-button"
+					matTooltip="Add Attribute"
+					(click)="onAddAttribute(element.name)">
+					<mat-icon fontIcon="add_circle_outline"></mat-icon>
+				</button>	
+				<button mat-icon-button 
+					class="table-button"
+					matTooltip="Remove"
+					(click)="onRemoveElement(element.name)">
+					<mat-icon fontIcon="clear"></mat-icon>
+				</button>		
+			</span>
+			<span *ngIf="!editing"
+				class="button-span"
+				>
+				<button mat-icon-button
+					class="table-button"
+					matTooltip="Upload data"
+					(click)="onUploadElement(element.name)"
+					>
+					<mat-icon fontIcon="upload"></mat-icon>
+				</button>
+			</span>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="attributes">
+		<th mat-header-cell *matHeaderCellDef> Attributes </th>
+		<td mat-cell *matCellDef="let element">
+			<div *ngFor="let attr of element.attributes">				
+				<span
+					class="table-text-span"
+					>{{attr.name}}
+				</span>
+				<span *ngIf="editing"
+					class="button-span"
+					>
+					<button mat-icon-button
+						class="table-button"
+						matTooltip="Rename"
+						(click)="onRenameAttribute(element.name, attr.name)">
+						<mat-icon fontIcon="edit"></mat-icon>
+					</button>
+					<button mat-icon-button
+						class="table-button"
+						[ngClass]="{'unique': !attr.unique}"
+						matTooltip="is Unique"
+						(click)="onToggleUnique(element.name, attr.name)">
+						<mat-icon fontIcon="vpn_key"></mat-icon>
+					</button>
+					<button mat-icon-button
+						class="table-button"
+						[ngClass]="{'unique': !attr.unique}"
+						matTooltip="Add relation"
+						(click)="onAddRelation(element.name, attr.name)"
+						[disabled]="!attr.unique">
+						<mat-icon fontIcon="add_circle_outline"></mat-icon>
+					</button>
+					<button mat-icon-button
+						class="table-button"
+						matTooltip="Remove"
+						(click)="onRemoveAttribute(element.name, attr.name)">
+						<mat-icon fontIcon="clear"></mat-icon>
+					</button>
+				</span>
+				<span *ngIf="!editing"
+					class="button-span"
+					>
+					<button mat-icon-button
+						class="table-button"
+						matTooltip="Upload data"
+						(click)="onUploadAttribute(element.name, attr.name)">
+						<mat-icon fontIcon="upload"></mat-icon>
+					</button>
+				</span>
+			</div>
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="_elementTableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: _elementTableColumns;"></tr>
+</table>
+
+<h2>Relations:</h2>
+<table mat-table
+	[dataSource]="_relations"
+	#relationsTable
+	>
+	<ng-container matColumnDef="source">
+		<th mat-header-cell *matHeaderCellDef> Source </th>
+		<td mat-cell *matCellDef="let relation">
+			<span>{{relation.srcElement}}/{{relation.srcAttribute}}</span>
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="target">
+		<th mat-header-cell *matHeaderCellDef> Target </th>
+		<td mat-cell *matCellDef="let relation">
+			<span>{{relation.trgElement}}/{{relation.trgAttribute}}</span>
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="cardinality">
+		<th mat-header-cell *matHeaderCellDef> Cardinality </th>
+		<td mat-cell *matCellDef="let relation">
+			<span>{{relation.cardinality}}</span>
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="actions">
+		<th mat-header-cell *matHeaderCellDef></th>
+		<td mat-cell *matCellDef="let relation">
+			<button *ngIf="editing" mat-icon-button
+				class="table-button"
+				matTooltip="Remove"
+				(click)="onRemoveRelation(relation.name)">
+				<mat-icon fontIcon="clear"></mat-icon>
+			</button>
+
+			<button *ngIf="!editing" mat-icon-button
+				class="table-button"
+				matTooltip="Remove"
+				(click)="onUploadRelation(relation.name)">
+				<mat-icon fontIcon="upload"></mat-icon>
+			</button>
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="_relationTableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: _relationTableColumns;"></tr>
+</table>
+

@@ -5,6 +5,7 @@ import { DataLoaderComponent } from './data-loader/data-loader.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 	],
   imports: [
     CommonModule,
+		SharedModule,
 		MatToolbarModule,
 		MatMenuModule,
 		MatButtonModule,

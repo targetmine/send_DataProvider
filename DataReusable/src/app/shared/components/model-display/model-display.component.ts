@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
-import { AddAttributeDialogComponent } from '../add-attribute-dialog/add-attribute-dialog.component';
-import { AddRelationDialogComponent } from '../add-relation-dialog/add-relation-dialog.component';
+import { ElementRenameDialogComponent } from 'src/app/modeler/element-rename-dialog/element-rename-dialog.component';
+import { AddAttributeDialogComponent } from 'src/app/modeler/add-attribute-dialog/add-attribute-dialog.component';
+import { AddRelationDialogComponent } from 'src/app/modeler/add-relation-dialog/add-relation-dialog.component';
 import { Relation } from 'src/app/shared/models/relation';
 
 @Component({
@@ -15,6 +15,9 @@ import { Relation } from 'src/app/shared/models/relation';
 	changeDetection: ChangeDetectionStrategy.Default
 })
 export class ModelDisplayComponent implements OnInit{
+	@Input()
+	editing: boolean = false;
+	
 	// the current model 
 	protected _elements: Element[] = [];
 	set elements(eles: Element[]) { this._elements = eles; };
@@ -27,7 +30,7 @@ export class ModelDisplayComponent implements OnInit{
 	get displayedColumns(): string[]{ return this._elementTableColumns; }
 	
 	@ViewChild('relationsTable') relationTable!: MatTable<Relation[]>;
-	protected _relationTableColumns: string[] = ['source', 'target', 'cardinality'];
+	protected _relationTableColumns: string[] = ['source', 'target', 'cardinality', 'actions'];
 
 	constructor(
 		protected readonly _modelServ: ShareModelService,
@@ -82,11 +85,15 @@ export class ModelDisplayComponent implements OnInit{
 				restoreFocus: false}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if( result ){ //true
+			if( result === true ){
 				this._modelServ.removeElement(name);
 				this._modelServ.removeRelationElement(name);
 			}
 		});
+	}
+
+	onUploadElement(elementName: string){
+		/* TO-DO */
 	}
 
 	onRenameAttribute(elementName: string, attributeName: string){
@@ -102,6 +109,42 @@ export class ModelDisplayComponent implements OnInit{
 				this._modelServ.renameAttribute(elementName, attributeName, result);
 		})
 	}
+	
+	onToggleUnique(elementName: string, attributeName: string){
+		this._modelServ.toggleUnique(elementName, attributeName);
+	}
+
+	onAddRelation(srcEle:string, srcAttribute: string ){
+		let data: any = {};
+		data['srcEle'] = srcEle; 
+		data['srcAttr'] = srcAttribute;
+		data.targets = [];
+		this._elements.forEach(v => {
+			let t = { name: v.name, attributes: [] as string[] };
+			v.attributes.forEach(a => {
+				if (a.unique)
+					t['attributes'].push(a.name);
+			});
+			if (t['attributes'].length > 0)
+				data.targets.push(t);
+		});
+		const dialogRef = this.dialog.open(
+			AddRelationDialogComponent, 
+			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if( result !== undefined ){
+				this._modelServ.addRelation({
+					name: srcEle+result.element, 
+					srcElement: srcEle, 
+					srcAttribute: srcAttribute, 
+					trgElement: result.element,
+					trgAttribute: result.attribute, 
+					cardinality: result.cardinality
+				});
+			}
+		});
+	}
 
 	onRemoveAttribute(elementName: string, attributeName: string){
 		const dialogRef = this.dialog.open(
@@ -112,47 +155,15 @@ export class ModelDisplayComponent implements OnInit{
 			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if(result){ //true
+			if( result === true ){
 				this._modelServ.removeAttribute(elementName, attributeName);
 				this._modelServ.removeRelationAttribute(attributeName);
 			}
 		});
 	}
 
-	onToggleUnique(elementName: string, attributeName: string){
-		this._modelServ.toggleUnique(elementName, attributeName);
-	}
-
-	onAddRelation(srcEle:string, srcAttribute: string ){
-		let data: any = {};
-		data['srcEle'] = srcEle; data['srcAttr'] = srcAttribute;
-		data.targets = [];
-		this._elements.forEach(v => {
-			let t = { name: v.name, attributes: [] as string[] };
-			v.attributes.forEach(a => {
-				if (a.unique)
-					t['attributes'].push(a.name);
-			})
-			if (t['attributes'].length > 0)
-				data.targets.push(t);
-		});
-		const dialogRef = this.dialog.open(
-			AddRelationDialogComponent, 
-			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
-		);
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(result);
-			if( result !== undefined ){
-				this._modelServ.addRelation({
-					name: srcEle+result.element, 
-					srcElement: srcEle, 
-					srcAttribute: srcAttribute, 
-					trgElement: result.element,
-					trgAttribute: result.attribute, 
-					cardinality: result.cardinality}
-					);
-			}
-		})
+	onUploadAttribute(elementName: string, attributeName: string){
+		/* TO-DO */
 	}
 
 	onRemoveRelation(name: string){
@@ -166,6 +177,10 @@ export class ModelDisplayComponent implements OnInit{
 		dialogRef.afterClosed().subscribe(result =>{
 			if(result) this._modelServ.removeRelation(name);
 		});
+	}
+
+	onUploadRelation(name:string){
+		/* TO-DO */
 	}
 
 }

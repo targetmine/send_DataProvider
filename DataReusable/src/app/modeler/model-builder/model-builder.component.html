@@ -1,3 +1,26 @@
+<mat-toolbar>
+	<button mat-button [mat-menu-trigger-for]="modelMenu">Model</button>
+	<mat-menu #modelMenu="matMenu">
+		<button mat-menu-item
+			type="submit"
+			(click)="onLoadModel($event)"
+			[disabled]="model.length !== 0"
+			>
+			Load Model
+		</button>
+	</mat-menu>
+
+	<button mat-button [mat-menu-trigger-for]="elementMenu">Element</button>
+	<mat-menu #elementMenu="matMenu">
+		<button mat-menu-item
+			type="submit"
+			(click)="onAddElement($event)"
+			[disabled]="true"
+			>
+			Add Element
+		</button>
+	</mat-menu>
+</mat-toolbar>
 <form>
 
 	<mat-form-field appearance="outline">
@@ -58,5 +81,6 @@
 	</div>
 </form>
 
-
-
+<app-model-display
+	[editing]="true">
+</app-model-display> 
