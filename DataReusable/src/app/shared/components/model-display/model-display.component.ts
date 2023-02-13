@@ -4,7 +4,7 @@ import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ElementRenameDialogComponent } from 'src/app/modeler/element-rename-dialog/element-rename-dialog.component';
-import { AddAttributeDialogComponent } from 'src/app/modeler/add-attribute-dialog/add-attribute-dialog.component';
+import { AddItemDialogComponent } from 'src/app/modeler/add-item-dialog/add-item-dialog.component';
 import { AddRelationDialogComponent } from 'src/app/modeler/add-relation-dialog/add-relation-dialog.component';
 import { Relation } from 'src/app/shared/models/relation';
 
@@ -67,7 +67,7 @@ export class ModelDisplayComponent implements OnInit{
 
 	onAddAttribute(name: string){
 		const dialogRef = this.dialog.open(
-			AddAttributeDialogComponent, 
+			AddItemDialogComponent, 
 			<MatDialogConfig<any>>{ element: name, restoreFocus: false }
 		);
 		dialogRef.afterClosed().subscribe(result => {

@@ -1,0 +1,69 @@
+<h1 mat-dialog-title>Add new {{itemType}} to the model:</h1>
+<div mat-dialog-content>
+	<!-- new Element form -->
+	<form *ngIf="itemType === 'Element'"
+		[formGroup]="elementForm"
+		>
+		<mat-form-field appearance="outline">
+			<mat-label>New Element's name:</mat-label>
+			<input matInput
+				required
+				type="text"
+				placeholder="Ex. Gene"
+				formControlName="name"
+			>
+			<mat-hint>Letter first. Only alpha-numeric characters.</mat-hint>
+		</mat-form-field>
+	</form>
+	<!-- new Attribute form -->
+	<form *ngIf="itemType === 'Attribute'"
+		[formGroup]="attributeForm"
+		>
+		<mat-form-field appearance="outline">
+			<mat-label>New Attribute's name:</mat-label>
+			<input matInput
+				required
+				type="text"
+				placeholder="Ex. Id"
+				formControlName="name"
+			>
+			<mat-hint>Letter first. Only alpha-numeric characters.</mat-hint>
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Attribute's type:</mat-label>
+			<mat-select
+				formControlName="type"
+			>
+				<mat-option 
+					*ngFor="let t of TYPES"
+					[value]="t"
+					>
+					{{t}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-checkbox 
+			formControlName="unique">
+			Attribute is unique
+		</mat-checkbox>
+	</form> 
+</div>
+
+<div mat-dialog-actions>
+	<button mat-button 
+		(click)="onCancel()"
+		>Cancel
+	</button>
+	<button *ngIf="itemType === 'Element'"
+		mat-button
+		[disabled]="!elementForm.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+	<button *ngIf="itemType === 'Attribute'"
+		mat-button
+		[disabled]="!attributeForm.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+</div>

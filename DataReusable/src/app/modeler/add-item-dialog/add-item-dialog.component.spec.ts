@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddAttributeDialogComponent } from './add-attribute-dialog.component';
+import { AddItemDialogComponent } from "./add-item-dialog.component";
 import { ModelerModule } from '../modeler.module';
 
 describe('AddAttributeDialogComponent', () => {
-  let component: AddAttributeDialogComponent;
-  let fixture: ComponentFixture<AddAttributeDialogComponent>;
+  let component: AddItemDialogComponent;
+  let fixture: ComponentFixture<AddItemDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
 			imports: [ ModelerModule ],
-      declarations: [ AddAttributeDialogComponent ],
+      declarations: [ AddItemDialogComponent ],
 			providers: [
 				{ provide: MatDialogRef, useValue: {} },
 				{ provide: MAT_DIALOG_DATA, useValue: [] }
@@ -18,7 +18,7 @@ describe('AddAttributeDialogComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddAttributeDialogComponent);
+    fixture = TestBed.createComponent(AddItemDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

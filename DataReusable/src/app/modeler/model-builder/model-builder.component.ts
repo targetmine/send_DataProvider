@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { DockerService } from 'src/app/shared/services/docker.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
 import { Relation } from 'src/app/shared/models/relation';
-
-import { catchError, flatMap, switchMap, tap } from 'rxjs';
+import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
 
 @Component({
   selector: 'app-model-builder',
@@ -39,7 +38,7 @@ export class ModelBuilderComponent implements OnInit {
 	constructor(
 		private readonly modelServ: ShareModelService,
 		private readonly dockerService: DockerService,
-		private snackBar: MatSnackBar
+		public dialog: MatDialog
 	) { }
 
   ngOnInit(): void {
@@ -84,7 +83,7 @@ export class ModelBuilderComponent implements OnInit {
 		}
 	}
 
-	onSaveModel(event:any){
+	onExportModel(event:any){
 		event.preventDefault();
 		/* convert model to text */
 		let elementsText = JSON.stringify(this._elements);
@@ -123,10 +122,17 @@ export class ModelBuilderComponent implements OnInit {
 	}
 
 	onAddElement(event: any) {
-		event.preventDefault(); // don't refresh the page
-		if( this.elementName.valid )
-			this.modelServ.addElement({ name: this.elementName.value, attributes: [] });
-		else
-			this.snackBar.open('The name for the new element is invalid', 'Close');
+		const dialogRef = this.dialog.open(
+			AddItemDialogComponent,
+			<MatDialogConfig<any>>{
+				data: ['Element'],
+				restoreFocus: false
+			}
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if (result === undefined) return;
+			console.log(result);
+			this.modelServ.addElement(result);	
+		});
 	}
 }
