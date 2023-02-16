@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Element } from 'src/app/shared/models/element';
-import { Attribute, ATTRIBUTE_TYPES } from 'src/app/shared/models/attribute';
+import { ATTRIBUTE_TYPES } from 'src/app/shared/models/attribute';
 import { CARDINALITY } from 'src/app/shared/models/relation';
 
 @Component({
@@ -12,16 +11,17 @@ import { CARDINALITY } from 'src/app/shared/models/relation';
 })
 export class AddItemDialogComponent {
 	
+	protected _itemType: 'Element' | 'Attribute' | 'Relation' = 'Element';
+	get itemType(){ return this._itemType; } 
 	
-	protected itemType: 'Element' | 'Attribute' | 'Relation' = 'Element';
-	
-	protected elementForm = new FormGroup({
+	protected _elementForm = new FormGroup({
 		name: new FormControl('',
 			Validators.compose([
 				Validators.required,
 				Validators.pattern('^[a-zA-Z][a-zA-Z0-9]*')
 		]))
 	});
+	get elementForm(){ return this._elementForm; }
 	
 	protected attributeTypes = ATTRIBUTE_TYPES;
 	protected attributeForm = new FormGroup({
@@ -48,8 +48,8 @@ export class AddItemDialogComponent {
 		public dialogRef: MatDialogRef<AddItemDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	) { 
-		this.itemType = data.type;
-		if( this.itemType === 'Relation' )
+		this._itemType = data.type;
+		if( this._itemType === 'Relation' )
 			this.eles = this.data.targets.map((v:any) => v.name);
 	}
 
@@ -67,10 +67,10 @@ export class AddItemDialogComponent {
 	}
 
 	onSubmit(): void {
-		switch(this.itemType){
+		switch(this._itemType){
 			case 'Element':
 				this.dialogRef.close({
-					name: this.elementForm.get('name')?.value,
+					name: this._elementForm.get('name')?.value,
 					attributes: []
 				});
 				break;

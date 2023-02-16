@@ -130,8 +130,9 @@ export class ModelBuilderComponent implements OnInit {
 			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if (result === undefined) return;
-			this.modelServ.addElement(result);	
+			if (result !== undefined){
+				this.modelServ.addElement(result);	
+			}
 		});
 	}
 }

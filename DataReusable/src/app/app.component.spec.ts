@@ -14,7 +14,7 @@ import { ShareModelService } from './shared/services/share-model.service';
 @Component({selector: 'router-outlet', template: ''})
 class RouterOutletStubComponent {}
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
 	let app: AppComponent;
 	let fixture: ComponentFixture<AppComponent>;
 	let shareService: ShareModelService;

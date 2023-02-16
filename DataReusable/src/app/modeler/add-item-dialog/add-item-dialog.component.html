@@ -88,22 +88,26 @@
 
 <div mat-dialog-actions>
 	<button mat-button 
+		id="cancel"
 		(click)="onCancel()"
 		>Cancel
 	</button>
 	<button *ngIf="itemType === 'Element'"
+		id="elementSubmit"
 		mat-button
 		[disabled]="!elementForm.valid"
 		(click)="onSubmit()"
 		>Submit
 	</button>
 	<button *ngIf="itemType === 'Attribute'"
+		id="atrtibuteSubmit"
 		mat-button
 		[disabled]="!attributeForm.valid"
 		(click)="onSubmit()"
 		>Submit
 	</button>
 	<button *ngIf="itemType === 'Relation'"
+		id="relationSubmit"
 		mat-button
 		[disabled]="!relationForm.valid"
 		(click)="onSubmit()"
