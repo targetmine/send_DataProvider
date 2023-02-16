@@ -7,32 +7,41 @@
 </div>
 
 <mat-toolbar>
-	<button mat-button [mat-menu-trigger-for]="modelMenu">Model</button>
+	<button mat-button 
+		id="modelMenu"
+		[mat-menu-trigger-for]="modelMenu"
+		>Model
+	</button>
 	<mat-menu #modelMenu="matMenu">
 		<button mat-menu-item
+			id="loadModelMenuItem"
 			type="submit"
 			(click)="onLoadModel($event)"
-			[disabled]="model.length !== 0"
+			[disabled]="elements.length !== 0"
 			>
 			Load Model
 		</button>
 		<button mat-menu-item
 			type="submit"
 			(click)="onExportModel($event)"
-			[disabled]="model.length === 0"
+			[disabled]="elements.length === 0"
 			>
 			Export Model to File
 		</button>
 		<button mat-menu-item
 			type="submit"
 			(click)="onFinishModel($event)"
-			[disabled]="model.length === 0"
+			[disabled]="elements.length === 0"
 			>
 			Finish Model and Upload Data
 		</button>
 	</mat-menu>
 
-	<button mat-button [mat-menu-trigger-for]="elementMenu">Element</button>
+	<button mat-button 
+		id="elementMenu"
+		[mat-menu-trigger-for]="elementMenu"
+		>Element
+	</button>
 	<mat-menu #elementMenu="matMenu">
 		<button mat-menu-item
 			type="submit"

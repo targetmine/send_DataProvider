@@ -17,10 +17,12 @@ import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.compo
 export class ModelBuilderComponent implements OnInit {
 	// the current model used for the database
 	protected _elements: Element[] = [];
-	get model() { return this._elements; }
-	set model(eles: Element[]) { this._elements = eles; }
+	get elements() { return this._elements; }
+	set elements(eles: Element[]) { this._elements = eles; }
 
 	protected _relations!: Relation[];
+	get relations() { return this._relations; }
+	set relations(rels: Relation[]) { this._relations = rels; }
 	
 	actionType: FormControl = new FormControl('', Validators.required);
 
@@ -88,7 +90,7 @@ export class ModelBuilderComponent implements OnInit {
 		/* convert model to text */
 		let elementsText = JSON.stringify(this._elements);
 		let relationTexs = JSON.stringify(this._relations);
-		let objectUrl = URL.createObjectURL(new Blob([`[${elementsText}],[${relationTexs}`], {type: "text/text"}));
+		let objectUrl = URL.createObjectURL(new Blob([`[[${elementsText}],[${relationTexs}]]`], {type: "text/text"}));
 		const a = document.createElement('a');
 		a.download = `model.txt`;
 		a.href = objectUrl;

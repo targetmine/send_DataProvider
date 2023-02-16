@@ -7,7 +7,7 @@ import { ModelerModule } from '../modeler.module';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
 
-fdescribe('AddAttributeDialogComponent: Element addition', () => {
+describe('AddAttributeDialogComponent: Element addition', () => {
   let component: AddItemDialogComponent;
   let fixture: ComponentFixture<AddItemDialogComponent>;
 	let loader: HarnessLoader;
