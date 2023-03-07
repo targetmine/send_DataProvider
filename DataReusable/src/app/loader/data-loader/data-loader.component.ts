@@ -23,7 +23,10 @@ export class DataLoaderComponent implements OnInit {
 			.subscribe((data) => {
 				console.log('Database commited');
 			});
+	}
 
+	loadElement(event: any){
+		console.log(`Captured loadElement: ${event}`);
 	}
 
 }

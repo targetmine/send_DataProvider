@@ -11,4 +11,7 @@
 	</mat-menu>
 </mat-toolbar>
 
-<app-model-display></app-model-display> 
+<app-model-display
+	(uploadElementEmitter)="loadElement($event)"
+	>
+</app-model-display> 

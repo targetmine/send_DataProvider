@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject, Input, EventEmitter, Output } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
@@ -31,6 +31,9 @@ export class ModelDisplayComponent implements OnInit{
 	@ViewChild('relationsTable') relationTable!: MatTable<Relation[]>;
 	protected _relationTableColumns: string[] = ['source', 'target', 'cardinality', 'actions'];
 
+	@Output()
+	uploadElementEmitter = new EventEmitter<string>();
+
 	constructor(
 		protected readonly _modelServ: ShareModelService,
 		public dialog: MatDialog
@@ -45,7 +48,6 @@ export class ModelDisplayComponent implements OnInit{
 		});
 		this.modelServ.relations.subscribe(data => {
 			this._relations = data;
-			console.log('new relations', this._relations);
 			if(this._relations.length > 0) this.relationTable.renderRows();
 		})
 	}
@@ -95,8 +97,8 @@ export class ModelDisplayComponent implements OnInit{
 		});
 	}
 
-	onUploadElement(elementName: string){
-		/* TO-DO */
+	emitUploadElement(elementName: string){
+		this.uploadElementEmitter.emit(elementName);
 	}
 
 	onRenameAttribute(elementName: string, attributeName: string){
@@ -119,7 +121,6 @@ export class ModelDisplayComponent implements OnInit{
 
 	onAddRelation(srcEle:string, srcAttribute: string ){
 		let data: any = {};
-		// data['type'] = 'Relation';
 		data.type = 'Relation';
 		data['srcEle'] = srcEle; 
 		data['srcAttr'] = srcAttribute;
