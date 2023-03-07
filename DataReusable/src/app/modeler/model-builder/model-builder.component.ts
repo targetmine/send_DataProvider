@@ -16,13 +16,8 @@ import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.compo
 })
 export class ModelBuilderComponent implements OnInit {
 	// the current model used for the database
-	protected _elements: Element[] = [];
-	get elements() { return this._elements; }
-	set elements(eles: Element[]) { this._elements = eles; }
-
-	protected _relations!: Relation[];
-	get relations() { return this._relations; }
-	set relations(rels: Relation[]) { this._relations = rels; }
+	elements: Element[] = [];
+	relations: Relation[] = [];
 	
 	actionType: FormControl = new FormControl('', Validators.required);
 
@@ -44,8 +39,8 @@ export class ModelBuilderComponent implements OnInit {
 	) { }
 
   ngOnInit(): void {
-		this.modelServ.elements.subscribe(data => this._elements = data );
-		this.modelServ.relations.subscribe(data => this._relations = data );
+		this.modelServ.elements.subscribe(data => this.elements = data );
+		this.modelServ.relations.subscribe(data => this.relations = data );
   }
 
 	onLoadModel(event:any){
@@ -90,8 +85,8 @@ export class ModelBuilderComponent implements OnInit {
 	onExportModel(event:any){
 		event.preventDefault();
 		/* convert model to text */
-		let elementsText = JSON.stringify(this._elements);
-		let relationText = JSON.stringify(this._relations);
+		let elementsText = JSON.stringify(this.elements);
+		let relationText = JSON.stringify(this.relations);
 		let objectUrl = URL.createObjectURL(new Blob([`{\n\t"elements": ${elementsText},\n\t"relations": ${relationText}\n}`], {type: "text/text"}));
 		const a = document.createElement('a');
 		a.download = `model.txt`;
@@ -103,7 +98,7 @@ export class ModelBuilderComponent implements OnInit {
 	onFinishModel(event:any){
 		event.preventDefault();
 		/* run container with postgres database */
-		this.dockerService.createPostgresContainer(this._elements, this._relations)
+		this.dockerService.createPostgresContainer(this.elements, this.relations)
 		.subscribe((data) => {
 			console.log('step1',data);
 		});

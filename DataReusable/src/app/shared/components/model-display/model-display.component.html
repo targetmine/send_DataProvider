@@ -1,6 +1,6 @@
 <h2>Elements:</h2>
 <table mat-table 
-	[dataSource]="_elements"
+	[dataSource]="elements"
 	#elementsTable
 	>
 	<ng-container matColumnDef="elements">
@@ -98,13 +98,13 @@
 		</td>
 	</ng-container>
 
-	<tr mat-header-row *matHeaderRowDef="_elementTableColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: _elementTableColumns;"></tr>
+	<tr mat-header-row *matHeaderRowDef="elementTableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: elementTableColumns;"></tr>
 </table>
 
 <h2>Relations:</h2>
 <table mat-table
-	[dataSource]="_relations"
+	[dataSource]="relations"
 	#relationsTable
 	>
 	<ng-container matColumnDef="source">
@@ -144,7 +144,7 @@
 		</td>
 	</ng-container>
 
-	<tr mat-header-row *matHeaderRowDef="_relationTableColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: _relationTableColumns;"></tr>
+	<tr mat-header-row *matHeaderRowDef="relationTableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: relationTableColumns;"></tr>
 </table>
 
