@@ -50,7 +50,9 @@ export class ModelBuilderComponent implements OnInit {
 
 	onLoadModel(event:any){
 		event.preventDefault();
-		this.modelFileInput.nativeElement.click(); // loading file dialog
+		// use a hidden html input to select a file and load it
+		// on selection of file onFileSelected method is triggered
+		this.modelFileInput.nativeElement.click(); 
 	}
 
 	onFileSelected(event: any){
@@ -60,7 +62,7 @@ export class ModelBuilderComponent implements OnInit {
 				let text = JSON.parse(e.target.result);
 				// parse elements
 				let eles: Element[] = [];
-				text[0].forEach((value: any) => {
+				text.elements.forEach((value: any) => {
 					let t: Element = { name: value.name, attributes: [] } as Element;
 					value.attributes.forEach((a:any) => t.attributes.push(a as unknown as Attribute));
 					eles.push(t);
@@ -68,7 +70,7 @@ export class ModelBuilderComponent implements OnInit {
 				this.modelServ.elements.next(eles);
 				// parse relations
 				let rels: Relation[] = [];
-				text[1].forEach((value: any) => {
+				text.relations.forEach((value: any) => {
 					let r: Relation = { 
 						name: value.name, 
 						srcElement: value.srcElement,
@@ -89,8 +91,8 @@ export class ModelBuilderComponent implements OnInit {
 		event.preventDefault();
 		/* convert model to text */
 		let elementsText = JSON.stringify(this._elements);
-		let relationTexs = JSON.stringify(this._relations);
-		let objectUrl = URL.createObjectURL(new Blob([`[[${elementsText}],[${relationTexs}]]`], {type: "text/text"}));
+		let relationText = JSON.stringify(this._relations);
+		let objectUrl = URL.createObjectURL(new Blob([`{\n\t"elements": ${elementsText},\n\t"relations": ${relationText}\n}`], {type: "text/text"}));
 		const a = document.createElement('a');
 		a.download = `model.txt`;
 		a.href = objectUrl;

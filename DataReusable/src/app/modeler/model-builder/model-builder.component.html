@@ -52,30 +52,6 @@
 	</mat-menu>
 </mat-toolbar>
 
-<!-- 
-
-	<div *ngIf="actionType.value == 'Add Element'">
-		<mat-form-field appearance="outline">
-			<mat-label>Element name:</mat-label>
-		<input matInput
-			required
-			type="text"
-			[formControl]="elementName"
-			placeholder="Ex. Gene"
-		>
-		<mat-hint>Start with letter. Use only alpha-numeric characters.</mat-hint>
-		</mat-form-field>
-
-		<button mat-raised-button
-			type="submit"
-			(click)="onAddElement($event)"
-			[disabled]="!elementName.valid"
-		>
-		Add
-		</button>
-	</div> -->
-
-
 <app-model-display
 	[editing]="true">
 </app-model-display> 

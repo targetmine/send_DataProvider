@@ -45,6 +45,7 @@ export class ModelDisplayComponent implements OnInit{
 		});
 		this.modelServ.relations.subscribe(data => {
 			this._relations = data;
+			console.log('new relations', this._relations);
 			if(this._relations.length > 0) this.relationTable.renderRows();
 		})
 	}
