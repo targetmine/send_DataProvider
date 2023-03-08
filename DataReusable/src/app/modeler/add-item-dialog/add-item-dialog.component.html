@@ -1,0 +1,116 @@
+<h1 mat-dialog-title>Add new {{itemType}} to the model:</h1>
+<div mat-dialog-content>
+	<!-- new Element form -->
+	<form *ngIf="itemType === 'Element'"
+		[formGroup]="elementForm"
+		>
+		<mat-form-field appearance="outline">
+			<mat-label>New Element's name:</mat-label>
+			<input matInput
+				required
+				type="text"
+				placeholder="Ex. Gene"
+				formControlName="name"
+			>
+			<mat-hint>Letter first. Only alpha-numeric characters.</mat-hint>
+		</mat-form-field>
+	</form>
+	<!-- new Attribute form -->
+	<form *ngIf="itemType === 'Attribute'"
+		[formGroup]="attributeForm"
+		>
+		<mat-form-field appearance="outline">
+			<mat-label>New Attribute's name:</mat-label>
+			<input matInput
+				required
+				type="text"
+				placeholder="Ex. Id"
+				formControlName="name"
+			>
+			<mat-hint>Letter first. Only alpha-numeric characters.</mat-hint>
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Attribute's type:</mat-label>
+			<mat-select
+				formControlName="type"
+			>
+				<mat-option 
+					*ngFor="let t of attributeTypes"
+					[value]="t"
+					>
+					{{t}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-checkbox 
+			formControlName="unique">
+			Attribute is unique
+		</mat-checkbox>
+	</form>
+	<!-- new Relation form -->
+	<form *ngIf="itemType === 'Relation'"
+		[formGroup]="relationForm"
+		>
+		<mat-form-field	appearance="outline">
+			<mat-label>Select target element:</mat-label>
+			<mat-select	formControlName="trgElement">
+				<mat-option 
+					*ngFor="let e of eles"
+					[value]="e"
+					(click)="refreshAtts(e)">
+					{{e}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field	appearance="outline">
+			<mat-label>Select target attribute:</mat-label>
+			<mat-select formControlName="trgAttribute">
+				<mat-option 
+					*ngFor="let e of atts"
+					[value]="e">
+					{{e}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label> Select cardinality</mat-label>
+			<mat-select formControlName="cardinality">
+				<mat-option
+					*ngFor="let c of cardinalities"
+					[value]="c"
+					>
+					{{c}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</form>
+</div>
+
+<div mat-dialog-actions>
+	<button mat-button 
+		id="cancel"
+		(click)="onCancel()"
+		>Cancel
+	</button>
+	<button *ngIf="itemType === 'Element'"
+		id="elementSubmit"
+		mat-button
+		[disabled]="!elementForm.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+	<button *ngIf="itemType === 'Attribute'"
+		id="atrtibuteSubmit"
+		mat-button
+		[disabled]="!attributeForm.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+	<button *ngIf="itemType === 'Relation'"
+		id="relationSubmit"
+		mat-button
+		[disabled]="!relationForm.valid"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+</div>

@@ -5,7 +5,7 @@ import { ModelDisplayComponent } from './model-display.component';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
 import { Attribute } from 'src/app/shared/models/attribute';
-import { ModelerModule } from '../modeler.module';
+import { ModelerModule } from '../../../modeler/modeler.module';
 import { MatHeaderCellHarness, MatTableHarness } from '@angular/material/table/testing';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatButtonHarness } from '@angular/material/button/testing';
@@ -117,11 +117,11 @@ describe('ModelDisplayComponent: unit test', () => {
 			{ name: 'protein', attributes: [] }
 		];
 		test[0].attributes = [
-			{ name: 'id', type: 'string', unique: true } as Attribute,
-			{ name: 'other', type: 'number', unique: false } as Attribute
+			{ name: 'id', type: 'string', unique: true } as unknown as Attribute,
+			{ name: 'other', type: 'number', unique: false } as unknown as Attribute
 		];
 		test[1].attributes = [
-			{ name: 'acession', type: 'number', unique: true } as Attribute,
+			{ name: 'acession', type: 'number', unique: true } as unknown as Attribute,
 		];
 		service.elements.next(test);
 		let table = await loader.getHarness(MatTableHarness);
@@ -140,8 +140,8 @@ describe('ModelDisplayComponent: unit test', () => {
 			{ name: 'protein', attributes: [] }
 		];
 		test[0].attributes = [
-			{ name: 'id', type: 'string', unique: true } as Attribute,
-			{ name: 'other', type: 'number', unique: false } as Attribute
+			{ name: 'id', type: 'string', unique: true } as unknown as  Attribute,
+			{ name: 'other', type: 'number', unique: false } as unknown as  Attribute
 		];
 		service.elements.next(test);
 		let renameSpy = spyOn(component, 'onRenameAttribute');
@@ -159,8 +159,8 @@ describe('ModelDisplayComponent: unit test', () => {
 			{ name: 'protein', attributes: [] }
 		];
 		test[0].attributes = [
-			{ name: 'id', type: 'string', unique: true } as Attribute,
-			{ name: 'other', type: 'number', unique: false } as Attribute
+			{ name: 'id', type: 'string', unique: true } as unknown as Attribute,
+			{ name: 'other', type: 'number', unique: false } as unknown as Attribute
 		];
 		service.elements.next(test);
 		let delSpy = spyOn(component, 'onRemoveAttribute');

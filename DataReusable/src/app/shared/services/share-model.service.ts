@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Element } from '../models/element';
 import { Attribute } from '../models/attribute';
-import { Cardinality, Relation } from '../models/relation';
+import { Relation } from '../models/relation';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,13 @@ export class ShareModelService {
 		
 		updated.push(ele);
 		this._elements$.next(updated);
+	}
+
+	public getElement(name: string): Element|null{
+		const ele = this._elements$.value.filter(e => e.name === name);
+		if(ele.length === 1)
+			return ele[0];
+		return null;
 	}
 
 	public renameElement(name: string, newName: string): void {

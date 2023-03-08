@@ -1,65 +1,120 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ModelBuilderComponent } from './model-builder.component';
 import { ShareModelService } from '../../shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element'; 
+import { Relation } from 'src/app/shared/models/relation';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ModelerModule } from '../modeler.module';
+import { DockerService } from 'src/app/shared/services/docker.service';
 
-import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatMenuHarness, MatMenuItemHarness } from '@angular/material/menu/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 @Injectable()
 class mockShareModelService extends ShareModelService{
 	protected override _elements$: BehaviorSubject<Element[]> = new BehaviorSubject<Element[]>([]);
+	protected override _relations$: BehaviorSubject<Relation[]> = new BehaviorSubject<Relation[]>([]);
 }
 
-describe('ModelBuilderComponent: unit test', () => {
-  let component: ModelBuilderComponent;
-  let fixture: ComponentFixture<ModelBuilderComponent>;
-	let service: mockShareModelService;
-	let loader: HarnessLoader;
-	
+@Injectable()
+class mockDockerService extends DockerService{}
+
+fdescribe('ModelBuilderComponent:', () => {
+
 	beforeEach(async () => {
-    await TestBed.configureTestingModule({
-			imports:[ ModelerModule	],
+    TestBed.configureTestingModule({
+			imports:[ 
+				HttpClientTestingModule,
+				ModelerModule	
+			],
       declarations: [ ModelBuilderComponent ],
-			providers: [ mockShareModelService ]
-    })
-		.compileComponents();
-    fixture = TestBed.createComponent(ModelBuilderComponent);
-		service = TestBed.inject(mockShareModelService);
-    component = fixture.componentInstance;
-		service.elements.subscribe(data => {
-			component.model = data;
-		});
-    fixture.detectChanges();
-		loader = TestbedHarnessEnvironment.loader(fixture);
+    });
 	});
 
-	afterEach(() => fixture.destroy());
-
 	it('should create', () => {
+		const fixture = TestBed.createComponent(ModelBuilderComponent);
+		const component = fixture.componentInstance;
 		expect(component).toBeTruthy();
 	});
 
-	it('should have as model the current state of the service', () => {
+	// describe('Integration tests:', () => {
+		// httpClient = TestBed.inject(HttpClient);
+		// httpTestingController = TestBed.inject(HttpTestingController);
+		// modelService = TestBed.inject(mockShareModelService);
+		// dockerService = TestBed.inject(mockDockerService);
+		// modelService.elements.subscribe(data => { component.elements = data;	});
+		// modelService.relations.subscribe(data => { component.relations = data; });
+    // fixture.detectChanges();
+		// loader = TestbedHarnessEnvironment.loader(fixture);
+    
+		// afterEach(() => {
+		// 	httpTestingController.verify(); // assert there are no pending requests
+		// });
 
-	});
+	// });
 
-	it('should bind actionType to select action on template', async() => {
-		const select = await loader.getHarness(MatSelectHarness);
-		await select.open();
-		let text = await select.getValueText();
-		expect(text).toEqual('');
+	describe('Component tests:', () => {
+		let loader: HarnessLoader;
+		let component: ModelBuilderComponent;
+		beforeEach( async () => {
+			TestBed.configureTestingModule({
+				imports:[]
+			})
+			.compileComponents();
+			const fixture = TestBed.createComponent(ModelBuilderComponent);
+			component = fixture.componentInstance;
+			loader = TestbedHarnessEnvironment.loader(fixture);
+		});
+
+		it('should display model menu on request', async() => {
+			let menu = await loader.getHarness(MatMenuHarness.with({selector: '#modelMenu'}));
+			expect(await menu.isOpen()).toBeFalsy();
+			const button = await loader.getHarness(MatButtonHarness.with({selector: 'button#modelMenu'}));
+			await button.click();
+			menu = await loader.getHarness(MatMenuHarness.with({selector: '#modelMenu'}));
+			expect(await menu.isOpen()).toBeTruthy();
+		});
+
+		it('makes load model option available only on an empty model', async()=>{
+			let menu = await loader.getHarness(MatMenuHarness.with({selector: '#modelMenu'}));
+			await menu.open();
+			let item = await menu.getHarness(MatMenuItemHarness.with({selector: '#loadModelMenuItem'}));
+			expect(await item.isDisabled()).toBeFalsy();
+			
+			component.elements = [{} as Element];
+			item = await menu.getHarness(MatMenuItemHarness.with({selector: '#loadModelMenuItem'}));
+			expect(await item.isDisabled()).toBeTruthy();
+		});
+
+		it('should display element menu on request', async() => {
+			let menu = await loader.getHarness(MatMenuHarness.with({selector: '#elementMenu'}));
+			expect(await menu.isOpen()).toBeFalsy();
+			const button = await loader.getHarness(MatButtonHarness.with({selector: 'button#elementMenu'}));
+			await button.click();
+			menu = await loader.getHarness(MatMenuHarness.with({selector: '#elementMenu'}));
+			expect(await menu.isOpen()).toBeTruthy();
+		});
+
+	})
+
+
+	// it('should bind actionType to select action on template', async() => {
+	// 	const select = await loader.getHarness(MatSelectHarness);
+	// 	await select.open();
+	// 	let text = await select.getValueText();
+	// 	expect(text).toEqual('');
 		
-		let opts = await select.getOptions();
-		expect(opts.length).toBe(3);
-		await opts[0].click();
-		text = await select.getValueText();
-		expect(component.actionType.value).toEqual(text);
-	});
+	// 	let opts = await select.getOptions();
+	// 	expect(opts.length).toBe(3);
+	// 	await opts[0].click();
+	// 	text = await select.getValueText();
+	// 	expect(component.actionType.value).toEqual(text);
+	// });
 	
 
 	// it('actionType invalid only when empty', ()=>{

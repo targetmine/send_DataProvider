@@ -1,0 +1,106 @@
+<div hidden>
+	<input
+		(change)="onFileSelected($event)"
+		#loadFileInput
+		type="file"
+	>
+</div>
+
+<h1 mat-dialog-title>Load {{type}} data</h1>
+
+<div mat-dialog-content>
+	<h3>Input file selection:</h3>
+
+	<form [formGroup]="elementForm">
+		<mat-form-field appareance="outline">
+			<mat-label>Input file</mat-label>
+			<input matInput
+				type="text"
+				placeholder="Ex. data.csv"
+				formControlName="fileName"
+				(click)="loadFileInput.click()"
+			>
+			<mat-hint>Click to open a file selection screen</mat-hint>
+		</mat-form-field>
+		<mat-checkbox
+			formControlName="includeColumnNames"
+			(change)="parsePreview()"
+			>Use first row as column names
+		</mat-checkbox>
+		<button mat-button
+			id="elementPreview"
+			[disabled]="!elementForm.valid"
+			(click)="loadFile()"
+			>Preview
+		</button>
+	</form>
+
+	<h3>Preview:</h3>
+	<ng-template *ngIf="loading">
+		Loading...
+	</ng-template>
+
+	<table mat-table
+		[dataSource]="previewTableData"
+		#previewTable
+		>
+		<ng-container 
+			*ngFor="let column of previewTableColumns; let i=index"
+			[matColumnDef]="column"
+			>
+			<th mat-header-cell *matHeaderCellDef>{{column}}</th>
+			<td mat-cell *matCellDef="let element">
+				{{element.split(',')[i]}}
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="previewTableColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: previewTableColumns"></tr>
+	</table>
+
+	<ng-container *ngIf="isElement"	>
+
+		<h3>File column / Attribute matching:</h3>	
+
+		<ng-container *ngFor="let column of previewTableColumns">
+			<mat-form-field appearance="outline">
+			<mat-label>Column: {{column}}</mat-label>
+			<mat-select>
+				<mat-option
+					[value]="'None'"
+					>None
+				</mat-option>
+				<mat-option *ngFor="let o of options"
+					[value]="o"
+					>Attribute: {{o}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		</ng-container>
+		
+	</ng-container>
+
+
+	<ng-container *ngIf="isAttribute">
+
+	</ng-container>
+	
+	<ng-container *ngIf="isRelation">
+
+	</ng-container>
+
+</div>
+
+<div mat-dialog-actions>
+	<button mat-button
+		id="cancel"
+		(click)="onCancel()"
+		>Cancel
+	</button>
+	<button mat-button
+		id="elementSubmit"
+		(click)="onSubmit()"
+		>Submit
+	</button>
+	
+</div>
+

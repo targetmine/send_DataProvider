@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MatTable } from '@angular/material/table';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, Inject, Input, EventEmitter, Output } from '@angular/core';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { Element } from 'src/app/shared/models/element';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ElementRenameDialogComponent } from '../element-rename-dialog/element-rename-dialog.component';
-import { AddAttributeDialogComponent } from '../add-attribute-dialog/add-attribute-dialog.component';
-import { AddRelationDialogComponent } from '../add-relation-dialog/add-relation-dialog.component';
+import { ElementRenameDialogComponent } from 'src/app/modeler/element-rename-dialog/element-rename-dialog.component';
+import { AddItemDialogComponent } from 'src/app/modeler/add-item-dialog/add-item-dialog.component';
 import { Relation } from 'src/app/shared/models/relation';
 
 @Component({
@@ -16,34 +15,32 @@ import { Relation } from 'src/app/shared/models/relation';
 })
 export class ModelDisplayComponent implements OnInit{
 	// the current model 
-	protected _elements: Element[] = [];
-	set elements(eles: Element[]) { this._elements = eles; };
-	protected _relations: Relation[] = [];
-	set relations(rels: Relation[]) { this._relations = rels; };
+	elements: MatTableDataSource<Element> = new MatTableDataSource<Element>();
+	relations: MatTableDataSource<Relation> = new MatTableDataSource<Relation>();
 	
-	// elements required for Element display
-	@ViewChild('elementsTable') elementTable!: MatTable<Element[]>;
-	protected _elementTableColumns: string[] = ['elements','attributes'];
-	get displayedColumns(): string[]{ return this._elementTableColumns; }
-	
-	@ViewChild('relationsTable') relationTable!: MatTable<Relation[]>;
-	protected _relationTableColumns: string[] = ['source', 'target', 'cardinality'];
+	// table for Element display
+	@ViewChild('elementsTable')
+	elementTable!: MatTable<Element[]>;
+	elementTableColumns: string[] = ['elements','attributes'];
+	// table used for Relations display
+	@ViewChild('relationsTable') 
+	relationTable!: MatTable<Relation[]>;
+	relationTableColumns: string[] = ['source', 'target', 'cardinality', 'actions'];
+
+	@Input() editing: boolean = false;
+	@Output()	uploadElementEmitter = new EventEmitter<string>();
 
 	constructor(
-		protected readonly _modelServ: ShareModelService,
+		protected readonly modelServ: ShareModelService,
 		public dialog: MatDialog
 	) { }
 
-	get modelServ(): ShareModelService { return this._modelServ; }
-
 	ngOnInit(): void {
 		this.modelServ.elements.subscribe(data => {
-			this._elements = data;
-			if(this._elements.length > 0) this.elementTable.renderRows();
+			this.elements = new MatTableDataSource<Element>(data);
 		});
 		this.modelServ.relations.subscribe(data => {
-			this._relations = data;
-			if(this._relations.length > 0) this.relationTable.renderRows();
+			this.relations = new MatTableDataSource<Relation>(data);
 		})
 	}
 
@@ -57,19 +54,22 @@ export class ModelDisplayComponent implements OnInit{
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
-				this._modelServ.renameElement(name, result);
+				this.modelServ.renameElement(name, result);
 			}		
 		});
 	}
 
 	onAddAttribute(name: string){
 		const dialogRef = this.dialog.open(
-			AddAttributeDialogComponent, 
-			<MatDialogConfig<any>>{ element: name, restoreFocus: false }
+			AddItemDialogComponent, 
+			<MatDialogConfig<any>>{ 
+				data: { type: 'Attribute'},
+				restoreFocus: false 
+			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
-				this._modelServ.addAttribute(name, result);
+				this.modelServ.addAttribute(name, result);
 			}
 		})
 	}
@@ -82,11 +82,15 @@ export class ModelDisplayComponent implements OnInit{
 				restoreFocus: false}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if( result ){ //true
-				this._modelServ.removeElement(name);
-				this._modelServ.removeRelationElement(name);
+			if( result === true ){
+				this.modelServ.removeElement(name);
+				this.modelServ.removeRelationElement(name);
 			}
 		});
+	}
+
+	emitUploadElement(elementName: string){
+		this.uploadElementEmitter.emit(elementName);
 	}
 
 	onRenameAttribute(elementName: string, attributeName: string){
@@ -99,8 +103,45 @@ export class ModelDisplayComponent implements OnInit{
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if(result !== undefined)
-				this._modelServ.renameAttribute(elementName, attributeName, result);
+				this.modelServ.renameAttribute(elementName, attributeName, result);
 		})
+	}
+	
+	onToggleUnique(elementName: string, attributeName: string){
+		this.modelServ.toggleUnique(elementName, attributeName);
+	}
+
+	onAddRelation(srcEle:string, srcAttribute: string ){
+		let data: any = {};
+		data.type = 'Relation';
+		data['srcEle'] = srcEle; 
+		data['srcAttr'] = srcAttribute;
+		data.targets = [];
+		this.elements.data.forEach(v => {
+			let t = { name: v.name, attributes: [] as string[] };
+			v.attributes.forEach(a => {
+				if (a.unique)
+					t['attributes'].push(a.name);
+			});
+			if (t['attributes'].length > 0)
+				data.targets.push(t);
+		});
+		const dialogRef = this.dialog.open(
+			AddItemDialogComponent, 
+			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
+		);
+		dialogRef.afterClosed().subscribe(result => {
+			if( result !== undefined ){
+				this.modelServ.addRelation({
+					name: srcEle+result.element, 
+					srcElement: srcEle, 
+					srcAttribute: srcAttribute, 
+					trgElement: result.element,
+					trgAttribute: result.attribute, 
+					cardinality: result.cardinality
+				});
+			}
+		});
 	}
 
 	onRemoveAttribute(elementName: string, attributeName: string){
@@ -112,47 +153,15 @@ export class ModelDisplayComponent implements OnInit{
 			}
 		);
 		dialogRef.afterClosed().subscribe(result => {
-			if(result){ //true
-				this._modelServ.removeAttribute(elementName, attributeName);
-				this._modelServ.removeRelationAttribute(attributeName);
+			if( result === true ){
+				this.modelServ.removeAttribute(elementName, attributeName);
+				this.modelServ.removeRelationAttribute(attributeName);
 			}
 		});
 	}
 
-	onToggleUnique(elementName: string, attributeName: string){
-		this._modelServ.toggleUnique(elementName, attributeName);
-	}
-
-	onAddRelation(srcEle:string, srcAttribute: string ){
-		let data: any = {};
-		data['srcEle'] = srcEle; data['srcAttr'] = srcAttribute;
-		data.targets = [];
-		this._elements.forEach(v => {
-			let t = { name: v.name, attributes: [] as string[] };
-			v.attributes.forEach(a => {
-				if (a.unique)
-					t['attributes'].push(a.name);
-			})
-			if (t['attributes'].length > 0)
-				data.targets.push(t);
-		});
-		const dialogRef = this.dialog.open(
-			AddRelationDialogComponent, 
-			<MatDialogConfig<any>>{ data: data, restoreFocus: false }
-		);
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(result);
-			if( result !== undefined ){
-				this._modelServ.addRelation({
-					name: srcEle+result.element, 
-					srcElement: srcEle, 
-					srcAttribute: srcAttribute, 
-					trgElement: result.element,
-					trgAttribute: result.attribute, 
-					cardinality: result.cardinality}
-					);
-			}
-		})
+	onUploadAttribute(elementName: string, attributeName: string){
+		/* TO-DO */
 	}
 
 	onRemoveRelation(name: string){
@@ -164,8 +173,12 @@ export class ModelDisplayComponent implements OnInit{
 			}
 		);
 		dialogRef.afterClosed().subscribe(result =>{
-			if(result) this._modelServ.removeRelation(name);
+			if(result) this.modelServ.removeRelation(name);
 		});
+	}
+
+	onUploadRelation(name:string){
+		/* TO-DO */
 	}
 
 }

@@ -1,57 +1,58 @@
-<form>
-
-	<mat-form-field appearance="outline">
-		<mat-label>Select action:</mat-label>
-		<mat-select
-			[formControl]="actionType"
-			required
-			>
-			<mat-option *ngIf="model.length === 0"
-				(click)="onLoadModel($event)"
-				value="Load Model">
-				Load Model
-			</mat-option>
-			<mat-option *ngIf="model.length > 0"
-				(click)="onSaveModel($event)"
-				value="Save Model">
-				Save Model
-			</mat-option>
-			<mat-option 
-				value="Add Element"
-				>Add Element
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
-
-	<div hidden>
-		<input 
-			(change)="onFileSelected($event)"
-			#modelFileInput
-			type="file"
-			>
-	</div>
-
-	<div *ngIf="actionType.value == 'Add Element'">
-		<mat-form-field appearance="outline">
-			<mat-label>Element name:</mat-label>
-		<input matInput
-			required
-			type="text"
-			[formControl]="elementName"
-			placeholder="Ex. Gene"
+<div hidden>
+	<input 
+		(change)="onFileSelected($event)"
+		#modelFileInput
+		type="file"
 		>
-		<mat-hint>Start with letter. Use only alpha-numeric characters.</mat-hint>
-		</mat-form-field>
+</div>
 
-		<button mat-raised-button
+<mat-toolbar>
+	<button mat-button 
+		id="modelMenu"
+		[mat-menu-trigger-for]="modelMenu"
+		>Model
+	</button>
+	<mat-menu #modelMenu="matMenu">
+		<button mat-menu-item
+			id="loadModelMenuItem"
+			type="submit"
+			(click)="onLoadModel($event)"
+			[disabled]="elements.length !== 0"
+			>
+			Load Model
+		</button>
+		<button mat-menu-item
+			type="submit"
+			(click)="onExportModel($event)"
+			[disabled]="elements.length === 0"
+			>
+			Export Model to File
+		</button>
+		<button mat-menu-item
+			type="submit"
+			(click)="onFinishModel($event)"
+			[disabled]="elements.length === 0"
+			>
+			Finish Model and Upload Data
+		</button>
+	</mat-menu>
+
+	<button mat-button 
+		id="elementMenu"
+		[mat-menu-trigger-for]="elementMenu"
+		>Element
+	</button>
+	<mat-menu #elementMenu="matMenu">
+		<button mat-menu-item
 			type="submit"
 			(click)="onAddElement($event)"
-			[disabled]="!elementName.valid"
-		>
-		Add
+			>
+			Add Element
 		</button>
-	</div>
-</form>
+	</mat-menu>
+</mat-toolbar>
 
-
-
+<app-model-display
+	[editing]="true"
+	>
+</app-model-display> 
