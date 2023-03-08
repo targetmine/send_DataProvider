@@ -24,6 +24,13 @@ export class ShareModelService {
 		this._elements$.next(updated);
 	}
 
+	public getElement(name: string): Element|null{
+		const ele = this._elements$.value.filter(e => e.name === name);
+		if(ele.length === 1)
+			return ele[0];
+		return null;
+	}
+
 	public renameElement(name: string, newName: string): void {
 		let updated = this._elements$.value.map(v => {
 			if( v.name === name )
