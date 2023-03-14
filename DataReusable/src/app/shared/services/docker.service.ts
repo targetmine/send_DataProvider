@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Element } from '../models/element';
-import { Relation } from '../models/relation';
-import { catchError, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +12,16 @@ export class DockerService {
 		private http: HttpClient
 	) { }
 
-	public createPostgresContainer(eles: Element[], rels: Relation[]) {
-		console.log('start: startPostgresContainer');
-		const url = `${environment.serverURL}/builder/tables/`;
-		const body = `[${JSON.stringify(eles)}, ${JSON.stringify(rels)}]`;
+	public addElements(eles: Element[]){
+		const url = `${environment.serverURL}/provider/elements/`;
+		
+		const body = JSON.stringify(eles);
 		return this.http.post(url, body, {
-				headers: {
-					'Content-type': 'application/json'
-				},
-				observe: 'response'
-			});
+			headers: {
+				'Content-type': 'application/json'
+			},
+			observe: 'response'
+		});
 	}
 
 	public commitDataContainer(){
