@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ModelBuilderComponent } from "./model-builder/model-builder.component";
+import { ModelBuilderComponent, FinishModelDialogComponent } from "./model-builder/model-builder.component";
 import { ElementRenameDialogComponent } from './element-rename-dialog/element-rename-dialog.component';
 import { AddItemDialogComponent } from "./add-item-dialog/add-item-dialog.component";
 
@@ -20,6 +20,7 @@ import { SharedModule } from "../shared/shared.module";
 @NgModule({
 	declarations: [
 		ModelBuilderComponent,
+		FinishModelDialogComponent,
 		ElementRenameDialogComponent,
 		AddItemDialogComponent,
   ],

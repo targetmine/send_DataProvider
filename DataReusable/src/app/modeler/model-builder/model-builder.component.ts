@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } fro
 import { FormControl, Validators } from '@angular/forms';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { DockerService } from 'src/app/shared/services/docker.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
 import { Relation } from 'src/app/shared/models/relation';
@@ -98,26 +98,23 @@ export class ModelBuilderComponent implements OnInit {
 	onFinishModel(event:any){
 		event.preventDefault();
 		/* run container with postgres database */
-		this.dockerService.createPostgresContainer(this.elements, this.relations)
-		.subscribe((data) => {
-			console.log('step1',data);
-		});
+		
 
+		const dialogRef =  this.dialog.open(
+			FinishModelDialogComponent,
+			<MatDialogConfig<any>>{
+				restoreFocus: false
+			}
+		)
+		dialogRef.afterClosed().subscribe(result => {
+			if (result !== undefined){
+				this.dockerService.addElements(this.elements)
+					.subscribe((data) => {
+						console.log('step1',data);
+					});
+				}
+		})
 
-		// .then(data =>{
-		// 	console.log('Start progres container finished');
-		// 	console.log(data);
-		// 	return this.dockerService.createTables(this._elements, this._relations);
-		// })
-		// // .then(() =>{
-		// // 	this.dockerService.commitDataContainer();
-		// // })
-		// .then((data) => console.log(data))
-		// .catch(error => {
-		// 	console.log(error);
-		// });
-
-		// this.dockerService.createTables(this._elements, this._relations);
 	}
 
 	onAddElement(event: any) {
@@ -134,4 +131,32 @@ export class ModelBuilderComponent implements OnInit {
 			}
 		});
 	}
+}
+
+@Component({
+	selector: 'finish-model-dialog',
+	template: `<h1 mat-dialog-title>Finish model</h1>
+	<div mat-dialog-content>
+		<p>You will not be able to further change the model. On completion, the system
+			will proceed to the data uploading stage.</p>
+		<p>If unsure, you can cancel the process and export the current model
+			(Model -> Export model to file), before proceeding with the completion and
+			data upload. </p>
+	</div>
+	<div mat-dialog-actions>
+		<button mat-button
+			(click)="this.dialogRef.close(undefined)"
+		>Cancel
+		</button>
+		<button mat-button
+			(click)="this.dialogRef.close(true)"
+		>OK
+		</button>
+	</div>
+`
+})
+export class FinishModelDialogComponent{
+	constructor(
+		public dialogRef: MatDialogRef<FinishModelDialogComponent>,
+	) {}
 }
