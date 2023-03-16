@@ -2,6 +2,8 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Element } from 'src/app/shared/models/element';
+import { ShareModelService } from 'src/app/shared/services/share-model.service';
 
 @Component({
   selector: 'app-upload-item-dialog',
@@ -9,6 +11,7 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./upload-item-dialog.component.css']
 })
 export class UploadItemDialogComponent implements OnInit {
+	elements: Element[] = [];
 
 	type: 'Element' | 'Attribute' | 'Relation' = 'Element'
 	loading: boolean = false;
@@ -34,6 +37,7 @@ export class UploadItemDialogComponent implements OnInit {
 	previewTableColumns: string[] = [];
 	
   constructor(
+		private readonly modelServ: ShareModelService,
 		public dialogRef: MatDialogRef<UploadItemDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any
 	){
@@ -43,6 +47,7 @@ export class UploadItemDialogComponent implements OnInit {
 	}
 
   ngOnInit(): void {
+		this.modelServ.elements.subscribe(data => this.elements = data);
   }
 
 	onFileSelected(event: Event) {
