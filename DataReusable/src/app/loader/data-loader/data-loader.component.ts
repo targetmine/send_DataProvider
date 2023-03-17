@@ -91,9 +91,52 @@ export class DataLoaderComponent implements OnInit {
 		}
 	}
 
-	onSubmit() {
-		
-		console.log(this.elementForm);
+	onSubmitElements() {
+		console.log(this.input?.slice(0,10));
+		this.elementTableData.data.forEach(ele =>{
+			
+			let idx: number[] = []; 
+			let cols: string[] = [];
+			ele.attributes.forEach(attr => {
+				const col: string | undefined = this.elementForm.get(`${ele.name}_${attr.name}`)?.value;
+				if ( col !== undefined && col !== 'None'){
+					cols.push(attr.name);
+					idx.push(this.previewTableColumns.indexOf(col));
+				}
+			});
+
+			if (cols.length > 0){
+				console.log(ele.name);
+				console.log(idx, cols);
+			
+				const firstRow = this.inputFileForm.get('includeColumnNames')?.value ? 1 : 0;
+				const filteredData = this.input?.slice(firstRow).map(row => {
+					return row.split(',').filter(
+						(r,i) => i in idx)
+				});
+
+				console.log(filteredData);
+
+			this.dockerService.uploadElement(ele.name, cols, filteredData)
+				.subscribe(response =>{
+					console.log(response);
+				});
+			}	
+		});
 	}
+
+	// 	this.elementForm = new FormGroup({});
+	// 	for (const ele of data){
+	// 		for (const attr of ele.attributes){
+	// 			let control = new FormControl('None');
+	// 			if (attr.unique)
+	// 				control.addValidators(Validators.required);
+	// 			this.elementForm.addControl(`${ele.name}_${attr.name}`, control);
+	// 		}
+	// 	}
+	// });
+	// 	// this.dockerService.uploadElement();
+	// 	console.log(this.elementForm);
+	// }
 	
 }

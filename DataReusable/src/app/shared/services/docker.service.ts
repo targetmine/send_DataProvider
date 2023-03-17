@@ -24,6 +24,20 @@ export class DockerService {
 		});
 	}
 
+	public uploadElement(element: string, columns: string[], data: any){
+		const url = `${environment.serverURL}/provider/element/${element}`
+		const body = {
+			columns: columns,
+			data: data
+		}
+		return this.http.put(url, body, {
+			headers:{
+				'Content-type': 'application/json'
+			},
+			observe: 'response'
+		});
+	}
+
 	public commitDataContainer(){
 		console.log('start: commit database image')
 		const url = `${environment.serverURL}/builder/commit/`;
