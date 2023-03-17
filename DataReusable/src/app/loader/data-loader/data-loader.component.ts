@@ -67,7 +67,7 @@ export class DataLoaderComponent implements OnInit {
 		this.inputFileForm.patchValue({fileName: this.inputFile.name});
 		const reader = new FileReader();
 		reader.onload = (e:any) => {
-			this.input = e.target.result.split('\n');
+			this.input = e.target.result.trim().split('\n');
 			this.parsePreview();
 		};
 		reader.onerror = (error: any) => {
@@ -92,7 +92,7 @@ export class DataLoaderComponent implements OnInit {
 	}
 
 	onSubmitElements() {
-		console.log(this.input?.slice(0,10));
+		console.log(this.input);//?.slice(0,10));
 		this.elementTableData.data.forEach(ele =>{
 			
 			let idx: number[] = []; 
