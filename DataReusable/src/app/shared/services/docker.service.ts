@@ -15,7 +15,25 @@ export class DockerService {
 	public addElements(eles: Element[]){
 		const url = `${environment.serverURL}/provider/elements/`;
 		
-		const body = JSON.stringify(eles);
+		let tables = [];
+		for (const ele of eles){
+			let table: any = {
+				name: '',
+				columns: [],
+				primaryKeys: []
+			};
+			table['name'] = ele.name;
+			for (const attr of ele.attributes){
+				table.columns.push(`${attr.name} ${attr.type}`);
+				if (attr.unique)
+					table.primaryKeys.push(attr.name);
+			};
+			
+			tables.push(table);
+		}
+		const body = {
+			tables: tables
+		};
 		return this.http.post(url, body, {
 			headers: {
 				'Content-type': 'application/json'

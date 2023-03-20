@@ -111,8 +111,11 @@ export class DataLoaderComponent implements OnInit {
 			
 				const firstRow = this.inputFileForm.get('includeColumnNames')?.value ? 1 : 0;
 				const filteredData = this.input?.slice(firstRow).map(row => {
-					return row.split(',').filter(
-						(r,i) => i in idx)
+					const values = row.split(',');
+					let r = [];
+					for (const i of idx)
+						r.push(values[i])
+					return r;
 				});
 
 				console.log(filteredData);
