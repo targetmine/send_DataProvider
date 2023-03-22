@@ -6,7 +6,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '../shared/shared.module';
-import { UploadItemDialogComponent } from './upload-item-dialog/upload-item-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -19,8 +18,7 @@ import { MatListModule } from '@angular/material/list';
 @NgModule({
   declarations: [
 		DataLoaderComponent,
-  	UploadItemDialogComponent,
-	],
+  ],
   imports: [
     CommonModule,
 		SharedModule,
