@@ -7,6 +7,7 @@ import { Element } from 'src/app/shared/models/element';
 import { Attribute } from 'src/app/shared/models/attribute';
 import { Relation } from 'src/app/shared/models/relation';
 import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-model-builder',
@@ -35,7 +36,8 @@ export class ModelBuilderComponent implements OnInit {
 	constructor(
 		private readonly modelServ: ShareModelService,
 		private readonly dockerService: DockerService,
-		public dialog: MatDialog
+		public dialog: MatDialog,
+		private router: Router
 	) { }
 
   ngOnInit(): void {
@@ -97,9 +99,7 @@ export class ModelBuilderComponent implements OnInit {
 
 	onFinishModel(event:any){
 		event.preventDefault();
-		/* run container with postgres database */
 		
-
 		const dialogRef =  this.dialog.open(
 			FinishModelDialogComponent,
 			<MatDialogConfig<any>>{
@@ -108,9 +108,15 @@ export class ModelBuilderComponent implements OnInit {
 		)
 		dialogRef.afterClosed().subscribe(result => {
 			if (result !== undefined){
+				this.router.navigate(['/loader']);
 				this.dockerService.addElements(this.elements)
-					.subscribe((data) => {
-						console.log('step1',data);
+					.subscribe({
+						next(data) {
+							console.log(data);
+						},
+						error(err) {
+							console.error(err);
+						}
 					});
 				}
 		})

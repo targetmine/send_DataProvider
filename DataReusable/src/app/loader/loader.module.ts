@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { MatSelectModule } from '@angular/material/select';
 		MatInputModule,
 		MatCheckboxModule,
 		MatTableModule,
-		MatSelectModule
+		MatSelectModule,
+		MatIconModule,
+		MatListModule,
   ]
 })
 export class LoaderModule { }

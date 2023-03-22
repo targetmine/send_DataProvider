@@ -1,56 +1,146 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Element } from 'src/app/shared/models/element';
 import { DockerService } from 'src/app/shared/services/docker.service';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
-import { UploadItemDialogComponent } from '../upload-item-dialog/upload-item-dialog.component';
 
 @Component({
   selector: 'app-data-loader',
   templateUrl: './data-loader.component.html',
-  styleUrls: ['./data-loader.component.css']
+  styleUrls: ['./data-loader.component.css'],
+	encapsulation: ViewEncapsulation.None
 })
 export class DataLoaderComponent implements OnInit {
 
-	options: string[]|undefined = [];
+	relations = []
 
+	@ViewChild('loadFileInput')
+	loadFileInput !:ElementRef;
+
+	inputFile !: File;
+	input :string[]|null = null;
+
+	inputFileForm = new FormGroup({
+		fileName: new FormControl('', Validators.required),
+		includeColumnNames: new FormControl(true)
+	});
+	
+	@ViewChild('previewTable')
+	previewTable!: MatTable<string[]>
+	previewTableData: MatTableDataSource<string> = new MatTableDataSource<string>([]);
+	previewTableColumns: string[] = [];
+
+	@ViewChild('elementTable')
+	elementTable!: MatTable<Element[]>;
+	elementTableData: MatTableDataSource<Element> = new MatTableDataSource<Element>();
+	elementTableColumns: string[] = ['elements', 'attributes'];
+
+	modelComponent: FormControl = new FormControl<string>('Element');
+
+	elementForm = new FormGroup({});
+	
   constructor(
 		private readonly modelServ: ShareModelService,
-		private readonly dockerService: DockerService,
-		public dialog: MatDialog
+		private readonly dockerService: DockerService,	
 	) { }
 
   ngOnInit(): void {
-  }
-
-	loadElement(event: any){
-		const ele = this.modelServ.getElement(event);
-		this.options = ele?.attributes.map(a => a.name);
-		const dialogRef = this.dialog.open(
-			UploadItemDialogComponent,
-			<MatDialogConfig<any>>{
-				data: {
-					type: 'Element',
-					isElement: true,
-					options: this.options
-				},
-				restoreFocus: false
+		this.modelServ.elements.subscribe(data => {
+			this.elementTableData = new MatTableDataSource<Element>(data);
+			this.elementForm = new FormGroup({});
+			for (const ele of data){
+				for (const attr of ele.attributes){
+					let control = new FormControl('None');
+					if (attr.unique)
+						control.addValidators(Validators.required);
+					this.elementForm.addControl(`${ele.name}_${attr.name}`, control);
+				}
 			}
-		);
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(result);
-			// if( result !== undefined )
-			// 	this.dockerService.commit(result);
+  	});
+	}
+
+	loadFile(){
+		if (typeof(FileReader) === 'undefined') throw new Error('FileReader undefined');
+
+		this.inputFile = this.loadFileInput.nativeElement.files[0];
+		this.inputFileForm.patchValue({fileName: this.inputFile.name});
+		const reader = new FileReader();
+		reader.onload = (e:any) => {
+			this.input = e.target.result.trim().split('\n');
+			this.parsePreview();
+		};
+		reader.onerror = (error: any) => {
+			this.input = error;
+			console.log(error);
+		}
+		reader.readAsText(this.inputFile);
+	}
+
+	parsePreview(){
+		if(this.input === null) return;
+		
+		if(this.inputFileForm.get('includeColumnNames')?.value){
+			this.previewTableColumns = this.input[0].split(',')
+			this.previewTableData = new MatTableDataSource(this.input.slice(1,5));
+		}
+		else{
+			const n = this.input[0].split(',').length;
+			this.previewTableColumns = [ ...Array(n)].map((_, i) => `Column ${i}`);
+			this.previewTableData = new MatTableDataSource(this.input.slice(0,4));
+		}
+	}
+
+	onSubmitElements() {
+		this.elementTableData.data.forEach(ele =>{
+			
+			let idx: number[] = []; 
+			let pkeys: string[] = [];
+			let cols: string[] = [];
+			ele.attributes.forEach((attr) => {
+				const col: string | undefined = this.elementForm.get(`${ele.name}_${attr.name}`)?.value;
+				if ( col !== undefined && col !== 'None'){
+					if(attr.unique) pkeys.push(attr.name);
+					cols.push(attr.name);
+					idx.push(this.previewTableColumns.indexOf(col));
+				}
+			});
+
+			if (cols.length > 0){
+				console.log(ele.name);
+				console.log(idx, pkeys, cols);
+			
+				const firstRow = this.inputFileForm.get('includeColumnNames')?.value ? 1 : 0;
+				const filteredData = this.input?.slice(firstRow).map(row => {
+					const values = row.split(',');
+					let r = [];
+					for (const i of idx)
+						r.push(values[i])
+					return r;
+				});
+
+				console.log(filteredData);
+
+			this.dockerService.uploadElement(ele.name, pkeys, cols, filteredData)
+				.subscribe(response =>{
+					console.log(response);
+				});
+			}	
 		});
 	}
 
-	onSaveDB(event: any){
-		event.preventDefault();
-		this.dockerService.commitDataContainer()
-			.subscribe((data) => {
-				console.log('Database commited');
-			});
-	}
-
-
-
+	// 	this.elementForm = new FormGroup({});
+	// 	for (const ele of data){
+	// 		for (const attr of ele.attributes){
+	// 			let control = new FormControl('None');
+	// 			if (attr.unique)
+	// 				control.addValidators(Validators.required);
+	// 			this.elementForm.addControl(`${ele.name}_${attr.name}`, control);
+	// 		}
+	// 	}
+	// });
+	// 	// this.dockerService.uploadElement();
+	// 	console.log(this.elementForm);
+	// }
+	
 }
