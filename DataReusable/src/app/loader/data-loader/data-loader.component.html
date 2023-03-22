@@ -102,6 +102,7 @@
 				<mat-label>{{attr.name}}</mat-label>
 				<mat-select
 					[formControlName]="element.name+'_'+attr.name"
+					[required]="attr.unique"
 				>
 					<mat-option
 						[value]="'None'"

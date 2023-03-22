@@ -92,14 +92,15 @@ export class DataLoaderComponent implements OnInit {
 	}
 
 	onSubmitElements() {
-		console.log(this.input);//?.slice(0,10));
 		this.elementTableData.data.forEach(ele =>{
 			
 			let idx: number[] = []; 
+			let pkeys: string[] = [];
 			let cols: string[] = [];
-			ele.attributes.forEach(attr => {
+			ele.attributes.forEach((attr) => {
 				const col: string | undefined = this.elementForm.get(`${ele.name}_${attr.name}`)?.value;
 				if ( col !== undefined && col !== 'None'){
+					if(attr.unique) pkeys.push(attr.name);
 					cols.push(attr.name);
 					idx.push(this.previewTableColumns.indexOf(col));
 				}
@@ -107,7 +108,7 @@ export class DataLoaderComponent implements OnInit {
 
 			if (cols.length > 0){
 				console.log(ele.name);
-				console.log(idx, cols);
+				console.log(idx, pkeys, cols);
 			
 				const firstRow = this.inputFileForm.get('includeColumnNames')?.value ? 1 : 0;
 				const filteredData = this.input?.slice(firstRow).map(row => {
@@ -120,7 +121,7 @@ export class DataLoaderComponent implements OnInit {
 
 				console.log(filteredData);
 
-			this.dockerService.uploadElement(ele.name, cols, filteredData)
+			this.dockerService.uploadElement(ele.name, pkeys, cols, filteredData)
 				.subscribe(response =>{
 					console.log(response);
 				});

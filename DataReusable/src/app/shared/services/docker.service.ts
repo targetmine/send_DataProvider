@@ -42,10 +42,11 @@ export class DockerService {
 		});
 	}
 
-	public uploadElement(element: string, columns: string[], data: any){
+	public uploadElement(element: string, primaryKeys: string[], columns: string[], data: any){
 		const url = `${environment.serverURL}/provider/element/${element}`
 		const body = {
 			columns: columns,
+			primaryKeys: primaryKeys,
 			data: data
 		}
 		return this.http.put(url, body, {
