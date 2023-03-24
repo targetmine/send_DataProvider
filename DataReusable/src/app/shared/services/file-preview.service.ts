@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FilePreviewService {
 
 	includeColumnNames: boolean = true;
-	fileName: File|undefined = undefined;
+	fileName: string|undefined = undefined;
 	fileData: string[]|null = null; 
 
 	previewColumns$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
@@ -22,9 +22,11 @@ export class FilePreviewService {
 	public loadFile(file: File): void{
 		if (file === null) return;
 		const reader = new FileReader();
+		this.fileName = file.name;
 		
 		reader.onload = (data:any) => {
-			this.fileData = data.target.result.split('\n');
+			const text = data.target.result as string;
+			this.fileData = text.trim().split('\n');
 			this.parsePreview();
 		}
 		reader.onerror = (error: any) => {

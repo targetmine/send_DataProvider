@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Element } from 'src/app/shared/models/element';
 import { DockerService } from 'src/app/shared/services/docker.service';
+import { FilePreviewService } from 'src/app/shared/services/file-preview.service';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 
 @Component({
@@ -13,17 +13,11 @@ import { ShareModelService } from 'src/app/shared/services/share-model.service';
 })
 export class DataLoaderComponent implements OnInit {
 
-	relations = []
-
 	@ViewChild('loadFileInput')
 	loadFileInput !:ElementRef;
-
-	inputFile !: File;
-	input :string[]|null = null;
-
 	inputFileForm = new FormGroup({
 		fileName: new FormControl('', Validators.required),
-		includeColumnNames: new FormControl(true)
+		includeColumnNames: new FormControl(this.filePreviewService.includeColumnNames)
 	});
 	
 	@ViewChild('previewTable')
@@ -31,116 +25,42 @@ export class DataLoaderComponent implements OnInit {
 	previewTableData: MatTableDataSource<string> = new MatTableDataSource<string>([]);
 	previewTableColumns: string[] = [];
 
-	@ViewChild('elementTable')
-	elementTable!: MatTable<Element[]>;
-	elementTableData: MatTableDataSource<Element> = new MatTableDataSource<Element>();
-	elementTableColumns: string[] = ['elements', 'attributes'];
-
 	modelComponent: FormControl = new FormControl<string>('Element');
-
-	elementForm = new FormGroup({});
 	
   constructor(
 		private readonly modelServ: ShareModelService,
-		private readonly dockerService: DockerService,	
+		private readonly dockerService: DockerService,
+		public readonly filePreviewService: FilePreviewService	
 	) { }
 
   ngOnInit(): void {
-		this.modelServ.elements.subscribe(data => {
-			this.elementTableData = new MatTableDataSource<Element>(data);
-			this.elementForm = new FormGroup({});
-			for (const ele of data){
-				for (const attr of ele.attributes){
-					let control = new FormControl('None');
-					if (attr.unique)
-						control.addValidators(Validators.required);
-					this.elementForm.addControl(`${ele.name}_${attr.name}`, control);
-				}
-			}
-  	});
-	}
-
-	loadFile(){
-		if (typeof(FileReader) === 'undefined') throw new Error('FileReader undefined');
-
-		this.inputFile = this.loadFileInput.nativeElement.files[0];
-		this.inputFileForm.patchValue({fileName: this.inputFile.name});
-		const reader = new FileReader();
-		reader.onload = (e:any) => {
-			this.input = e.target.result.trim().split('\n');
-			this.parsePreview();
-		};
-		reader.onerror = (error: any) => {
-			this.input = error;
-			console.log(error);
-		}
-		reader.readAsText(this.inputFile);
-	}
-
-	parsePreview(){
-		if(this.input === null) return;
+		this.filePreviewService.previewData$.subscribe(data => this.previewTableData = data);
+		this.filePreviewService.previewColumns$.subscribe(data => this.previewTableColumns = data);
 		
-		if(this.inputFileForm.get('includeColumnNames')?.value){
-			this.previewTableColumns = this.input[0].split(',')
-			this.previewTableData = new MatTableDataSource(this.input.slice(1,5));
-		}
-		else{
-			const n = this.input[0].split(',').length;
-			this.previewTableColumns = [ ...Array(n)].map((_, i) => `Column ${i}`);
-			this.previewTableData = new MatTableDataSource(this.input.slice(0,4));
-		}
+		const f = this.filePreviewService.fileName;
+		if (f !== undefined )
+			this.inputFileForm.patchValue({fileName: f});
 	}
 
-	onSubmitElements() {
-		this.elementTableData.data.forEach(ele =>{
-			
-			let idx: number[] = []; 
-			let pkeys: string[] = [];
-			let cols: string[] = [];
-			ele.attributes.forEach((attr) => {
-				const col: string | undefined = this.elementForm.get(`${ele.name}_${attr.name}`)?.value;
-				if ( col !== undefined && col !== 'None'){
-					if(attr.unique) pkeys.push(attr.name);
-					cols.push(attr.name);
-					idx.push(this.previewTableColumns.indexOf(col));
-				}
-			});
+	onInputFileChange(){
+		const inputFile = this.loadFileInput.nativeElement.files[0];
+		this.inputFileForm.patchValue({fileName: inputFile.name});
+		this.filePreviewService.loadFile(inputFile);		
+	// 	if (typeof(FileReader) === 'undefined') throw new Error('FileReader undefined');
 
-			if (cols.length > 0){
-				console.log(ele.name);
-				console.log(idx, pkeys, cols);
-			
-				const firstRow = this.inputFileForm.get('includeColumnNames')?.value ? 1 : 0;
-				const filteredData = this.input?.slice(firstRow).map(row => {
-					const values = row.split(',');
-					let r = [];
-					for (const i of idx)
-						r.push(values[i])
-					return r;
-				});
-
-				console.log(filteredData);
-
-			this.dockerService.uploadElement(ele.name, pkeys, cols, filteredData)
-				.subscribe(response =>{
-					console.log(response);
-				});
-			}	
-		});
-	}
-
-	// 	this.elementForm = new FormGroup({});
-	// 	for (const ele of data){
-	// 		for (const attr of ele.attributes){
-	// 			let control = new FormControl('None');
-	// 			if (attr.unique)
-	// 				control.addValidators(Validators.required);
-	// 			this.elementForm.addControl(`${ele.name}_${attr.name}`, control);
-	// 		}
+	// 	this.inputFile = this.loadFileInput.nativeElement.files[0];
+	// 	this.inputFileForm.patchValue({fileName: this.inputFile.name});
+	// 	const reader = new FileReader();
+	// 	reader.onload = (e:any) => {
+	// 		this.input = e.target.result.trim().split('\n');
+	// 		this.filePreviewService.parsePreview();
+	// 	};
+	// 	reader.onerror = (error: any) => {
+	// 		this.input = error;
+	// 		console.log(error);
 	// 	}
-	// });
-	// 	// this.dockerService.uploadElement();
-	// 	console.log(this.elementForm);
-	// }
-	
+	// 	reader.readAsText(this.inputFile);
+	}
+
+
 }

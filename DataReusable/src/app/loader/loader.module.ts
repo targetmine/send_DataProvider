@@ -14,10 +14,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { RelationModelMatcherComponent } from './relation-model-matcher/relation-model-matcher.component';
+import { ElementModelMatcherComponent } from './element-model-matcher/element-model-matcher.component';
 
 @NgModule({
   declarations: [
 		DataLoaderComponent,
+  	RelationModelMatcherComponent,
+   ElementModelMatcherComponent,
   ],
   imports: [
     CommonModule,

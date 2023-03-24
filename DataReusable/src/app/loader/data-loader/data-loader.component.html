@@ -1,6 +1,6 @@
 <div hidden>
 	<input
-		(change)="loadFile()"
+		(change)="onInputFileChange()"
 		#loadFileInput
 		type="file"
 		accept=".csv, .tsv"
@@ -33,30 +33,29 @@
 	</mat-form-field>
 	<mat-checkbox
 		formControlName="includeColumnNames"
-		(change)="parsePreview()"
+		(change)="filePreviewService.toogleIncludeColumnNames()"
 		>Use first row as column names
 	</mat-checkbox>
 </form>
 
 <h3>Preview:</h3>
-<ng-container *ngIf="input!==null">
-	<table mat-table 
-		[dataSource]="previewTableData"
-		#previewTable
+<table mat-table 
+	[dataSource]="previewTableData"
+	#previewTable
+>
+	<ng-container 
+		*ngFor="let column of previewTableColumns; let i=index"
+		[matColumnDef]="column"
 	>
-		<ng-container 
-			*ngFor="let column of previewTableColumns; let i=index"
-			[matColumnDef]="column"
-		>
-			<th mat-header-cell *matHeaderCellDef>{{column}}</th>
-			<td mat-cell *matCellDef="let element">
-				{{element.split(',')[i]}}
-			</td>
-		</ng-container>
-		<tr mat-header-row *matHeaderRowDef="previewTableColumns"></tr>
-		<tr mat-row *matRowDef="let row; columns: previewTableColumns"></tr>
-	</table>
-</ng-container>
+		<th mat-header-cell *matHeaderCellDef>{{column}}</th>
+		<td mat-cell *matCellDef="let item">
+			{{item.split(',')[i]}}
+		</td>
+	</ng-container>
+	<tr mat-header-row *matHeaderRowDef="previewTableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: previewTableColumns"></tr>
+</table>
+
 
 <h3>Select model item:</h3>
 <form>
@@ -76,54 +75,12 @@
 	</mat-form-field>
 </form>
 
-<h3>Column / Model matching:</h3>
-<form [formGroup]="elementForm">
-	
-	<table mat-table *ngIf="modelComponent.value === 'Element'"
-	[dataSource]="elementTableData"
-	#elementTable
+<app-element-model-matcher
+	*ngIf="modelComponent.value === 'Element'"
 >
-	<ng-container matColumnDef="elements">
-		<th mat-header-cell *matHeaderCellDef> Element </th>
-		<td mat-cell *matCellDef="let element;">
-			<span>{{element.name}}</span>
-			<!-- <mat-icon fontIcon="check_box_outline_blank"></mat-icon> -->
-			<!-- <mat-icon fontIcon="check_box"></mat-icon> 
-			<mat-icon fontIcon="indeterminate_check_box"></mat-icon>
-			-->
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="attributes">
-		<th mat-header-cell *matHeaderCellDef> Attributes </th>
-		<td mat-cell *matCellDef="let element;" class="list">
-			<mat-form-field 
-				*ngFor="let attr of element.attributes"
-				appearance="outline">
-				<mat-label>{{attr.name}}</mat-label>
-				<mat-select
-					[formControlName]="element.name+'_'+attr.name"
-					[required]="attr.unique"
-				>
-					<mat-option
-						[value]="'None'"
-						>None
-					</mat-option>
-					<mat-option *ngFor="let o of previewTableColumns"
-						[value]="o"
-						>Column: {{o}}
-					</mat-option>
-				</mat-select> 
-			</mat-form-field>
-		</td>
-	</ng-container>
+</app-element-model-matcher>
 
-	<tr mat-header-row *matHeaderRowDef="elementTableColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: elementTableColumns;"></tr>
-</table>
-</form>
-
-<button mat-button
-	id="submit"
-	(click)="onSubmitElements()"
-	>Submit
-</button>
+<app-relation-model-matcher 
+	*ngIf="modelComponent.value === 'Relation'"
+>
+</app-relation-model-matcher>
