@@ -110,17 +110,29 @@ export class ModelBuilderComponent implements OnInit {
 			if (result !== undefined){
 				this.router.navigate(['/loader']);
 				this.dockerService.addElements(this.elements)
-					.subscribe({
-						next(data) {
-							console.log(data);
-						},
-						error(err) {
-							console.error(err);
-						}
-					});
-				}
+				.subscribe({
+					next(data) { console.log(data);	},
+					error(err) { console.error(err.message); }
+				});
+				
+				this.relations.forEach(relation => {
+					switch(relation.cardinality){
+						case 'one to one':
+							const type = this.elements.filter(n => n.name === relation.trgElement)[0].attributes.filter(a => a.name === relation.trgAttribute)[0].type;
+							console.log(relation.srcElement, [relation.trgAttribute, type]);
+							this.dockerService.addRelationOneToOne(relation.srcElement, [{name:relation.trgAttribute, type}])
+								.subscribe({
+									next(data){	console.log(data); },
+									error(err){ console.error(err.message); }
+								});
+							break;
+						case 'one to many':
+							break;
+						case 'many to many':
+					}
+				})
+			}
 		})
-
 	}
 
 	onAddElement(event: any) {

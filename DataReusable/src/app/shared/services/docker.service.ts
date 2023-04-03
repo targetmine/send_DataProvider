@@ -35,9 +35,7 @@ export class DockerService {
 			tables: tables
 		};
 		return this.http.post(url, body, {
-			headers: {
-				'Content-type': 'application/json'
-			},
+			headers: { 'Content-type': 'application/json'	},
 			observe: 'response'
 		});
 	}
@@ -55,6 +53,23 @@ export class DockerService {
 			},
 			observe: 'response'
 		});
+	}
+
+	public addRelationOneToOne(table: string, columns: any[]){
+		const url = `${environment.serverURL}/provider/relation/one-to-one/`;
+		const body = { table, columns };
+		return this.http.post(url, body, {
+			headers: { 'Content-type': 'application/json'},
+			observe: 'response'
+		});
+	}
+
+	public addRelationOneToMany(table: string, columns: any[]){
+		const url = `${environment.serverURL}/provider/relation/one-to-one/`;
+	}
+	
+	public addRelationManyToMany(){
+		const url = `${environment.serverURL}/provider/relation/many-to-many/`;
 	}
 
 	public commitDataContainer(){
