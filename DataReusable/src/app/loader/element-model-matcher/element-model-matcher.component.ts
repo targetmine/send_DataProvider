@@ -46,7 +46,6 @@ export class ElementModelMatcherComponent implements OnInit {
 
 	onSubmit() {
 		this.elementTableData.data.forEach(ele =>{
-			
 			let idx: number[] = []; 
 			let pkeys: string[] = [];
 			let cols: string[] = [];
@@ -58,11 +57,7 @@ export class ElementModelMatcherComponent implements OnInit {
 					idx.push(this.previewTableColumns.indexOf(col));
 				}
 			});
-
 			if (cols.length > 0){
-				console.log(ele.name);
-				console.log(idx, pkeys, cols);
-			
 				const firstRow = this.filePreviewService.includeColumnNames ? 1 : 0;
 				const filteredData = this.filePreviewService.fileData?.slice(firstRow).map(row => {
 					const values = row.split(',');
@@ -71,13 +66,8 @@ export class ElementModelMatcherComponent implements OnInit {
 						r.push(values[i])
 					return r;
 				});
-
-				console.log(filteredData);
-
 				this.dockerService.uploadElement(ele.name, pkeys, cols, filteredData)
-				.subscribe(response =>{
-					console.log(response);
-				});
+				.then(response => console.log(response));
 			}	
 		});
 	}

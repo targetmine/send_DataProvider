@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Element } from '../models/element';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,6 @@ export class DockerService {
 
 	public addElements(eles: Element[]){
 		const url = `${environment.serverURL}/provider/elements/`;
-		
 		let tables = [];
 		for (const ele of eles){
 			let table: any = {
@@ -28,16 +28,15 @@ export class DockerService {
 				if (attr.unique)
 					table.primaryKeys.push(attr.name);
 			};
-			
 			tables.push(table);
 		}
 		const body = {
 			tables: tables
 		};
-		return this.http.post(url, body, {
+		return firstValueFrom(this.http.post(url, body, {
 			headers: { 'Content-type': 'application/json'	},
 			observe: 'response'
-		});
+		}));
 	}
 
 	public uploadElement(element: string, primaryKeys: string[], columns: string[], data: any){
@@ -47,21 +46,19 @@ export class DockerService {
 			primaryKeys: primaryKeys,
 			data: data
 		}
-		return this.http.put(url, body, {
-			headers:{
-				'Content-type': 'application/json'
-			},
+		return firstValueFrom(this.http.put(url, body, {
+			headers:{ 'Content-type': 'application/json' },
 			observe: 'response'
-		});
+		}));
 	}
 
 	public addRelationOneToOne(table: string, columns: any[]){
 		const url = `${environment.serverURL}/provider/relation/one-to-one/`;
 		const body = { table, columns };
-		return this.http.post(url, body, {
+		return firstValueFrom(this.http.post(url, body, {
 			headers: { 'Content-type': 'application/json'},
 			observe: 'response'
-		});
+		}));
 	}
 
 	public addRelationOneToMany(table: string, columns: any[]){
@@ -73,9 +70,8 @@ export class DockerService {
 	}
 
 	public commitDataContainer(){
-		console.log('start: commit database image')
 		const url = `${environment.serverURL}/builder/commit/`;
-		return this.http.post(url, {observe: 'response'});
+		return firstValueFrom(this.http.post(url, {observe: 'response'}));
 	}
 
 }
