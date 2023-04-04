@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { ElementRenameDialogComponent } from 'src/app/modeler/element-rename-dialog/element-rename-dialog.component';
 import { AddItemDialogComponent } from 'src/app/modeler/add-item-dialog/add-item-dialog.component';
 import { Relation } from 'src/app/shared/models/relation';
+import { AttributeType } from '../../models/attribute';
 
 @Component({
   selector: 'app-model-display',
@@ -111,7 +112,7 @@ export class ModelDisplayComponent implements OnInit{
 		this.modelServ.toggleUnique(elementName, attributeName);
 	}
 
-	onAddRelation(srcEle:string, srcAttribute: string ){
+	onAddRelation(srcEle:string, srcAttribute: string, srcType: AttributeType ){
 		let data: any = {};
 		data.type = 'Relation';
 		data['srcEle'] = srcEle; 
@@ -120,8 +121,9 @@ export class ModelDisplayComponent implements OnInit{
 		this.elements.data.forEach(v => {
 			let t = { name: v.name, attributes: [] as string[] };
 			v.attributes.forEach(a => {
-				if (a.unique)
+				if (a.unique){
 					t['attributes'].push(a.name);
+				}
 			});
 			if (t['attributes'].length > 0)
 				data.targets.push(t);
@@ -132,12 +134,15 @@ export class ModelDisplayComponent implements OnInit{
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
+				const trgType = this.elements.data.filter(n => n.name === result.element)[0].attributes.filter(a => a.name === result.attribute)[0].type;
 				this.modelServ.addRelation({
 					name: srcEle+result.element, 
 					srcElement: srcEle, 
 					srcAttribute: srcAttribute, 
+					srcType: srcType,
 					trgElement: result.element,
 					trgAttribute: result.attribute, 
+					trgType,
 					cardinality: result.cardinality
 				});
 			}

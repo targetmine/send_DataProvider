@@ -73,7 +73,7 @@
 						class="table-button"
 						[ngClass]="{'unique': !attr.unique}"
 						matTooltip="Add relation"
-						(click)="onAddRelation(element.name, attr.name)"
+						(click)="onAddRelation(element.name, attr.name, attr.type)"
 						[disabled]="!attr.unique">
 						<mat-icon fontIcon="add_circle_outline"></mat-icon>
 					</button>
