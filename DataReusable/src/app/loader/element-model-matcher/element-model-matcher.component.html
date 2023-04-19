@@ -1,11 +1,11 @@
-<h3>Column / Model matching:</h3>
+<h3>Column / Element matching:</h3>
 <form [formGroup]="elementForm">
 	<table mat-table	
 		[dataSource]="elementTableData"
 		#elementTable
 	>
 		<ng-container matColumnDef="elements">
-			<th mat-header-cell *matHeaderCellDef> Element </th>
+			<th mat-header-cell *matHeaderCellDef>Element</th>
 			<td mat-cell *matCellDef="let element;">
 				<span>{{element.name}}</span>
 			</td>

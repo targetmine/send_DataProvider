@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Element } from '../models/element';
+import { Element } from 'src/app/shared/models/element';
 import { Relation } from 'src/app/shared/models/relation';
 import { firstValueFrom } from 'rxjs';
 
@@ -45,6 +45,7 @@ export class DatabaseService {
 	}
 
 	public addRelationOneToMany(table: string, columns: any[]){
+		// should be provider/columns/element
 		const url = `${environment.serverURL}/provider/relation/one-to-one/`;
 	}
 	
@@ -64,9 +65,5 @@ export class DatabaseService {
 			observe: 'response'
 		}));
 	}
-
-
-
-
 
 }

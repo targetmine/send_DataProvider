@@ -46,7 +46,6 @@ export class FilePreviewService {
 			this.previewData$.next(new MatTableDataSource<string>([]));
 			return;
 		};
-		console.log(this.fileData[0])
 		if(this.includeColumnNames){
 			this.previewColumns$.next(this.fileData[0].split(','));
 			this.previewData$.next(new MatTableDataSource(this.fileData.slice(1,5)));

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public title: string = 'DataReusable';
+  public title: string = 'DataReusable - Provider';
 	// tabs using for navigation purposes in the main app
 	protected tabs: any = [];
 	private activeTabIndex: number = 0;
