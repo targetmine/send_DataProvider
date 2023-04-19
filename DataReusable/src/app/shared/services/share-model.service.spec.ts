@@ -119,8 +119,10 @@ describe('Service: ShareModelService - Relation routines', () => {
 			name: 'testRelation', 
 			srcElement: 'source', 
 			srcAttribute: 'srcAttribute',
+			srcType: 'integer',
 			trgElement: 'target',
 			trgAttribute: 'trgAttribute',
+			trgType: 'integer',
 			cardinality: 'one to one' 
 		};
 		service = new ShareModelService();

@@ -1,6 +1,7 @@
 <div hidden>
 	<input 
 		(change)="onFileSelected($event)"
+		id="modelFileInput"
 		#modelFileInput
 		type="file"
 		>
@@ -22,6 +23,7 @@
 			Load Model
 		</button>
 		<button mat-menu-item
+			id="exportModelMenuItem"
 			type="submit"
 			(click)="onExportModel($event)"
 			[disabled]="elements.length === 0"
@@ -29,6 +31,7 @@
 			Export Model to File
 		</button>
 		<button mat-menu-item
+			id="finishModelMenuItem"
 			type="submit"
 			(click)="onFinishModel($event)"
 			[disabled]="elements.length === 0"
@@ -44,6 +47,7 @@
 	</button>
 	<mat-menu #elementMenu="matMenu">
 		<button mat-menu-item
+			id="addElementMenuItem"
 			type="submit"
 			(click)="onAddElement($event)"
 			>

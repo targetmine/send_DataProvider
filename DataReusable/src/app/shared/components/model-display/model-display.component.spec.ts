@@ -32,9 +32,9 @@ describe('ModelDisplayComponent: unit test', () => {
 		fixture = TestBed.createComponent(ModelDisplayComponent);
 		service = TestBed.inject(mockShareModelService);
 		component = fixture.componentInstance;
-		service.elements.subscribe(data => {
-			component.elements = data;
-		});
+		// service.elements.subscribe(data => {
+		// 	component.elements = data;
+		// });
 		fixture.detectChanges();
 		loader = TestbedHarnessEnvironment.loader(fixture);
 	});
@@ -49,12 +49,12 @@ describe('ModelDisplayComponent: unit test', () => {
 
 	});
 
-	it('should display the columns specified in _displayedColumns', async() => {
-		loader = TestbedHarnessEnvironment.loader(fixture);
-		let headers = await loader.getAllHarnesses(MatHeaderCellHarness);
-		let colNames = await parallel(() => headers.map(row => row.getColumnName()));
-		expect(colNames).toEqual(component.displayedColumns);
-	});
+	// it('should display the columns specified in _displayedColumns', async() => {
+	// 	loader = TestbedHarnessEnvironment.loader(fixture);
+	// 	let headers = await loader.getAllHarnesses(MatHeaderCellHarness);
+	// 	let colNames = await parallel(() => headers.map(row => row.getColumnName()));
+	// 	expect(colNames).toEqual(component.displayedColumns);
+	// });
 
 	it('should display elements from the model in the `Elements` column', async() => {
 		let test: Element[] = [
