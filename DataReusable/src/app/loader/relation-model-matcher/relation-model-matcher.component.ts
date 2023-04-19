@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Relation } from 'src/app/shared/models/relation';
-import { DockerService } from 'src/app/shared/services/docker.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 import { FilePreviewService } from 'src/app/shared/services/file-preview.service';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 
@@ -23,7 +23,7 @@ export class RelationModelMatcherComponent implements OnInit {
 
   constructor(
 		private readonly modelService: ShareModelService,
-		private readonly dockerService: DockerService,
+		private readonly databaseService: DatabaseService,
 		private readonly filePreviewService: FilePreviewService
 	) { }
 

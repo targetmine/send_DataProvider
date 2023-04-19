@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
-import { DockerService } from 'src/app/shared/services/docker.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
 import { Relation } from 'src/app/shared/models/relation';
 import { AddItemDialogComponent } from '../add-item-dialog/add-item-dialog.component';
 import { Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-model-builder',
@@ -20,68 +21,58 @@ export class ModelBuilderComponent implements OnInit {
 	elements: Element[] = [];
 	relations: Relation[] = [];
 	
-	actionType: FormControl = new FormControl('', Validators.required);
-
 	@ViewChild('modelFileInput')
 	modelFileInput!: ElementRef;
 
-	// control to add new Element to the model
-	elementName: FormControl = new FormControl('',
-		Validators.compose([
-			Validators.required, 
-			Validators.pattern('^[a-zA-Z][a-zA-Z0-9]*')
-		])
-	);
-	
 	constructor(
-		private readonly modelServ: ShareModelService,
-		private readonly dockerService: DockerService,
+		private readonly shareModelServ: ShareModelService,
+		private readonly databaseService: DatabaseService,
 		public dialog: MatDialog,
 		private router: Router
 	) { }
 
   ngOnInit(): void {
-		this.modelServ.elements.subscribe(data => this.elements = data );
-		this.modelServ.relations.subscribe(data => this.relations = data );
+		this.shareModelServ.elements.subscribe(data => this.elements = data );
+		this.shareModelServ.relations.subscribe(data => this.relations = data );
   }
+
+	onFileSelected(event: any){
+		if (typeof (FileReader) === 'undefined') return;
+		
+		const reader = new FileReader();
+		reader.onload = (e: any) => {
+			let text = JSON.parse(e.target.result);
+			// parse elements
+			let eles: Element[] = [];
+			text.elements.forEach((value: any) => {
+				let t: Element = { name: value.name, attributes: [] } as Element;
+				value.attributes.forEach((a:any) => t.attributes.push(a as unknown as Attribute));
+				eles.push(t);
+			});
+			this.shareModelServ.elements.next(eles);
+			// parse relations
+			let rels: Relation[] = [];
+			text.relations.forEach((value: any) => {
+				let r: Relation = { 
+					name: value.name, 
+					srcElement: value.srcElement,
+					srcAttribute: value.srcAttribute,
+					srcType: value.type,
+					trgElement: value.trgElement,
+					trgAttribute: value.trgAttribute,
+					trgType: value.trgType,
+					cardinality: value.cardinality
+				} as Relation;
+				rels.push(r);
+			});
+			this.shareModelServ.relations.next(rels);
+		};
+		reader.readAsText(this.modelFileInput.nativeElement.files[0]);	
+	}
 
 	onLoadModel(event:any){
 		event.preventDefault();
-		// use a hidden html input to select a file and load it
-		// on selection of file onFileSelected method is triggered
 		this.modelFileInput.nativeElement.click(); 
-	}
-
-	onFileSelected(event: any){
-		if (typeof (FileReader) !== 'undefined') {
-		 	const reader = new FileReader();
-			reader.onload = (e: any) => {
-				let text = JSON.parse(e.target.result);
-				// parse elements
-				let eles: Element[] = [];
-				text.elements.forEach((value: any) => {
-					let t: Element = { name: value.name, attributes: [] } as Element;
-					value.attributes.forEach((a:any) => t.attributes.push(a as unknown as Attribute));
-					eles.push(t);
-				});
-				this.modelServ.elements.next(eles);
-				// parse relations
-				let rels: Relation[] = [];
-				text.relations.forEach((value: any) => {
-					let r: Relation = { 
-						name: value.name, 
-						srcElement: value.srcElement,
-						srcAttribute: value.srcAttribute,
-						trgElement: value.trgElement,
-						trgAttribute: value.trgAttribute,
-						cardinality: value.cardinality
-					} as Relation;
-					rels.push(r);
-				});
-				this.modelServ.relations.next(rels);
-			};
-			reader.readAsText(this.modelFileInput.nativeElement.files[0]);
-		}
 	}
 
 	onExportModel(event:any){
@@ -91,7 +82,7 @@ export class ModelBuilderComponent implements OnInit {
 		let relationText = JSON.stringify(this.relations);
 		let objectUrl = URL.createObjectURL(new Blob([`{\n\t"elements": ${elementsText},\n\t"relations": ${relationText}\n}`], {type: "text/text"}));
 		const a = document.createElement('a');
-		a.download = `model.txt`;
+		a.download = `model.json`;
 		a.href = objectUrl;
 		a.click();
 		URL.revokeObjectURL(objectUrl);	
@@ -109,34 +100,28 @@ export class ModelBuilderComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(result => {
 			if (result !== undefined){
 				this.router.navigate(['/loader']);
-				this.dockerService.addElements(this.elements)
-					.then(data => { 
-						console.log(data);	
+				let eleRequests: Promise<HttpResponse<Object>>[] = [];
+				for(const element of this.elements)
+					eleRequests.push(this.databaseService.addElement(element))
+				
+				Promise.allSettled(eleRequests)
+					.then(value => {
+						for(const v of value)
+							console.log(v);
+						return;
 					})
-					.catch( err => { console.error(err.message); })
-					.finally(()=>{
-						this.relations.forEach(relation => {
-							switch(relation.cardinality){
-								case 'one to one':
-									console.log(relation);
-									this.dockerService.addRelationOneToOne(relation.srcElement, [{name:relation.trgAttribute, type: relation.trgType}])
-										.then(data => console.log(data))
-										.catch(err => console.error(err.message))
-										;
-									break;
-								case 'one to many':
-									// this.dockerService.addRelationOneToMany()
-									break;
-								case 'many to one':
-									// this.dockerService.addRelationOneToMany()
-									break;
-								case 'many to many':
-									// this.dockerService.addRelationManyToMany()
-							}
-						})
+					.then(() => {
+						let relRequests: Promise<HttpResponse<Object>>[] = [];
+						for(const relation of this.relations)
+							relRequests.push(this.databaseService.addRelation(relation));
+						return Promise.allSettled(relRequests);
+					})
+					.then(value => {
+						for(const v of value)
+							console.log(v);
 					});
-				}
-			});
+			}
+		});
 	}
 
 	onAddElement(event: any) {
@@ -149,7 +134,7 @@ export class ModelBuilderComponent implements OnInit {
 		);
 		dialogRef.afterClosed().subscribe(result => {
 			if (result !== undefined){
-				this.modelServ.addElement(result);	
+				this.shareModelServ.addElement(result);	
 			}
 		});
 	}

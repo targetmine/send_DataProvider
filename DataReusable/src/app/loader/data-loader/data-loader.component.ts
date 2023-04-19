@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { DockerService } from 'src/app/shared/services/docker.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 import { FilePreviewService } from 'src/app/shared/services/file-preview.service';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 
@@ -29,7 +29,7 @@ export class DataLoaderComponent implements OnInit {
 	
   constructor(
 		private readonly modelServ: ShareModelService,
-		private readonly dockerService: DockerService,
+		private readonly databaseService: DatabaseService,
 		public readonly filePreviewService: FilePreviewService	
 	) { }
 

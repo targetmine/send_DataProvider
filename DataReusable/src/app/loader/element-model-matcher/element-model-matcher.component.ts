@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Element } from 'src/app/shared/models/element';
-import { DockerService } from 'src/app/shared/services/docker.service';
+import { DatabaseService } from 'src/app/shared/services/database.service';
 import { FilePreviewService } from 'src/app/shared/services/file-preview.service';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 
@@ -23,7 +23,7 @@ export class ElementModelMatcherComponent implements OnInit {
 
   constructor(
 		public readonly modelService: ShareModelService,
-		public readonly dockerService: DockerService,
+		public readonly databaseService: DatabaseService,
 		public readonly filePreviewService: FilePreviewService
 	) { }
 
@@ -66,7 +66,7 @@ export class ElementModelMatcherComponent implements OnInit {
 						r.push(values[i])
 					return r;
 				});
-				this.dockerService.uploadElement(ele.name, pkeys, cols, filteredData)
+				this.databaseService.uploadElement(ele.name, pkeys, cols, filteredData)
 				.then(response => console.log(response));
 			}	
 		});
