@@ -4,8 +4,8 @@
 		<nav mat-tab-nav-bar [tabPanel]="tabPanel">
 			<a mat-tab-link *ngFor="let tab of tabs"
 				[routerLink]="tab.link"
-				routerLinkActive #rla="routerLinkActive"
-				[active]="rla.isActive"
+				[active]="tab.active"
+				[disabled]="tab.disabled"
 				>{{tab.label}}</a>
 		</nav>
 		<mat-tab-nav-panel #tabPanel>

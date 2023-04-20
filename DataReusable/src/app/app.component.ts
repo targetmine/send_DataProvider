@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -9,30 +9,22 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   public title: string = 'DataReusable - Provider';
 	// tabs using for navigation purposes in the main app
-	protected tabs: any = [];
-	private activeTabIndex: number = 0;
+	protected tabs: any[] = [];
+	protected activeTabIndex: number = 0;
 	
 	/**
 	 * 
 	 * @param router 
 	 */
-	constructor(private router:Router){
-		// initialize navigation tabs
-		this.tabs = [
-			{ label: 'Model Builder', link: './builder', index: 0 },
-			{ label: 'Data Loader', link: './loader', index: 1 },
-		];
-	}
+	constructor(
+		private readonly navitationService: NavigationService
+	){ }
 
 	/**
 	 * 
 	 */
 	ngOnInit(): void {
-		// update the currently active tag on user interaction
-		this.router.events.subscribe((res) => {
-			this.activeTabIndex = this.tabs.indexOf(
-				this.tabs.find((t: { link: string; }) => t.link === '.'+this.router.url)
-			);
-		});
-	}
+		// initialize navigation tabs
+		this.navitationService.tabs$.subscribe(tabs => this.tabs = tabs);
+	}	
 }

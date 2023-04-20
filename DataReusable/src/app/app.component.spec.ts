@@ -8,8 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoaderModule } from './loader/loader.module';
 import { ModelerModule } from './modeler/modeler.module';
-import { DatabaseService } from './shared/services/database.service';
-import { ShareModelService } from './shared/services/share-model.service';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({selector: 'router-outlet', template: ''})
 class RouterOutletStubComponent {}
@@ -17,8 +16,7 @@ class RouterOutletStubComponent {}
 describe('AppComponent', () => {
 	let app: AppComponent;
 	let fixture: ComponentFixture<AppComponent>;
-	let shareService: ShareModelService;
-	let dockerService: DatabaseService;
+	let navigationService: NavigationService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -38,8 +36,7 @@ describe('AppComponent', () => {
     }).compileComponents();
 
 		fixture = TestBed.createComponent(AppComponent);
-		shareService = TestBed.inject(ShareModelService);
-		dockerService = TestBed.inject(DatabaseService);
+		navigationService = TestBed.inject(NavigationService);
 		app = fixture.componentInstance;
 		fixture.detectChanges();
   });
