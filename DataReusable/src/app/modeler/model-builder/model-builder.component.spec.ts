@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { ModelBuilderComponent } from './model-builder.component';
 
@@ -11,13 +10,11 @@ import { ShareModelService } from '../../shared/services/share-model.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { Element } from 'src/app/shared/models/element'; 
 import { Relation } from 'src/app/shared/models/relation';
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { MatToolbarHarness } from '@angular/material/toolbar/testing';
 import { MatMenuHarness, MatMenuItemHarness } from '@angular/material/menu/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
-
 
 @Injectable()
 class mockShareModelService extends ShareModelService{
@@ -158,6 +155,29 @@ fdescribe('ModelBuilderComponent:', () => {
 				expect(spy).toHaveBeenCalled();
 			});
 		}); //describe #elementMenu
+	});
+
+	describe('Component tests:', ()=>{
+		let component: ModelBuilderComponent;
+		let fixture: ComponentFixture<ModelBuilderComponent>;
+		beforeEach(async() => {
+			TestBed.configureTestingModule({
+				imports:[]
+			})
+			.compileComponents();
+			fixture = TestBed.createComponent(ModelBuilderComponent);
+			component = fixture.componentInstance;
+		});
+		it('onLoadModel should display the modelFileInput', ()=>{
+			fixture.detectChanges();
+			const input = fixture.debugElement.query(By.css('#modelFileInput'));
+			component.modelFileInput = new ElementRef(input.nativeElement);
+			const spy = spyOn(component.modelFileInput.nativeElement, 'click');
+			const event = new Event('click');
+			component.onLoadModel(event);
+			expect(spy).toHaveBeenCalled();
+		});
+
 	});
 
 });

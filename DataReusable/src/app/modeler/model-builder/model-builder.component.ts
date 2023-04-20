@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
@@ -70,12 +69,12 @@ export class ModelBuilderComponent implements OnInit {
 		reader.readAsText(this.modelFileInput.nativeElement.files[0]);	
 	}
 
-	onLoadModel(event:any){
+	onLoadModel(event:any): void{
 		event.preventDefault();
 		this.modelFileInput.nativeElement.click(); 
 	}
 
-	onExportModel(event:any){
+	onExportModel(event:any): void{
 		event.preventDefault();
 		/* convert model to text */
 		let elementsText = JSON.stringify(this.elements);
@@ -88,9 +87,8 @@ export class ModelBuilderComponent implements OnInit {
 		URL.revokeObjectURL(objectUrl);	
 	}
 
-	onFinishModel(event:any){
+	onFinishModel(event:any): void{
 		event.preventDefault();
-		
 		const dialogRef =  this.dialog.open(
 			FinishModelDialogComponent,
 			<MatDialogConfig<any>>{
