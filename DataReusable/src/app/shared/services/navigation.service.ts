@@ -25,7 +25,7 @@ export class NavigationService {
 				link: './loader', 
 				active: false, 
 				index: 1, 
-				disabled: false 
+				disabled: true 
 			},
 		]);
 	

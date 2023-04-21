@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Element } from 'src/app/shared/models/element'; 
 import { Attribute } from 'src/app/shared/models/attribute';
@@ -26,6 +27,7 @@ export class ModelBuilderComponent implements OnInit {
 	constructor(
 		private readonly shareModelServ: ShareModelService,
 		private readonly databaseService: DatabaseService,
+		private readonly navigationService: NavigationService,
 		public dialog: MatDialog,
 		private router: Router
 	) { }
@@ -117,6 +119,10 @@ export class ModelBuilderComponent implements OnInit {
 					.then(value => {
 						for(const v of value)
 							console.log(v);
+					})
+					.then(_=>{
+						this.navigationService.onTabToggleEnabled(0);
+						this.navigationService.onTabToggleEnabled(1);
 					});
 			}
 		});
