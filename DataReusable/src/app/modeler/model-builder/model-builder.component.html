@@ -1,6 +1,6 @@
 <div hidden>
 	<input 
-		(change)="onFileSelected($event)"
+		(change)="onFileSelected(this.modelFileInput.files)"
 		id="modelFileInput"
 		#modelFileInput
 		type="file"

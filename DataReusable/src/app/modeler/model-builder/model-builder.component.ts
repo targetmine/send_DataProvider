@@ -37,13 +37,26 @@ export class ModelBuilderComponent implements OnInit {
 		this.shareModelServ.relations.subscribe(data => this.relations = data );
   }
 
-	onFileSelected(event: any){
-		if (typeof (FileReader) === 'undefined') return;
-		
-		const reader = new FileReader();
-		reader.onload = (e: any) => {
-			let text = JSON.parse(e.target.result);
-			// parse elements
+	onFileSelected(files: any): void{
+		this.readFile(files[0])
+			.then(text => {
+				this.parseElements(text);
+				this.parseRelations(text);
+			});
+	}
+
+	readFile(file: File): Promise<any>{
+		return new Promise((resolve,reject) => {
+			const reader = new FileReader();
+			reader.onload = (e: any) => {
+				const data = JSON.parse(e.target.result);
+				resolve(data);
+			}
+			reader.readAsText(file);		
+		});
+	}
+	
+	parseElements(text: { elements: Element[]; }){
 			let eles: Element[] = [];
 			text.elements.forEach((value: any) => {
 				let t: Element = { name: value.name, attributes: [] } as Element;
@@ -51,24 +64,24 @@ export class ModelBuilderComponent implements OnInit {
 				eles.push(t);
 			});
 			this.shareModelServ.elements.next(eles);
-			// parse relations
-			let rels: Relation[] = [];
-			text.relations.forEach((value: any) => {
-				let r: Relation = { 
-					name: value.name, 
-					srcElement: value.srcElement,
-					srcAttribute: value.srcAttribute,
-					srcType: value.type,
-					trgElement: value.trgElement,
-					trgAttribute: value.trgAttribute,
-					trgType: value.trgType,
-					cardinality: value.cardinality
-				} as Relation;
-				rels.push(r);
-			});
-			this.shareModelServ.relations.next(rels);
-		};
-		reader.readAsText(this.modelFileInput.nativeElement.files[0]);	
+	}
+
+	parseRelations(text: { relations: Relation[]; }){
+		let rels: Relation[] = [];
+		text.relations.forEach((value: any) => {
+			let r: Relation = { 
+				name: value.name, 
+				srcElement: value.srcElement,
+				srcAttribute: value.srcAttribute,
+				srcType: value.type,
+				trgElement: value.trgElement,
+				trgAttribute: value.trgAttribute,
+				trgType: value.trgType,
+				cardinality: value.cardinality
+			} as Relation;
+			rels.push(r);
+		});
+		this.shareModelServ.relations.next(rels);
 	}
 
 	onLoadModel(event:any): void{

@@ -1,13 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { ModelBuilderComponent } from './model-builder.component';
 
-import { ModelerModule } from '../modeler.module';
-import { ShareModelService } from '../../shared/services/share-model.service';
+import { ModelerModule } from 'src/app/modeler/modeler.module';
+import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { DatabaseService } from 'src/app/shared/services/database.service';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { Element } from 'src/app/shared/models/element'; 
 import { Relation } from 'src/app/shared/models/relation';
 import { ElementRef, Injectable } from '@angular/core';
@@ -23,9 +24,14 @@ class mockShareModelService extends ShareModelService{
 }
 
 @Injectable()
-class mockDatabaseService extends DatabaseService{}
+class mockDatabaseService extends DatabaseService {}
+
+@Injectable()
+class mockNavigationService extends NavigationService {}
 
 fdescribe('ModelBuilderComponent:', () => {
+	let component: ModelBuilderComponent;
+	let fixture: ComponentFixture<ModelBuilderComponent>;
 
 	beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -33,27 +39,27 @@ fdescribe('ModelBuilderComponent:', () => {
 				HttpClientTestingModule,
 				ModelerModule	
 			],
-      declarations: [ ModelBuilderComponent ],
-    });
+      declarations: [ 
+				ModelBuilderComponent 
+			],
+			providers: [
+				mockShareModelService,
+				mockDatabaseService,
+				mockNavigationService
+			]
+    }).compileComponents();
+		fixture = TestBed.createComponent(ModelBuilderComponent);
+		component = fixture.componentInstance;
 	});
 
 	it('should create', () => {
-		const fixture = TestBed.createComponent(ModelBuilderComponent);
-		const component = fixture.componentInstance;
 		expect(component).toBeTruthy();
 	});
 
 	describe('Template tests:', () => {
 		let loader: HarnessLoader;
-		let component: ModelBuilderComponent;
-		let fixture: ComponentFixture<ModelBuilderComponent>;
+		let menu: MatMenuHarness;
 		beforeEach(async() => {
-			TestBed.configureTestingModule({
-				imports:[]
-			})
-			.compileComponents();
-			fixture = TestBed.createComponent(ModelBuilderComponent);
-			component = fixture.componentInstance;
 			loader = TestbedHarnessEnvironment.loader(fixture);
 		});
 
@@ -65,11 +71,18 @@ fdescribe('ModelBuilderComponent:', () => {
 			expect(await tb[0].getHarness(MatMenuHarness.with({selector: '#modelMenu'}))).toBeTruthy();
 			expect(await tb[0].getHarness(MatMenuHarness.with({selector: '#elementMenu'}))).toBeTruthy();
 		});
-
-		let menu: MatMenuHarness;
 		it('should not display the menu on start', async()=>{
 			menu = await loader.getHarness(MatMenuHarness.with({selector: '#modelMenu'}));
 			expect(await menu.isOpen()).toBeFalsy();
+		});
+		it('onLoadModel should display the modelFileInput', ()=>{
+			fixture.detectChanges();
+			const input = fixture.debugElement.query(By.css('#modelFileInput'));
+			component.modelFileInput = new ElementRef(input.nativeElement);
+			const spy = spyOn(component.modelFileInput.nativeElement, 'click');
+			const event = new Event('click');
+			component.onLoadModel(event);
+			expect(spy).toHaveBeenCalled();
 		});
 		
 		describe('Menu #modelMenu tests:', ()=>{
@@ -158,26 +171,56 @@ fdescribe('ModelBuilderComponent:', () => {
 	});
 
 	describe('Component tests:', ()=>{
-		let component: ModelBuilderComponent;
-		let fixture: ComponentFixture<ModelBuilderComponent>;
-		beforeEach(async() => {
-			TestBed.configureTestingModule({
-				imports:[]
-			})
-			.compileComponents();
-			fixture = TestBed.createComponent(ModelBuilderComponent);
-			component = fixture.componentInstance;
+		
+		it('onFileSelected() should call on to read the file', waitForAsync(() => {
+			const dummyJson = { elements:[], relations: [] };
+			const frspy = spyOn(component, 'readFile').and.resolveTo(dummyJson);
+			component.onFileSelected(new Blob());
+			expect(frspy).toHaveBeenCalled();
+		}));
+		it('readFile should return the json object from the file', async () => {
+			const dummyJson = { elements:[], relations: [] };
+			const dummyfile = new File(
+				['{"elements":[], "relations": []}'],
+				'filename', 
+				{type: 'text/json'}
+			);
+			const data = await component.readFile(dummyfile);
+			expect(data).toEqual(dummyJson);
 		});
-		it('onLoadModel should display the modelFileInput', ()=>{
+		it('when readFile is finished, the parsing should be requested', fakeAsync(()=>{
+			const dummyJson = { elements:[], relations: [] };
+			spyOn(component, 'readFile').and.resolveTo(dummyJson);
+			const elementspy = spyOn(component, 'parseElements');
+			const relationspy = spyOn(component, 'parseRelations');
+			component.onFileSelected(new File([""],'test'))
 			fixture.detectChanges();
-			const input = fixture.debugElement.query(By.css('#modelFileInput'));
-			component.modelFileInput = new ElementRef(input.nativeElement);
-			const spy = spyOn(component.modelFileInput.nativeElement, 'click');
-			const event = new Event('click');
-			component.onLoadModel(event);
-			expect(spy).toHaveBeenCalled();
-		});
-
+			tick();
+			expect(elementspy).toHaveBeenCalled();
+			expect(relationspy).toHaveBeenCalled();
+		}));
+		it('should parse all the elements', fakeAsync(()=>{
+			const dummyEles = { elements: [
+				{name: 'ele1', attributes: []} as Element, 
+				{name: 'ele2', attributes: []} as Element
+			]};
+			component.parseElements(dummyEles);
+			fixture.detectChanges();
+			tick();
+			expect(component.elements.length).toBe(2);
+			expect(component.elements[0].name).toBe('ele1');
+		}));
+		it('should parse all the relations', fakeAsync(()=>{
+			const dummyRels = { relations: [
+				{name: 'rel1'} as Relation, 
+				{name: 'rel2'} as Relation
+			]};
+			component.parseRelations(dummyRels);
+			fixture.detectChanges();
+			tick();
+			expect(component.relations.length).toBe(2);
+			expect(component.relations[0].name).toBe('rel1');
+		}));
 	});
 
 });
