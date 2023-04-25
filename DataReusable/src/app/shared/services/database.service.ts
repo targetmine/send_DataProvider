@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Element } from 'src/app/shared/models/element';
 import { Relation } from 'src/app/shared/models/relation';
-import { firstValueFrom } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,18 @@ export class DatabaseService {
   constructor(
 		private http: HttpClient
 	) { }
+
+	public saveModel(elements: Element[], relations: Relation[]): Promise<HttpResponse<Object>>{
+		const url = `${environment.serverURL}/provider/model/`;
+		const body = {
+			elements: elements,
+			relations: relations
+		}
+		return firstValueFrom(this.http.post(url, body, {
+			headers: {'Content-type': 'application/json'},
+			observe: 'response'
+		}));
+	}
 
 	public addElement(element: Element): Promise<HttpResponse<Object>>{
 		const url = `${environment.serverURL}/provider/element/`;

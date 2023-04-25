@@ -111,33 +111,35 @@ export class ModelBuilderComponent implements OnInit {
 			}
 		)
 		dialogRef.afterClosed().subscribe(result => {
-			if (result !== undefined){
-				this.router.navigate(['/loader']);
-				let eleRequests: Promise<HttpResponse<Object>>[] = [];
-				for(const element of this.elements)
-					eleRequests.push(this.databaseService.addElement(element))
+			if (result === undefined) return;
+			// request to create all the elements
+			let eleRequests: Promise<HttpResponse<Object>>[] = [];
+			for(const element of this.elements)
+				eleRequests.push(this.databaseService.addElement(element))
 				
-				Promise.allSettled(eleRequests)
-					.then(value => {
-						for(const v of value)
-							console.log(v);
-						return;
-					})
-					.then(() => {
-						let relRequests: Promise<HttpResponse<Object>>[] = [];
-						for(const relation of this.relations)
-							relRequests.push(this.databaseService.addRelation(relation));
-						return Promise.allSettled(relRequests);
-					})
-					.then(value => {
-						for(const v of value)
-							console.log(v);
-					})
-					.then(_=>{
-						this.navigationService.onTabToggleEnabled(0);
-						this.navigationService.onTabToggleEnabled(1);
-					});
-			}
+			Promise.allSettled(eleRequests)
+				// .then(requests => {
+				// 	requests.forEach(r => console.log(r));
+				// 	let relRequests: Promise<HttpResponse<Object>>[] = [];
+				// 	for(const relation of this.relations)
+				// 		relRequests.push(this.databaseService.addRelation(relation));
+					
+				// 	return Promise.allSettled(relRequests);
+				// })
+				.then(requests => {
+					requests.forEach(r => console.log(r));
+					return this.databaseService.saveModel(this.elements, this.relations);
+				})
+				.then(request => {
+					console.log(request);
+					// change to the loader tab
+					this.router.navigate(['/loader']);
+					this.navigationService.onTabToggleEnabled(0);
+					this.navigationService.onTabToggleEnabled(1);
+				})
+				.catch()
+				.finally();
+					
 		});
 	}
 
