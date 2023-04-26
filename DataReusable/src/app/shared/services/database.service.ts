@@ -80,18 +80,6 @@ export class DatabaseService {
 					headers: {'Content-type': 'application/json'},
 					observe: 'response'
 				}));
-			// case 'many to one':
-			// 	body.element = relation.srcElement;
-			// 	body.columns = [];
-			// 	eles
-			// 		.filter(e => e.name === relation.trgElement)
-			// 		.map(e => {
-			// 			e.attributes.forEach(a => {
-			// 				if(a.unique)
-			// 					body.columns.push({name: `${e.name}_${a.name}`, type: a.type})
-			// 			});
-			// 		});
-			// 	break;
 			default: //'many to many'
 				url = `${environment.serverURL}/provider/element/`;
 				body.name = `${relation.srcElement}${relation.srcAttribute}${relation.trgElement}${relation.trgAttribute}`;
@@ -107,18 +95,11 @@ export class DatabaseService {
 							}
 						});
 					});
-				console.log(body);
 				return firstValueFrom(this.http.post(url, body, {
 					headers: {'Content-type': 'application/json'},
 					observe: 'response'
 				}));
 		}
-		console.log('relation body', body);
-		// return new Promise((resolve, reject) => resolve(new HttpResponse<Object>({})));
-		return firstValueFrom(this.http.post(url, body, {
-			headers: {'Content-type': 'application/json'},
-			observe: 'response'
-		}));
 	}
 
 	public addRelationOneToOne(table: string, columns: any[]){
