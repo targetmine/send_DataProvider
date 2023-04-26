@@ -135,8 +135,8 @@ export class ModelDisplayComponent implements OnInit{
 		dialogRef.afterClosed().subscribe(result => {
 			if( result !== undefined ){
 				const trgType = this.elements.data.filter(n => n.name === result.element)[0].attributes.filter(a => a.name === result.attribute)[0].type;
-				let relName = `${srcEle[0]}${srcAttribute.slice(0,3)}_${result.element[0]}${result.attribute.slice(0,3)}_`;
-				relName += result.cardinality === 'one to one' ? '1to1' : result.cardinality === 'many to many' ? '*to*' : '1to*';
+				let relName = `${srcEle}${srcAttribute.slice(0,3)}_${result.element}${result.attribute.slice(0,3)}_`;
+				relName += result.cardinality === 'one to one' ? '1to1' : result.cardinality === 'many to many' ? 'mtom' : '1tom';
 				this.modelServ.addRelation({
 					name: relName,
 					srcElement: srcEle, 
