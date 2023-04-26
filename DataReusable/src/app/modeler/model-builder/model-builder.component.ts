@@ -118,16 +118,14 @@ export class ModelBuilderComponent implements OnInit {
 				eleRequests.push(this.databaseService.addElement(element))
 				
 			Promise.allSettled(eleRequests)
-				// .then(requests => {
-				// 	requests.forEach(r => console.log(r));
-				// 	let relRequests: Promise<HttpResponse<Object>>[] = [];
-				// 	for(const relation of this.relations)
-				// 		relRequests.push(this.databaseService.addRelation(relation));
+				.then(_ => {
+					let relRequests: Promise<HttpResponse<Object>>[] = [];
+					for(const relation of this.relations)
+						relRequests.push(this.databaseService.addRelation(relation));
 					
-				// 	return Promise.allSettled(relRequests);
-				// })
-				.then(requests => {
-					requests.forEach(r => console.log(r));
+					return Promise.allSettled(relRequests);
+				})
+				.then(_ => {
 					return this.databaseService.saveModel(this.elements, this.relations);
 				})
 				.then(request => {
@@ -139,7 +137,6 @@ export class ModelBuilderComponent implements OnInit {
 				})
 				.catch()
 				.finally();
-					
 		});
 	}
 

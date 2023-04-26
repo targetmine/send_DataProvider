@@ -3,7 +3,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Element } from 'src/app/shared/models/element';
 import { Relation } from 'src/app/shared/models/relation';
-import { first, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+import { ShareModelService } from './share-model.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { first, firstValueFrom } from 'rxjs';
 export class DatabaseService {
 
   constructor(
-		private http: HttpClient
+		private http: HttpClient,
+		private modelService: ShareModelService
 	) { }
 
 	public saveModel(elements: Element[], relations: Relation[]): Promise<HttpResponse<Object>>{
@@ -44,7 +46,79 @@ export class DatabaseService {
 	}
 
 	public addRelation(relation: Relation): Promise<HttpResponse<Object>>{
-		return new Promise((resolve, reject) => resolve(new HttpResponse<Object>({})));
+		let url = `${environment.serverURL}/provider/relation/${relation.name}`;
+		const eles = this.modelService.elements.getValue();
+		let body: any = {	};
+		switch (relation.cardinality){
+			case 'one to one': case 'many to one':
+				body.element = relation.srcElement;
+				body.columns = []
+				eles
+					.filter(e => e.name === relation.trgElement)
+					.map(e => {
+						e.attributes.forEach(a => {
+							if(a.unique)
+								body.columns.push({name: `${e.name}_${a.name}`, type: a.type});
+						});
+					});
+				return firstValueFrom(this.http.post(url, body, {
+					headers: {'Content-type': 'application/json'},
+					observe: 'response'
+				}));
+			case 'one to many':
+				body.element = relation.trgElement;
+				body.columns = [];
+				eles
+					.filter(e => e.name === relation.srcElement)
+					.map(e => {
+						e.attributes.forEach(a => {
+							if(a.unique)
+								body.columns.push({name: `${e.name}_${a.name}`, type: a.type})
+						});
+					});
+				return firstValueFrom(this.http.post(url, body, {
+					headers: {'Content-type': 'application/json'},
+					observe: 'response'
+				}));
+			// case 'many to one':
+			// 	body.element = relation.srcElement;
+			// 	body.columns = [];
+			// 	eles
+			// 		.filter(e => e.name === relation.trgElement)
+			// 		.map(e => {
+			// 			e.attributes.forEach(a => {
+			// 				if(a.unique)
+			// 					body.columns.push({name: `${e.name}_${a.name}`, type: a.type})
+			// 			});
+			// 		});
+			// 	break;
+			default: //'many to many'
+				url = `${environment.serverURL}/provider/element/`;
+				body.name = `${relation.srcElement}${relation.srcAttribute}${relation.trgElement}${relation.trgAttribute}`;
+				body.columns = [];
+				body.primaryKeys = [];
+				eles
+					.filter(e => e.name === relation.srcElement || e.name === relation.trgElement)
+					.map(e => {
+						e.attributes.forEach(a => {
+							if (a.unique){
+								body.columns.push(`${e.name}_${a.name} ${a.type}`);
+								body.primaryKeys.push(`${e.name}_${a.name}`);
+							}
+						});
+					});
+				console.log(body);
+				return firstValueFrom(this.http.post(url, body, {
+					headers: {'Content-type': 'application/json'},
+					observe: 'response'
+				}));
+		}
+		console.log('relation body', body);
+		// return new Promise((resolve, reject) => resolve(new HttpResponse<Object>({})));
+		return firstValueFrom(this.http.post(url, body, {
+			headers: {'Content-type': 'application/json'},
+			observe: 'response'
+		}));
 	}
 
 	public addRelationOneToOne(table: string, columns: any[]){
@@ -54,15 +128,6 @@ export class DatabaseService {
 			headers: { 'Content-type': 'application/json'},
 			observe: 'response'
 		}));
-	}
-
-	public addRelationOneToMany(table: string, columns: any[]){
-		// should be provider/columns/element
-		const url = `${environment.serverURL}/provider/relation/one-to-one/`;
-	}
-	
-	public addRelationManyToMany(){
-		const url = `${environment.serverURL}/provider/relation/many-to-many/`;
 	}
 
 	public uploadElement(element: string, primaryKeys: string[], columns: string[], data: any){
