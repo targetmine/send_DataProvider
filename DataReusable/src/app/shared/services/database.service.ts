@@ -50,7 +50,7 @@ export class DatabaseService {
 		const eles = this.modelService.elements.getValue();
 		let body: any = {	};
 		switch (relation.cardinality){
-			case 'one to one': case 'many to one':
+			case 'one to one':
 				body.element = relation.srcElement;
 				body.columns = []
 				eles

@@ -115,28 +115,30 @@ export class ModelBuilderComponent implements OnInit {
 			// request to create all the elements
 			let eleRequests: Promise<HttpResponse<Object>>[] = [];
 			for(const element of this.elements)
-				eleRequests.push(this.databaseService.addElement(element))
+				eleRequests.push(this.databaseService.addElement(element));
 				
 			Promise.allSettled(eleRequests)
-				.then(_ => {
-					let relRequests: Promise<HttpResponse<Object>>[] = [];
-					for(const relation of this.relations)
-						relRequests.push(this.databaseService.addRelation(relation));
-					
-					return Promise.allSettled(relRequests);
-				})
-				.then(_ => {
-					return this.databaseService.saveModel(this.elements, this.relations);
-				})
-				.then(request => {
-					console.log(request);
-					// change to the loader tab
-					this.router.navigate(['/loader']);
-					this.navigationService.onTabToggleEnabled(0);
-					this.navigationService.onTabToggleEnabled(1);
-				})
-				.catch()
-				.finally();
+			.then(() => {
+				let relRequests: Promise<HttpResponse<Object>>[] = [];
+				for(const relation of this.relations)
+					relRequests.push(this.databaseService.addRelation(relation));
+				return Promise.allSettled(relRequests);
+			})
+			.then(() => {
+				this.databaseService.saveModel(this.elements, this.relations);
+			})
+			.then(() => {
+				// change to the loader tab
+				this.router.navigate(['/loader']);
+				this.navigationService.onTabToggleEnabled(0);
+				this.navigationService.onTabToggleEnabled(1);
+			})
+			.catch(error => {
+				console.log('finish model error');
+			})
+			.finally(()=>{
+				console.log('finally');
+			});
 		});
 	}
 
