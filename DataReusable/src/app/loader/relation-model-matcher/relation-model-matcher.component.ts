@@ -62,23 +62,14 @@ export class RelationModelMatcherComponent implements OnInit {
 					}
 					case 'one to many': {
 						this.uploadOneToMany(rel, src_idx, trg_idx, use_fr)
-							.then()
+							.then(response => console.log(response))
 							.catch(error => console.error(error));
 						break;
 					}
 					case 'many to many': {
-						// const pkeys = [`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`];
-						// let columns = [`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`];
-						// let types: AttributeType[] = [];
-						// const filteredData = data?.map(row => {
-
-						// });
-						// this.databaseService.uploadElement(
-						// 	element,
-						// 	pkeys,
-						// 	columns,
-						// 	filteredData
-						// )
+						this.uploadManyToMany(rel, src_idx, trg_idx, use_fr)
+							.then(response => console.log(response))
+							.catch(error => console.error(error));
 						break;
 					}
 				}
@@ -123,5 +114,22 @@ export class RelationModelMatcherComponent implements OnInit {
 			columns, // what columns are we loading
 			filteredData // and the data.. each row contains value for pkeys and columns
 		);
-}
+	}
+
+	uploadManyToMany(rel: Relation, src_idx: number, trg_idx: number, use_fr: number):
+		Promise<HttpResponse<Object>>{
+			const data = this.filePreviewService.fileData?.slice(use_fr);
+			const pkeys: string[] = [`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`];
+			const columns: string[] = [	`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`	];
+			const filteredData = data?.map(row => {
+				const values = row.split(',');
+				return [`'${values[src_idx]}'`, `'${values[trg_idx]}'`];
+			})
+			return this.databaseService.uploadElement(
+				`${rel.srcElement}_${rel.trgElement}`,
+				pkeys,
+				columns,
+				filteredData
+			)
+		}
 }
