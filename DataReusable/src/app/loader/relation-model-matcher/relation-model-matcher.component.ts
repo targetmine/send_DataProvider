@@ -7,6 +7,7 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 import { FilePreviewService } from 'src/app/shared/services/file-preview.service';
 import { ShareModelService } from 'src/app/shared/services/share-model.service';
 import { AttributeType } from 'src/app/shared/models/attribute';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-relation-model-matcher',
@@ -42,59 +43,88 @@ export class RelationModelMatcherComponent implements OnInit {
   }
 
 	onSubmit(): void {
-		const elements = this.modelService.elements.value;
+		// all the relations in the model 
 		const relations = this.modelService.relations.value;
 		relations.map(rel => {
 			const src_col = this.relationForm.get(`${rel.name}_src`)?.value;
 			const trg_col = this.relationForm.get(`${rel.name}_trg`)?.value;
-			
-			if( src_col && trg_col ){
-				const idx = [
-					this.previewTableColumns.indexOf(src_col),
-					this.previewTableColumns.indexOf(trg_col),				
-				];
-				const fr = this.filePreviewService.includeColumnNames ? 1 : 0;
-				const data = this.filePreviewService.fileData?.slice(fr);
+			// for which relation in the model am I trying to upload data	
+			if( src_col && trg_col ){	
+				const src_idx = this.previewTableColumns.indexOf(src_col); //index of source column
+				const trg_idx = this.previewTableColumns.indexOf(trg_col); //index of target column
+				const use_fr = this.filePreviewService.includeColumnNames ? 1 : 0;		
 				switch (rel.cardinality){
 					case 'one to one': {	
-						const pkeys = [rel.srcAttribute];
-						let columns = [rel.srcAttribute];
-						let types: AttributeType[] = [];
-						elements
-							.filter (e => e.name === rel.trgElement)
-							.reduce((e,c) => [...e, ...c.attributes], [] as Attribute[])
-							.forEach(a => { 
-								if(a.unique){ 
-									columns.push(`${rel.trgElement}_${a.name}`);
-									types.push(a.type);
-								}
-							});
-						const filteredData = data?.map(row => {
-							const values = row.split(',');
-							let r: any[] = [];
-							idx.forEach((i,j) => {
-								if( types[j] === 'text' || types[j] === 'varchar(40)')
-									r.push(`'${values[i]}'`);
-								else
-									r.push(`'${values[i]}'`);
-							});
-							return r;
-						});
-					
-						this.databaseService.uploadElement(
-							rel.srcElement,
-							pkeys,
-							columns,
-							filteredData
-						)
-						.then(response => console.log(response))
-						.catch(error => console.error(error))
-						;
+						this.uploadOneToOne(rel, src_idx, trg_idx, use_fr)
+							.then(response => console.log(response))
+							.catch(error => console.error(error));
+						break;
 					}
-					
+					case 'one to many': {
+						// const pkeys = [rel.trgAttribute];
+						// let columns = [rel.trgAttribute];
+						// let types: AttributeType[] = [];
+						// elements
+						// 	.filter(e => e.name === rel.srcElement) // search for the source Element in the model
+						// 	.reduce((e,c) => [...e, ...c.attributes], [] as Attribute[]) // extract only array of attributes
+						// 	.forEach(a => {
+						// 		if(a.unique){
+						// 			columns.push(`${rel.srcElement}_${a.name}`);
+						// 			types.push(a.type);
+						// 		}
+						// 	})
+						// const filteredData = data?.map(row => {
+
+						// });
+						// //element, primarykeys, columns, data
+						// this.databaseService.uploadElement(
+						// 	rel.trgElement,
+						// 	pkeys,
+						// 	columns,
+						// 	filteredData
+						// )
+						// .then(response => console.log(response))
+						// .catch(error => console.error(error));
+						break;
+					}
+					case 'many to many': {
+						// const pkeys = [`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`];
+						// let columns = [`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`];
+						// let types: AttributeType[] = [];
+						// const filteredData = data?.map(row => {
+
+						// });
+						// this.databaseService.uploadElement(
+						// 	element,
+						// 	pkeys,
+						// 	columns,
+						// 	filteredData
+						// )
+						break;
+					}
 				}
 			}	
+		});	
+	}
+
+	uploadOneToOne(rel: Relation, src_idx: number, trg_idx: number, use_fr: number): 
+		Promise<HttpResponse<Object>> {
+		
+		const data = this.filePreviewService.fileData?.slice(use_fr);
+		const pkeys: string[] = [rel.srcAttribute];
+		const columns: string[] = [rel.srcAttribute, `${rel.trgElement}_${rel.trgAttribute}`];
+		
+		const filteredData = data?.map(row => {
+			const values = row.split(',');
+			return [`'${values[src_idx]}'`, `'${values[trg_idx]}'`];
 		});
-			
+	
+		console.log(filteredData);
+		return this.databaseService.uploadElement(
+			rel.srcElement, // to which element we are loading
+			pkeys, // what are the primary keys of the element
+			columns, // what columns are we loading
+			filteredData // and the data.. each row contains value for pkeys and columns
+		);
 	}
 }
