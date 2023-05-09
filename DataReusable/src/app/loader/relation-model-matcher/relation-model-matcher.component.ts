@@ -61,30 +61,9 @@ export class RelationModelMatcherComponent implements OnInit {
 						break;
 					}
 					case 'one to many': {
-						// const pkeys = [rel.trgAttribute];
-						// let columns = [rel.trgAttribute];
-						// let types: AttributeType[] = [];
-						// elements
-						// 	.filter(e => e.name === rel.srcElement) // search for the source Element in the model
-						// 	.reduce((e,c) => [...e, ...c.attributes], [] as Attribute[]) // extract only array of attributes
-						// 	.forEach(a => {
-						// 		if(a.unique){
-						// 			columns.push(`${rel.srcElement}_${a.name}`);
-						// 			types.push(a.type);
-						// 		}
-						// 	})
-						// const filteredData = data?.map(row => {
-
-						// });
-						// //element, primarykeys, columns, data
-						// this.databaseService.uploadElement(
-						// 	rel.trgElement,
-						// 	pkeys,
-						// 	columns,
-						// 	filteredData
-						// )
-						// .then(response => console.log(response))
-						// .catch(error => console.error(error));
+						this.uploadOneToMany(rel, src_idx, trg_idx, use_fr)
+							.then()
+							.catch(error => console.error(error));
 						break;
 					}
 					case 'many to many': {
@@ -119,7 +98,6 @@ export class RelationModelMatcherComponent implements OnInit {
 			return [`'${values[src_idx]}'`, `'${values[trg_idx]}'`];
 		});
 	
-		console.log(filteredData);
 		return this.databaseService.uploadElement(
 			rel.srcElement, // to which element we are loading
 			pkeys, // what are the primary keys of the element
@@ -127,4 +105,23 @@ export class RelationModelMatcherComponent implements OnInit {
 			filteredData // and the data.. each row contains value for pkeys and columns
 		);
 	}
+
+	uploadOneToMany(rel: Relation, src_idx: number, trg_idx: number, use_fr: number): 
+		Promise<HttpResponse<Object>> {
+		
+		const data = this.filePreviewService.fileData?.slice(use_fr);
+		const pkeys: string[] = [rel.trgAttribute];
+		const columns: string[] = [rel.trgAttribute, `${rel.srcElement}_${rel.srcAttribute}`];
+		const filteredData = data?.map(row => {
+			const values = row.split(',');
+			return [`'${values[trg_idx]}'`, `'${values[src_idx]}'`];
+		});
+
+		return this.databaseService.uploadElement(
+			rel.trgElement, // to which element we are loading
+			pkeys, // what are the primary keys of the element
+			columns, // what columns are we loading
+			filteredData // and the data.. each row contains value for pkeys and columns
+		);
+}
 }
