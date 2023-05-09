@@ -1,15 +1,16 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DatabaseService } from './database.service';
+import { ShareModelService } from './share-model.service';
 
 describe('DockerService', () => {
-  let httpClient: HttpClient;
-	let httpTestingController: HttpTestingController;
-	let service: DatabaseService;
+  let service: DatabaseService;
+	let httpClient: HttpClient;
+	let smService: ShareModelService;
 	
   beforeEach(() => {
-    service = new DatabaseService(httpClient);
+		TestBed.configureTestingModule({});
+    service = new DatabaseService(httpClient, smService);
   });
 
   it('should be created', () => {
