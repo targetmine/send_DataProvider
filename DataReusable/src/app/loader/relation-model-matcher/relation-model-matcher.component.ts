@@ -86,7 +86,7 @@ export class RelationModelMatcherComponent implements OnInit {
 		
 		const filteredData = data?.map(row => {
 			const values = row.split(',');
-			return [`'${values[src_idx]}'`, `'${values[trg_idx]}'`];
+			return [`${values[src_idx]}`, `${values[trg_idx]}`];
 		});
 	
 		return this.databaseService.uploadElement(
@@ -105,7 +105,7 @@ export class RelationModelMatcherComponent implements OnInit {
 		const columns: string[] = [rel.trgAttribute, `${rel.srcElement}_${rel.srcAttribute}`];
 		const filteredData = data?.map(row => {
 			const values = row.split(',');
-			return [`'${values[trg_idx]}'`, `'${values[src_idx]}'`];
+			return [`${values[trg_idx]}`, `${values[src_idx]}`];
 		});
 
 		return this.databaseService.uploadElement(
@@ -123,7 +123,7 @@ export class RelationModelMatcherComponent implements OnInit {
 			const columns: string[] = [	`src_${rel.srcAttribute}`, `trg_${rel.trgAttribute}`	];
 			const filteredData = data?.map(row => {
 				const values = row.split(',');
-				return [`'${values[src_idx]}'`, `'${values[trg_idx]}'`];
+				return [`${values[src_idx]}`, `${values[trg_idx]}`];
 			})
 			return this.databaseService.uploadElement(
 				`${rel.srcElement}_${rel.trgElement}`,
