@@ -1,13 +1,14 @@
 services:
-  db:
+  datasharing_db:
     image: postgres
     container_name: datasharing_db    
     restart: unless-stopped
     ports:
-      - 5433:5432
+      - 127.0.0.1:5433:5432
     volumes:
       - datasharing_data:/var/lib/postgres/data
     environment:
+      - POSTGRES_HOST=datasharing_db
       - POSTGRES_PASSWORD=example
       - PGDATA=/var/lib/postgres/data
     healthcheck:
@@ -17,32 +18,30 @@ services:
       retries: 5
     networks:
       datasharing_net:
-        # ipv4_address: 172.0.0.2      
 
-  api:
+  datasharing_backend:
     container_name: datasharing_backend
     image: rallendes/datasharing_backend
     restart: unless-stopped
     ports:
-      - 5000:5000
+      - 127.0.0.1:5000:5000
     volumes:
       - datasharing_data:/etc/data
     networks:
       datasharing_net:
-        # ipv4_address: 172.0.0.1
+    depends_on:
+      - datasharing_db
 
-  builder:
+  datasharing_builder:
     container_name: datasharing_builder
     image: rallendes/datasharing_builder
     restart: unless-stopped
     ports:
-      - 4200:80 
+      - 127.0.0.1:4200:80 
     networks:
       datasharing_net:
-        # ipv4_address: 172.0.0.3
-    
-  
-
+    depends_on:
+      - datasharing_db
 
 volumes:
   datasharing_data:
@@ -51,9 +50,6 @@ volumes:
 networks:
   datasharing_net:
     driver: bridge
-    # ipam: 
-    #   config:
-    #   - subnet: 172.0.0.0/8
-    #     gateway: 172.0.0.254
+
 
 
