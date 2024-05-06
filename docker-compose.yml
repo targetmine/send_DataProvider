@@ -7,6 +7,9 @@ services:
       - 127.0.0.1:5433:5432
     volumes:
       - datasharing_data:/var/lib/postgres/data
+      - type: bind
+        source: ./backup
+        target: /backup
     environment:
       - POSTGRES_HOST=datasharing_db
       - POSTGRES_PASSWORD=example
