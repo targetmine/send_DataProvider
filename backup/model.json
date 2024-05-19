@@ -1,0 +1,4 @@
+{
+	"elements": [{"name":"Gene","attributes":[{"name":"geneid","type":"integer","unique":true},{"name":"ab40","type":"double precision","unique":false},{"name":"ab42","type":"double precision","unique":false}]}],
+	"relations": [{"name":"Genegen_Genegen_mtom","srcElement":"Gene","srcAttribute":"geneid","srcType":"integer","trgElement":"Gene","trgAttribute":"geneid","trgType":"integer","cardinality":"many to many"}]
+}
