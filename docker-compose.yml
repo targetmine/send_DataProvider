@@ -1,17 +1,17 @@
 services:
-  datasharing_db:
+  send_db:
     image: postgres
-    container_name: datasharing_db    
+    container_name: send_db    
     restart: unless-stopped
     ports:
       - 127.0.0.1:5433:5432
     volumes:
-      - datasharing_data:/var/lib/postgres/data
+      - send_data:/var/lib/postgres/data
       - type: bind
         source: ./backup
         target: /backup
     environment:
-      - POSTGRES_HOST=datasharing_db
+      - POSTGRES_HOST=send_db
       - POSTGRES_PASSWORD=example
       - PGDATA=/var/lib/postgres/data
     healthcheck:
@@ -20,39 +20,36 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      datasharing_net:
+      send_net:
 
-  datasharing_backend:
-    container_name: datasharing_backend
+  send_backend:
+    container_name: send_backend
     image: rallendes/datasharing_backend
     restart: unless-stopped
     ports:
       - 127.0.0.1:5000:5000
     volumes:
-      - datasharing_data:/etc/data
+      - send_data:/etc/data
     networks:
-      datasharing_net:
+      send_net:
     depends_on:
-      - datasharing_db
+      - send_db
 
-  datasharing_builder:
-    container_name: datasharing_builder
+  send_builder:
+    container_name: send_builder
     image: rallendes/datasharing_builder
     restart: unless-stopped
     ports:
       - 127.0.0.1:4200:80 
     networks:
-      datasharing_net:
+      send_net:
     depends_on:
-      - datasharing_db
+      - send_db
 
 volumes:
-  datasharing_data:
-    name: datasharing_volume
+  send_data:
+    name: send_volume
 
 networks:
-  datasharing_net:
+  send_net:
     driver: bridge
-
-
-
