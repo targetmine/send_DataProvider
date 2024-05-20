@@ -1,5 +1,5 @@
 services:
-  send_db:
+  datasharing_db:
     image: postgres
     container_name: send_db    
     restart: unless-stopped
@@ -11,7 +11,7 @@ services:
         source: ./backup
         target: /backup
     environment:
-      - POSTGRES_HOST=send_db
+      - POSTGRES_HOST=datasharing_db
       - POSTGRES_PASSWORD=example
       - PGDATA=/var/lib/postgres/data
     healthcheck:
@@ -33,7 +33,7 @@ services:
     networks:
       send_net:
     depends_on:
-      - send_db
+      - datasharing_db
 
   send_builder:
     container_name: send_builder
@@ -44,7 +44,7 @@ services:
     networks:
       send_net:
     depends_on:
-      - send_db
+      - datasharing_db
 
 volumes:
   send_data:
