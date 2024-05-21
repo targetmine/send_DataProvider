@@ -24,7 +24,7 @@ services:
 
   send_backend:
     container_name: send_backend
-    image: rallendes/datasharing_backend
+    image: rallendes/send_backend
     restart: unless-stopped
     ports:
       - 127.0.0.1:5000:5000
@@ -37,7 +37,7 @@ services:
 
   send_builder:
     container_name: send_builder
-    image: rallendes/datasharing_builder
+    image: rallendes/send_provider
     restart: unless-stopped
     ports:
       - 127.0.0.1:4200:80 
