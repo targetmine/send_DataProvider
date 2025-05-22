@@ -19,6 +19,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    command: /bin/sh -c 'echo "#! /bin/sh" >> /bin/send_dump &&
+      echo "pg_dump --dbname=postgresql://postgres:example@datasharing_db:5432/postgres -f ./backup/backup.sql" >> /bin/send_dump &&
+      chmod u+x /bin/send_dump &&
+      docker-entrypoint.sh -c "shared_buffers=256MB" -c "max_connections=200"'
     networks:
       send_net:
 
