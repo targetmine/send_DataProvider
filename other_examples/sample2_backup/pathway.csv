@@ -1,0 +1,327 @@
+pathway_id,pathway_name
+R-HSA-1227986,Signaling by ERBB2
+R-HSA-1257604,PI3K/AKT Signaling
+R-HSA-1280218,Adaptive Immune System
+R-HSA-162582,Signaling Pathways
+R-HSA-168256,Immune System
+R-HSA-170834,Signaling by TGF-beta Receptor Complex
+R-HSA-212436,Generic Transcription Pathway
+R-HSA-2173788,Downregulation of TGF-beta receptor signaling
+R-HSA-2173789,TGF-beta receptor signaling activates SMADs
+R-HSA-5213460,RIPK1-mediated regulated necrosis
+R-HSA-5218859,Regulated Necrosis
+R-HSA-5357801,Programmed Cell Death
+R-HSA-5357905,Regulation of TNFR1 signaling
+R-HSA-5675482,Regulation of necroptotic cell death
+R-HSA-6807070,PTEN Regulation
+R-HSA-73857,RNA Polymerase II Transcription
+R-HSA-73887,Death Receptor Signaling
+R-HSA-74160,Gene expression (Transcription)
+R-HSA-75893,TNF signaling
+R-HSA-8863795,Downregulation of ERBB2 signaling
+R-HSA-8878166,Transcriptional regulation by RUNX2
+R-HSA-8939902,Regulation of RUNX2 expression and activity
+R-HSA-8948751,Regulation of PTEN stability and activity
+R-HSA-9006925,Intracellular signaling by second messengers
+R-HSA-9006934,Signaling by Receptor Tyrosine Kinases
+R-HSA-9006936,Signaling by TGFB family members
+R-HSA-983168,Antigen processing: Ubiquitination & Proteasome degradation
+R-HSA-983169,Class I MHC mediated antigen processing & presentation
+R-HSA-2262752,Cellular responses to stress
+R-HSA-3371497,HSP90 chaperone cycle for SHRs
+R-HSA-8953897,Cellular responses to stimuli
+R-HSA-168249,Innate Immune System
+R-HSA-6798695,Neutrophil degranulation
+R-HSA-1430728,Metabolism
+R-HSA-1483206,Glycerophospholipid biosynthesis
+R-HSA-1483226,Synthesis of PI
+R-HSA-1483257,Phospholipid metabolism
+R-HSA-556833,Metabolism of lipids
+R-HSA-159227,Transport of the SLBP independent Mature mRNA
+R-HSA-159230,Transport of the SLBP Dependant Mature mRNA
+R-HSA-159231,Transport of Mature mRNA Derived from an Intronless Transcript
+R-HSA-159234,Transport of Mature mRNAs Derived from Intronless Transcripts
+R-HSA-159236,Transport of Mature mRNA derived from an Intron-Containing Transcript
+R-HSA-72202,Transport of Mature Transcript to Cytoplasm
+R-HSA-72203,Processing of Capped Intron-Containing Pre-mRNA
+R-HSA-8953854,Metabolism of RNA
+R-HSA-199991,Membrane Trafficking
+R-HSA-199992,trans-Golgi Network Vesicle Budding
+R-HSA-381426,Regulation of IGF Activity by IGFBP
+R-HSA-392499,Metabolism of proteins
+R-HSA-432722,Golgi Associated Vesicle Biogenesis
+R-HSA-5653656,Vesicle-mediated transport
+R-HSA-597592,Post-translational protein modification
+R-HSA-6811440,Retrograde transport at the Trans-Golgi-Network
+R-HSA-6811442,Intra-Golgi and retrograde Golgi-to-ER traffic
+R-HSA-8856825,Cargo recognition for clathrin-mediated endocytosis
+R-HSA-8856828,Clathrin-mediated endocytosis
+R-HSA-8957275,Post-translational protein phosphorylation
+R-HSA-1614517,Sulfide oxidation to sulfate
+R-HSA-1614558,Degradation of cysteine and homocysteine
+R-HSA-1614635,Sulfur amino acid metabolism
+R-HSA-382551,Transport of small molecules
+R-HSA-425393,Transport of inorganic cations/anions and amino acids/oligopeptides
+R-HSA-425407,SLC-mediated transmembrane transport
+R-HSA-428643,Organic anion transporters
+R-HSA-71291,Amino acid and derivative metabolism
+R-HSA-163125,Post-translational modification: synthesis of GPI-anchored proteins
+R-HSA-5621480,Dectin-2 family
+R-HSA-5621481,C-type lectin receptors (CLRs)
+R-HSA-1266738,Developmental Biology
+R-HSA-372790,Signaling by GPCR
+R-HSA-373076,Class A/1 (Rhodopsin-like receptors)
+R-HSA-375276,Peptide ligand-binding receptors
+R-HSA-388396,GPCR downstream signalling
+R-HSA-416476,G alpha (q) signalling events
+R-HSA-500792,GPCR ligand binding
+R-HSA-9730414,MITF-M-regulated melanocyte development
+R-HSA-9856649,Transcriptional and post-translational regulation of MITF-M expression and activity
+R-HSA-2682334,EPH-Ephrin signaling
+R-HSA-3928665,EPH-ephrin mediated repulsion of cells
+R-HSA-422475,Axon guidance
+R-HSA-9675108,Nervous system development
+R-HSA-977225,Amyloid fiber formation
+R-HSA-6811438,Intra-Golgi traffic
+R-HSA-174824,Lipoprotein metabolism
+R-HSA-8866427,VLDLR internalisation and degradation
+R-HSA-8964038,LDL clearance
+R-HSA-8964043,Plasma lipoprotein clearance
+R-HSA-198933,Immunoregulatory interactions between a Lymphoid and a non-Lymphoid cell
+R-HSA-194315,Signaling by Rho GTPases
+R-HSA-8980692,RHOA GTPase cycle
+R-HSA-9012999,RHO GTPase cycle
+R-HSA-9716542,"Signaling by Rho GTPases, Miro GTPases and RHOBTB3"
+R-HSA-9614085,FOXO-mediated transcription
+R-HSA-9617828,FOXO-mediated transcription of cell cycle genes
+R-HSA-109581,Apoptosis
+R-HSA-111465,Apoptotic cleavage of cellular proteins
+R-HSA-1280215,Cytokine Signaling in Immune system
+R-HSA-166016,Toll Like Receptor 4 (TLR4) Cascade
+R-HSA-166166,MyD88-independent TLR4 cascade
+R-HSA-168164,Toll Like Receptor 3 (TLR3) Cascade
+R-HSA-168638,NOD1/2 Signaling Pathway
+R-HSA-168643,"Nucleotide-binding domain, leucine rich repeat containing receptor (NLR) signaling pathways"
+R-HSA-168898,Toll-like Receptor Cascades
+R-HSA-168927,"TICAM1, RIP1-mediated IKK complex recruitment"
+R-HSA-5357786,TNFR1-induced proapoptotic signaling
+R-HSA-5357956,TNFR1-induced NF-kappa-B signaling pathway
+R-HSA-5668541,TNFR2 non-canonical NF-kB pathway
+R-HSA-5676594,TNF receptor superfamily (TNFSF) members mediating non-canonical NF-kB pathway
+R-HSA-5688426,Deubiquitination
+R-HSA-5689880,Ub-specific processing proteases
+R-HSA-75153,Apoptotic execution phase
+R-HSA-937041,IKK complex recruitment mediated by RIP1
+R-HSA-937061,TRIF (TICAM1)-mediated TLR4 signaling
+R-HSA-9841251,Mitochondrial unfolded protein response (UPRmt)
+R-HSA-194138,Signaling by VEGF
+R-HSA-4420097,VEGFA-VEGFR2 Pathway
+R-HSA-450408,AUF1 (hnRNP D0) binds and destabilizes mRNA
+R-HSA-450531,Regulation of mRNA stability by proteins that bind AU-rich elements
+R-HSA-5683057,MAPK family signaling cascades
+R-HSA-5687128,MAPK6/MAPK4 signaling
+R-HSA-1630316,Glycosaminoglycan metabolism
+R-HSA-1638091,Heparan sulfate/heparin (HS-GAG) metabolism
+R-HSA-1643685,Disease
+R-HSA-1793185,Chondroitin sulfate/dermatan sulfate metabolism
+R-HSA-2024096,HS-GAG degradation
+R-HSA-2024101,CS/DS degradation
+R-HSA-2206281,Mucopolysaccharidoses
+R-HSA-2206296,MPS II - Hunter syndrome
+R-HSA-5663084,Diseases of carbohydrate metabolism
+R-HSA-5668914,Diseases of metabolism
+R-HSA-71387,Carbohydrate metabolism
+R-HSA-449147,Signaling by Interleukins
+R-HSA-451927,Interleukin-2 family signaling
+R-HSA-512988,"Interleukin-3, Interleukin-5 and GM-CSF signaling"
+R-HSA-5673001,RAF/MAP kinase cascade
+R-HSA-5684996,ERK1/ERK2 pathway
+R-HSA-912526,Interleukin receptor SHC signaling
+R-HSA-447115,Interleukin-12 family signaling
+R-HSA-9020591,Interleukin-12 signaling
+R-HSA-9020933,Interleukin-23 signaling
+R-HSA-109582,Hemostasis
+R-HSA-114608,Platelet degranulation
+R-HSA-76002,"Platelet activation, signaling and aggregation"
+R-HSA-76005,Response to elevated platelet cytosolic Ca2+
+R-HSA-1474228,Degradation of the extracellular matrix
+R-HSA-1474244,Extracellular matrix organization
+R-HSA-1592389,Activation of Matrix Metalloproteinases
+R-HSA-195258,RHO GTPase Effectors
+R-HSA-5625740,RHO GTPases activate PKNs
+R-HSA-5625886,Activated PKN1 stimulates transcription of AR (androgen receptor) regulated genes KLK2 and KLK3
+R-HSA-196854,Metabolism of vitamins and cofactors
+R-HSA-2187338,Visual phototransduction
+R-HSA-6806667,Metabolism of fat-soluble vitamins
+R-HSA-8964026,Chylomicron clearance
+R-HSA-9709957,Sensory Perception
+R-HSA-975634,Retinoid metabolism and transport
+R-HSA-186763,Downstream signal transduction
+R-HSA-186797,Signaling by PDGF
+R-HSA-199418,Negative regulation of the PI3K/AKT network
+R-HSA-2219528,PI3K/AKT Signaling in Cancer
+R-HSA-2219530,Constitutive Signaling by Aberrant PI3K in Cancer
+R-HSA-5663202,Diseases of signal transduction by growth factor receptors and second messengers
+R-HSA-6811558,"PI5P, PP2A and IER3 Regulate PI3K/AKT Signaling"
+R-HSA-9671555,Signaling by PDGFR in disease
+R-HSA-9673767,"Signaling by PDGFRA transmembrane, juxtamembrane and kinase domain mutants"
+R-HSA-9673770,Signaling by PDGFRA extracellular domain mutants
+R-HSA-9674396,Imatinib-resistant PDGFR mutants
+R-HSA-9674401,Sunitinib-resistant PDGFR mutants
+R-HSA-9674403,Regorafenib-resistant PDGFR mutants
+R-HSA-9674404,Sorafenib-resistant PDGFR mutants
+R-HSA-9674415,Drug resistance of PDGFR mutants
+R-HSA-9674428,PDGFR mutants bind TKIs
+R-HSA-381038,XBP1(S) activates chaperone genes
+R-HSA-381070,IRE1alpha activates chaperones
+R-HSA-381119,Unfolded Protein Response (UPR)
+R-HSA-9013425,RHOT1 GTPase cycle
+R-HSA-9715370,Miro GTPase Cycle
+R-HSA-6802952,Signaling by BRAF and RAF1 fusions
+R-HSA-6802957,Oncogenic MAPK signaling
+R-HSA-446203,Asparagine N-linked glycosylation
+R-HSA-532668,N-glycan trimming in the ER and Calnexin/Calreticulin cycle
+R-HSA-901032,ER Quality Control Compartment (ERQC)
+R-HSA-901042,Calnexin/calreticulin cycle
+R-HSA-373080,Class B/2 (Secretin family receptors)
+R-HSA-5358351,Signaling by Hedgehog
+R-HSA-5610787,Hedgehog 'off' state
+R-HSA-5632681,Ligand-receptor interactions
+R-HSA-5632684,Hedgehog 'on' state
+R-HSA-5635838,Activation of SMO
+R-HSA-156827,L13a-mediated translational silencing of Ceruloplasmin expression
+R-HSA-156842,Eukaryotic Translation Elongation
+R-HSA-156902,Peptide chain elongation
+R-HSA-168255,Influenza Infection
+R-HSA-168273,Influenza Viral RNA Transcription and Replication
+R-HSA-1799339,SRP-dependent cotranslational protein targeting to membrane
+R-HSA-192823,Viral mRNA Translation
+R-HSA-2408522,Selenoamino acid metabolism
+R-HSA-2408557,Selenocysteine synthesis
+R-HSA-376176,Signaling by ROBO receptors
+R-HSA-5663205,Infectious disease
+R-HSA-6791226,Major pathway of rRNA processing in the nucleolus and cytosol
+R-HSA-72312,rRNA processing
+R-HSA-72613,Eukaryotic Translation Initiation
+R-HSA-72689,Formation of a pool of free 40S subunits
+R-HSA-72706,GTP hydrolysis and joining of the 60S ribosomal subunit
+R-HSA-72737,Cap-dependent Translation Initiation
+R-HSA-72764,Eukaryotic Translation Termination
+R-HSA-72766,Translation
+R-HSA-8868773,rRNA processing in the nucleus and cytosol
+R-HSA-9010553,Regulation of expression of SLITs and ROBOs
+R-HSA-927802,Nonsense-Mediated Decay (NMD)
+R-HSA-9633012,Response of EIF2AK4 (GCN2) to amino acid deficiency
+R-HSA-9711097,Cellular response to starvation
+R-HSA-975956,Nonsense Mediated Decay (NMD) independent of the Exon Junction Complex (EJC)
+R-HSA-975957,Nonsense Mediated Decay (NMD) enhanced by the Exon Junction Complex (EJC)
+R-HSA-9824446,Viral Infection Pathways
+R-HSA-211859,Biological oxidations
+R-HSA-2142691,Synthesis of Leukotrienes (LT) and Eoxins (EX)
+R-HSA-2142753,Arachidonate metabolism
+R-HSA-5423646,Aflatoxin activation and detoxification
+R-HSA-8978868,Fatty acid metabolism
+R-HSA-9658195,Leishmania infection
+R-HSA-9662851,Anti-inflammatory response favouring Leishmania parasite infection
+R-HSA-9664433,Leishmania parasite growth and survival
+R-HSA-9664535,LTC4-CYSLTR mediated IL4 production
+R-HSA-9824443,Parasitic Infection Pathways
+R-HSA-1268020,Mitochondrial protein import
+R-HSA-1482798,Acyl chain remodeling of CL
+R-HSA-9609507,Protein localization
+R-HSA-1181150,Signaling by NODAL
+R-HSA-1433617,Regulation of signaling by NODAL
+R-HSA-2892247,"POU5F1 (OCT4), SOX2, NANOG activate genes related to proliferation"
+R-HSA-452723,Transcriptional regulation of pluripotent stem cells
+R-HSA-166658,Complement cascade
+R-HSA-166663,Initial triggering of complement
+R-HSA-166786,Creation of C4 and C2 activators
+R-HSA-173623,Classical antibody-mediated complement activation
+R-HSA-977606,Regulation of Complement cascade
+R-HSA-140534,Ligand-dependent caspase activation
+R-HSA-166058,MyD88:MAL(TIRAP) cascade initiated on plasma membrane
+R-HSA-168138,Toll Like Receptor 9 (TLR9) Cascade
+R-HSA-168142,Toll Like Receptor 10 (TLR10) Cascade
+R-HSA-168176,Toll Like Receptor 5 (TLR5) Cascade
+R-HSA-168179,Toll Like Receptor TLR1:TLR2 Cascade
+R-HSA-168181,Toll Like Receptor 7/8 (TLR7/8) Cascade
+R-HSA-168188,Toll Like Receptor TLR6:TLR2 Cascade
+R-HSA-168928,DDX58/IFIH1-mediated induction of interferon-alpha/beta
+R-HSA-181438,Toll Like Receptor 2 (TLR2) Cascade
+R-HSA-3371378,Regulation by c-FLIP
+R-HSA-445989,TAK1-dependent IKK and NF-kappa-B activation
+R-HSA-446652,Interleukin-1 family signaling
+R-HSA-5218900,CASP8 activity is inhibited
+R-HSA-5357769,Caspase activation via extrinsic apoptotic signalling pathway
+R-HSA-69416,Dimerization of procaspase-8
+R-HSA-9020702,Interleukin-1 signaling
+R-HSA-933541,TRAF6 mediated IRF7 activation
+R-HSA-933542,TRAF6 mediated NF-kB activation
+R-HSA-9645723,Diseases of programmed cell death
+R-HSA-9693928,Defective RIPK1-mediated regulated necrosis
+R-HSA-975138,TRAF6 mediated induction of NFkB and MAP kinases upon TLR7/8 or 9 activation
+R-HSA-975155,MyD88 dependent cascade initiated on endosome
+R-HSA-9758274,Regulation of NF-kappa B signaling
+R-HSA-975871,MyD88 cascade initiated on plasma membrane
+R-HSA-1475029,Reversible hydration of carbon dioxide
+R-HSA-110313,Translesion synthesis by Y family DNA polymerases bypasses lesions on DNA template
+R-HSA-1169408,ISG15 antiviral mechanism
+R-HSA-1169410,Antiviral mechanism by IFN-stimulated genes
+R-HSA-5656169,Termination of translesion DNA synthesis
+R-HSA-5689896,Ovarian tumor domain proteases
+R-HSA-73893,DNA Damage Bypass
+R-HSA-73894,DNA Repair
+R-HSA-877300,Interferon gamma signaling
+R-HSA-913531,Interferon Signaling
+R-HSA-918233,TRAF3-dependent IRF activation pathway
+R-HSA-933543,NF-kB activation through FADD/RIP-1 pathway mediated by caspase-8 and -10
+R-HSA-936440,Negative regulators of RIG-I/MDA5 signaling
+R-HSA-9678108,SARS-CoV-1 Infection
+R-HSA-9679506,SARS-CoV Infections
+R-HSA-9692914,SARS-CoV-1-host interactions
+R-HSA-9692916,SARS-CoV-1 activates/modulates innate immune responses
+R-HSA-9694516,SARS-CoV-2 Infection
+R-HSA-9705671,SARS-CoV-2 activates/modulates innate and adaptive immune responses
+R-HSA-9705683,SARS-CoV-2-host interactions
+R-HSA-9820952,Respiratory Syncytial Virus Infection Pathway
+R-HSA-9833109,Evasion by RSV of host interferon responses
+R-HSA-9833110,RSV-host interactions
+R-HSA-9833482,PKR-mediated signaling
+R-HSA-9909505,Modulation of host responses by IFN-stimulated genes
+R-HSA-1852241,Organelle biogenesis and maintenance
+R-HSA-5617833,Cilium Assembly
+R-HSA-5620912,Anchoring of the basal body to the plasma membrane
+R-HSA-209822,Glycoprotein hormones
+R-HSA-209952,Peptide hormone biosynthesis
+R-HSA-2980736,Peptide hormone metabolism
+R-HSA-1640170,Cell Cycle
+R-HSA-2555396,Mitotic Metaphase and Anaphase
+R-HSA-2995410,Nuclear Envelope (NE) Reassembly
+R-HSA-389957,Prefoldin mediated transfer of substrate to CCT/TriC
+R-HSA-389958,Cooperation of Prefoldin and TriC/CCT in actin and tubulin folding
+R-HSA-389960,Formation of tubulin folding intermediates by CCT/TriC
+R-HSA-389977,Post-chaperonin tubulin folding pathway
+R-HSA-390466,Chaperonin-mediated protein folding
+R-HSA-391251,Protein folding
+R-HSA-68882,Mitotic Anaphase
+R-HSA-68886,M Phase
+R-HSA-69278,"Cell Cycle, Mitotic"
+R-HSA-8955332,Carboxyterminal post-translational modifications of tubulin
+R-HSA-9668328,Sealing of the nuclear envelope (NE) by ESCRT-III
+R-HSA-166662,Lectin pathway of complement activation
+R-HSA-2855086,Ficolins bind to repetitive carbohydrate structures on the target cell surface
+R-HSA-1428517,Aerobic respiration and respiratory electron transport
+R-HSA-611105,Respiratory electron transport
+R-HSA-8963693,Aspartate and asparagine metabolism
+R-HSA-9856872,Malate-aspartate shuttle
+R-HSA-381771,"Synthesis, secretion, and inactivation of Glucagon-like Peptide-1 (GLP-1)"
+R-HSA-400508,"Incretin synthesis, secretion, and inactivation"
+R-HSA-400511,"Synthesis, secretion, and inactivation of Glucose-dependent Insulinotropic Polypeptide (GIP)"
+R-HSA-422085,"Synthesis, secretion, and deacylation of Ghrelin"
+R-HSA-9820965,"Respiratory syncytial virus (RSV) genome replication, transcription and translation"
+R-HSA-9828806,Maturation of hRSV A proteins
+R-HSA-3781865,Diseases of glycosylation
+R-HSA-3906995,Diseases associated with O-glycosylation of proteins
+R-HSA-5083635,Defective B3GALTL causes PpS
+R-HSA-5173105,O-linked glycosylation
+R-HSA-5173214,O-glycosylation of TSR domain-containing proteins

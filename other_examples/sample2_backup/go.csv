@@ -1,0 +1,935 @@
+namespace,go_id,go_name
+cellular_component,GO:0070062,extracellular exosome
+biological_process,GO:0016064,immunoglobulin mediated immune response
+cellular_component,GO:0071735,IgG immunoglobulin complex
+molecular_function,GO:0003823,antigen binding
+biological_process,GO:0000209,protein polyubiquitination
+biological_process,GO:0006515,protein quality control for misfolded or incompletely synthesized proteins
+biological_process,GO:0043161,proteasome-mediated ubiquitin-dependent protein catabolic process
+biological_process,GO:0045862,positive regulation of proteolysis
+biological_process,GO:0071218,cellular response to misfolded protein
+cellular_component,GO:0005737,cytoplasm
+cellular_component,GO:0030018,Z disc
+biological_process,GO:0006513,protein monoubiquitination
+biological_process,GO:0016567,protein ubiquitination
+biological_process,GO:0031398,positive regulation of protein ubiquitination
+biological_process,GO:0031647,regulation of protein stability
+biological_process,GO:0031943,regulation of glucocorticoid metabolic process
+biological_process,GO:0032436,positive regulation of proteasomal ubiquitin-dependent protein catabolic process
+biological_process,GO:0050821,protein stabilization
+biological_process,GO:0051865,protein autoubiquitination
+biological_process,GO:0070534,protein K63-linked ubiquitination
+biological_process,GO:0090035,positive regulation of chaperone-mediated protein complex assembly
+cellular_component,GO:0000151,ubiquitin ligase complex
+cellular_component,GO:0005634,nucleus
+cellular_component,GO:0005654,nucleoplasm
+cellular_component,GO:0005783,endoplasmic reticulum
+cellular_component,GO:0005829,cytosol
+cellular_component,GO:0042405,nuclear inclusion body
+molecular_function,GO:0004842,ubiquitin-protein transferase activity
+molecular_function,GO:0030911,TPR domain binding
+molecular_function,GO:0051787,misfolded protein binding
+molecular_function,GO:0051879,Hsp90 protein binding
+molecular_function,GO:0061630,ubiquitin protein ligase activity
+biological_process,GO:0006281,DNA repair
+biological_process,GO:0010614,negative regulation of cardiac muscle hypertrophy
+biological_process,GO:0030968,endoplasmic reticulum unfolded protein response
+biological_process,GO:1904694,negative regulation of vascular associated smooth muscle contraction
+biological_process,GO:0006511,ubiquitin-dependent protein catabolic process
+biological_process,GO:0030512,negative regulation of transforming growth factor beta receptor signaling pathway
+biological_process,GO:0034392,negative regulation of smooth muscle cell apoptotic process
+biological_process,GO:0036503,ERAD pathway
+biological_process,GO:1904294,positive regulation of ERAD pathway
+cellular_component,GO:0101031,protein folding chaperone complex
+molecular_function,GO:0001664,G protein-coupled receptor binding
+molecular_function,GO:0005515,protein binding
+molecular_function,GO:0019899,enzyme binding
+molecular_function,GO:0019900,kinase binding
+molecular_function,GO:0030544,Hsp70 protein binding
+molecular_function,GO:0031072,heat shock protein binding
+molecular_function,GO:0031625,ubiquitin protein ligase binding
+molecular_function,GO:0042803,protein homodimerization activity
+molecular_function,GO:0046332,SMAD binding
+molecular_function,GO:0051087,protein-folding chaperone binding
+molecular_function,GO:0070412,R-SMAD binding
+biological_process,GO:0000165,MAPK cascade
+biological_process,GO:0034393,positive regulation of smooth muscle cell apoptotic process
+biological_process,GO:0035359,negative regulation of peroxisome proliferator activated receptor signaling pathway
+biological_process,GO:1901526,positive regulation of mitophagy
+cellular_component,GO:0005739,mitochondrion
+molecular_function,GO:0034450,ubiquitin-ubiquitin ligase activity
+molecular_function,GO:0048156,tau protein binding
+biological_process,GO:0038128,ERBB2 signaling pathway
+cellular_component,GO:0031371,ubiquitin conjugating enzyme complex
+molecular_function,GO:0030674,protein-macromolecule adaptor activity
+biological_process,GO:0042026,protein refolding
+molecular_function,GO:0001671,ATPase activator activity
+molecular_function,GO:0051082,unfolded protein binding
+biological_process,GO:0009408,response to heat
+cellular_component,GO:0016020,membrane
+molecular_function,GO:0005524,ATP binding
+molecular_function,GO:0008270,zinc ion binding
+biological_process,GO:0008284,positive regulation of cell population proliferation
+cellular_component,GO:0062023,collagen-containing extracellular matrix
+molecular_function,GO:0030021,extracellular matrix structural constituent conferring compression resistance
+biological_process,GO:0001694,histamine biosynthetic process
+biological_process,GO:0017148,negative regulation of translation
+biological_process,GO:0019370,leukotriene biosynthetic process
+biological_process,GO:0032757,positive regulation of interleukin-8 production
+biological_process,GO:0042119,neutrophil activation
+biological_process,GO:0042554,superoxide anion generation
+biological_process,GO:0045575,basophil activation
+biological_process,GO:0006955,immune response
+molecular_function,GO:0030246,carbohydrate binding
+cellular_component,GO:0005576,extracellular region
+cellular_component,GO:0035580,specific granule lumen
+cellular_component,GO:1904724,tertiary granule lumen
+biological_process,GO:0006661,phosphatidylinositol biosynthetic process
+cellular_component,GO:0005794,Golgi apparatus
+molecular_function,GO:0003881,CDP-diacylglycerol-inositol 3-phosphatidyltransferase activity
+cellular_component,GO:0005886,plasma membrane
+molecular_function,GO:0046872,metal ion binding
+cellular_component,GO:0005789,endoplasmic reticulum membrane
+biological_process,GO:0006457,protein folding
+molecular_function,GO:0005509,calcium ion binding
+biological_process,GO:0007339,binding of sperm to zona pellucida
+biological_process,GO:0065003,protein-containing complex assembly
+cellular_component,GO:0005635,nuclear envelope
+molecular_function,GO:0044183,protein folding chaperone
+biological_process,GO:0007338,single fertilization
+molecular_function,GO:0003723,RNA binding
+biological_process,GO:0016973,poly(A)+ mRNA export from nucleus
+biological_process,GO:0006406,mRNA export from nucleus
+cellular_component,GO:0000346,transcription export complex
+cellular_component,GO:0016607,nuclear speck
+biological_process,GO:0015031,protein transport
+cellular_component,GO:0005643,nuclear pore
+cellular_component,GO:0010494,cytoplasmic stress granule
+molecular_function,GO:0003729,mRNA binding
+cellular_component,GO:0042272,nuclear RNA export factor complex
+cellular_component,GO:0005768,endosome
+cellular_component,GO:0005802,trans-Golgi network
+cellular_component,GO:0030140,trans-Golgi network transport vesicle
+cellular_component,GO:0005788,endoplasmic reticulum lumen
+cellular_component,GO:0030133,transport vesicle
+cellular_component,GO:0030669,clathrin-coated endocytic vesicle membrane
+cellular_component,GO:0012505,endomembrane system
+biological_process,GO:0006783,heme biosynthetic process
+molecular_function,GO:0020037,heme binding
+cellular_component,GO:0030868,smooth endoplasmic reticulum membrane
+molecular_function,GO:0005496,steroid binding
+biological_process,GO:0140077,positive regulation of lipoprotein transport
+biological_process,GO:1903078,positive regulation of protein localization to plasma membrane
+cellular_component,GO:0005741,mitochondrial outer membrane
+cellular_component,GO:0043005,neuron projection
+cellular_component,GO:0043025,neuronal cell body
+cellular_component,GO:0044297,cell body
+cellular_component,GO:0045202,synapse
+cellular_component,GO:0035579,specific granule membrane
+molecular_function,GO:0001540,amyloid-beta binding
+molecular_function,GO:0005102,signaling receptor binding
+biological_process,GO:0007218,neuropeptide signaling pathway
+biological_process,GO:0009306,protein secretion
+biological_process,GO:0099550,"trans-synaptic signaling, modulating synaptic transmission"
+cellular_component,GO:0005615,extracellular space
+cellular_component,GO:0043083,synaptic cleft
+cellular_component,GO:0098978,glutamatergic synapse
+biological_process,GO:1904862,inhibitory synapse assembly
+cellular_component,GO:0098982,GABA-ergic synapse
+molecular_function,GO:0005310,dicarboxylic acid transmembrane transporter activity
+biological_process,GO:0015709,thiosulfate transport
+biological_process,GO:0015729,oxaloacetate transport
+biological_process,GO:0035435,phosphate ion transmembrane transport
+biological_process,GO:0071422,succinate transmembrane transport
+biological_process,GO:0071423,malate transmembrane transport
+biological_process,GO:1902358,sulfate transmembrane transport
+molecular_function,GO:0015116,sulfate transmembrane transporter activity
+molecular_function,GO:0015117,thiosulfate transmembrane transporter activity
+molecular_function,GO:0015131,oxaloacetate transmembrane transporter activity
+molecular_function,GO:0015140,malate transmembrane transporter activity
+molecular_function,GO:0015141,succinate transmembrane transporter activity
+biological_process,GO:0006869,lipid transport
+biological_process,GO:0046166,glyceraldehyde-3-phosphate biosynthetic process
+biological_process,GO:1902356,oxaloacetate(2-) transmembrane transport
+molecular_function,GO:0005315,phosphate transmembrane transporter activity
+molecular_function,GO:0015297,antiporter activity
+biological_process,GO:0006094,gluconeogenesis
+biological_process,GO:0006811,monoatomic ion transport
+biological_process,GO:0006835,dicarboxylic acid transport
+biological_process,GO:0070221,"sulfide oxidation, using sulfide:quinone oxidoreductase"
+cellular_component,GO:0005743,mitochondrial inner membrane
+cellular_component,GO:0044853,plasma membrane raft
+cellular_component,GO:0098552,side of membrane
+biological_process,GO:0061760,antifungal innate immune response
+cellular_component,GO:0009897,external side of plasma membrane
+molecular_function,GO:0038187,pattern recognition receptor activity
+biological_process,GO:0002250,adaptive immune response
+cellular_component,GO:0030667,secretory granule membrane
+cellular_component,GO:0070821,tertiary granule membrane
+cellular_component,GO:0101003,ficolin-1-rich granule membrane
+biological_process,GO:0006308,DNA catabolic process
+molecular_function,GO:0003677,DNA binding
+molecular_function,GO:0004530,deoxyribonuclease I activity
+biological_process,GO:0006259,DNA metabolic process
+molecular_function,GO:0004536,DNA nuclease activity
+biological_process,GO:0003100,regulation of systemic arterial blood pressure by endothelin
+biological_process,GO:0006874,intracellular calcium ion homeostasis
+biological_process,GO:0014826,vein smooth muscle contraction
+biological_process,GO:0045987,positive regulation of smooth muscle contraction
+molecular_function,GO:0005179,hormone activity
+biological_process,GO:0002690,positive regulation of leukocyte chemotaxis
+biological_process,GO:0007166,cell surface receptor signaling pathway
+biological_process,GO:0010460,positive regulation of heart rate
+biological_process,GO:0014824,artery smooth muscle contraction
+biological_process,GO:0030072,peptide hormone secretion
+biological_process,GO:0030593,neutrophil chemotaxis
+biological_process,GO:0042310,vasoconstriction
+biological_process,GO:0043406,positive regulation of MAP kinase activity
+biological_process,GO:0045840,positive regulation of mitotic nuclear division
+biological_process,GO:0046887,positive regulation of hormone secretion
+biological_process,GO:0001755,neural crest cell migration
+biological_process,GO:0007411,axon guidance
+biological_process,GO:0008283,cell population proliferation
+biological_process,GO:0010961,intracellular magnesium ion homeostasis
+biological_process,GO:0019229,regulation of vasoconstriction
+biological_process,GO:0030318,melanocyte differentiation
+biological_process,GO:0048070,regulation of developmental pigmentation
+biological_process,GO:0048675,axon extension
+biological_process,GO:0051649,establishment of localization in cell
+biological_process,GO:0071805,potassium ion transmembrane transport
+biological_process,GO:1901381,positive regulation of potassium ion transmembrane transport
+biological_process,GO:0010468,regulation of gene expression
+biological_process,GO:0045597,positive regulation of cell differentiation
+molecular_function,GO:0031708,endothelin B receptor binding
+biological_process,GO:0007165,signal transduction
+biological_process,GO:0007267,cell-cell signaling
+biological_process,GO:0008015,blood circulation
+biological_process,GO:0048013,ephrin receptor signaling pathway
+cellular_component,GO:0030425,dendrite
+molecular_function,GO:0005005,transmembrane-ephrin receptor activity
+biological_process,GO:0050730,regulation of peptidyl-tyrosine phosphorylation
+biological_process,GO:0070372,regulation of ERK1 and ERK2 cascade
+biological_process,GO:0007173,epidermal growth factor receptor signaling pathway
+biological_process,GO:0008286,insulin receptor signaling pathway
+biological_process,GO:0008543,fibroblast growth factor receptor signaling pathway
+biological_process,GO:0031290,retinal ganglion cell axon guidance
+biological_process,GO:0031547,brain-derived neurotrophic factor receptor signaling pathway
+biological_process,GO:0035790,platelet-derived growth factor receptor-alpha signaling pathway
+biological_process,GO:0035791,platelet-derived growth factor receptor-beta signaling pathway
+biological_process,GO:0036323,vascular endothelial growth factor receptor-1 signaling pathway
+biological_process,GO:0038063,collagen-activated tyrosine kinase receptor signaling pathway
+biological_process,GO:0038084,vascular endothelial growth factor signaling pathway
+biological_process,GO:0038109,Kit signaling pathway
+biological_process,GO:0038145,macrophage colony-stimulating factor signaling pathway
+biological_process,GO:0048009,insulin-like growth factor receptor signaling pathway
+biological_process,GO:0048012,hepatocyte growth factor receptor signaling pathway
+biological_process,GO:0048671,negative regulation of collateral sprouting
+biological_process,GO:0050804,modulation of chemical synaptic transmission
+biological_process,GO:0051402,neuron apoptotic process
+biological_process,GO:0051964,negative regulation of synapse assembly
+biological_process,GO:0072178,nephric duct morphogenesis
+biological_process,GO:0099175,regulation of postsynapse organization
+molecular_function,GO:0005006,epidermal growth factor receptor activity
+molecular_function,GO:0005007,fibroblast growth factor receptor activity
+molecular_function,GO:0005008,hepatocyte growth factor receptor activity
+molecular_function,GO:0005009,insulin receptor activity
+molecular_function,GO:0005010,insulin-like growth factor receptor activity
+molecular_function,GO:0005011,macrophage colony-stimulating factor receptor activity
+molecular_function,GO:0005018,platelet-derived growth factor alpha-receptor activity
+molecular_function,GO:0005019,platelet-derived growth factor beta-receptor activity
+molecular_function,GO:0005020,stem cell factor receptor activity
+molecular_function,GO:0005021,vascular endothelial growth factor receptor activity
+molecular_function,GO:0008288,boss receptor activity
+molecular_function,GO:0019838,growth factor binding
+molecular_function,GO:0036332,placental growth factor receptor activity
+molecular_function,GO:0038062,protein tyrosine kinase collagen receptor activity
+molecular_function,GO:0060175,brain-derived neurotrophic factor receptor activity
+biological_process,GO:0007420,brain development
+biological_process,GO:0016310,phosphorylation
+biological_process,GO:0022407,regulation of cell-cell adhesion
+biological_process,GO:0031952,regulation of protein autophosphorylation
+biological_process,GO:0043525,positive regulation of neuron apoptotic process
+biological_process,GO:0048755,branching morphogenesis of a nerve
+biological_process,GO:0050919,negative chemotaxis
+molecular_function,GO:0004713,protein tyrosine kinase activity
+molecular_function,GO:0005004,GPI-linked ephrin receptor activity
+molecular_function,GO:0008046,axon guidance receptor activity
+molecular_function,GO:0045499,chemorepellent activity
+biological_process,GO:0001788,antibody-dependent cellular cytotoxicity
+molecular_function,GO:0019770,IgG receptor activity
+molecular_function,GO:0034235,GPI anchor binding
+biological_process,GO:0038094,Fc-gamma receptor signaling pathway
+molecular_function,GO:0019864,IgG binding
+biological_process,GO:0030154,cell differentiation
+biological_process,GO:0030510,regulation of BMP signaling pathway
+biological_process,GO:0031549,negative regulation of brain-derived neurotrophic factor receptor signaling pathway
+biological_process,GO:0061000,negative regulation of dendritic spine development
+cellular_component,GO:0030141,secretory granule
+molecular_function,GO:0048403,brain-derived neurotrophic factor binding
+biological_process,GO:0006509,membrane protein ectodomain proteolysis
+biological_process,GO:0050435,amyloid-beta metabolic process
+biological_process,GO:0006508,proteolysis
+biological_process,GO:0016485,protein processing
+biological_process,GO:0034205,amyloid-beta formation
+cellular_component,GO:0005764,lysosome
+cellular_component,GO:0005769,early endosome
+cellular_component,GO:0005770,late endosome
+cellular_component,GO:0005771,multivesicular body
+cellular_component,GO:0009986,cell surface
+cellular_component,GO:0055037,recycling endosome
+molecular_function,GO:0004175,endopeptidase activity
+molecular_function,GO:0004190,aspartic-type endopeptidase activity
+molecular_function,GO:0008233,peptidase activity
+biological_process,GO:0010288,response to lead ion
+biological_process,GO:0050966,detection of mechanical stimulus involved in sensory perception of pain
+biological_process,GO:0060134,prepulse inhibition
+biological_process,GO:0071280,cellular response to copper ion
+biological_process,GO:0071287,cellular response to manganese ion
+biological_process,GO:0099171,presynaptic modulation of chemical synaptic transmission
+biological_process,GO:0140448,signaling receptor ligand precursor processing
+biological_process,GO:1904646,cellular response to amyloid-beta
+cellular_component,GO:0008021,synaptic vesicle
+cellular_component,GO:0030424,axon
+cellular_component,GO:0045121,membrane raft
+cellular_component,GO:0098686,hippocampal mossy fiber to CA3 synapse
+molecular_function,GO:0120283,protein serine/threonine kinase binding
+biological_process,GO:0042987,amyloid precursor protein catabolic process
+biological_process,GO:1990000,amyloid fibril formation
+cellular_component,GO:0010008,endosome membrane
+cellular_component,GO:0070931,Golgi-associated vesicle lumen
+molecular_function,GO:0008798,beta-aspartyl-peptidase activity
+biological_process,GO:0042981,regulation of apoptotic process
+cellular_component,GO:0034663,endoplasmic reticulum chaperone complex
+molecular_function,GO:0051117,ATPase binding
+biological_process,GO:0051085,chaperone cofactor-dependent protein refolding
+molecular_function,GO:0004035,alkaline phosphatase activity
+molecular_function,GO:0000287,magnesium ion binding
+molecular_function,GO:0004252,serine-type endopeptidase activity
+cellular_component,GO:0031232,extrinsic component of external side of plasma membrane
+biological_process,GO:0001920,negative regulation of receptor recycling
+biological_process,GO:0002091,negative regulation of receptor internalization
+biological_process,GO:0002092,positive regulation of receptor internalization
+biological_process,GO:0007041,lysosomal transport
+biological_process,GO:0010469,regulation of signaling receptor activity
+biological_process,GO:0010989,negative regulation of low-density lipoprotein particle clearance
+biological_process,GO:0016540,protein autoprocessing
+biological_process,GO:0032802,low-density lipoprotein particle receptor catabolic process
+biological_process,GO:0032805,positive regulation of low-density lipoprotein particle receptor catabolic process
+biological_process,GO:1905596,negative regulation of low-density lipoprotein particle receptor binding
+biological_process,GO:1905598,negative regulation of low-density lipoprotein receptor activity
+biological_process,GO:1905601,negative regulation of receptor-mediated endocytosis involved in cholesterol transport
+biological_process,GO:2000650,negative regulation of sodium ion transmembrane transporter activity
+cellular_component,GO:0048471,perinuclear region of cytoplasm
+cellular_component,GO:1990666,PCSK9-LDLR complex
+cellular_component,GO:1990667,PCSK9-AnxA2 complex
+molecular_function,GO:0019871,sodium channel inhibitor activity
+molecular_function,GO:0030547,signaling receptor inhibitor activity
+molecular_function,GO:0034190,apolipoprotein receptor binding
+molecular_function,GO:0070326,very-low-density lipoprotein particle receptor binding
+biological_process,GO:0006641,triglyceride metabolic process
+biological_process,GO:0006644,phospholipid metabolic process
+biological_process,GO:0006915,apoptotic process
+biological_process,GO:0008203,cholesterol metabolic process
+biological_process,GO:0042157,lipoprotein metabolic process
+cellular_component,GO:0030134,COPII-coated ER to Golgi transport vesicle
+biological_process,GO:0042632,cholesterol homeostasis
+molecular_function,GO:0050750,low-density lipoprotein particle receptor binding
+biological_process,GO:0001822,kidney development
+biological_process,GO:0001889,liver development
+biological_process,GO:0009267,cellular response to starvation
+biological_process,GO:0022008,neurogenesis
+biological_process,GO:0030182,neuron differentiation
+biological_process,GO:0032869,cellular response to insulin stimulus
+biological_process,GO:0043523,regulation of neuron apoptotic process
+molecular_function,GO:0030169,low-density lipoprotein particle binding
+molecular_function,GO:0034185,apolipoprotein binding
+molecular_function,GO:0034189,very-low-density lipoprotein particle binding
+cellular_component,GO:0005765,lysosomal membrane
+cellular_component,GO:0036020,endolysosome membrane
+biological_process,GO:0002429,immune response-activating cell surface receptor signaling pathway
+biological_process,GO:0030101,natural killer cell activation
+biological_process,GO:0045954,positive regulation of natural killer cell mediated cytotoxicity
+biological_process,GO:0051132,NK T cell activation
+molecular_function,GO:0140375,immune receptor activity
+molecular_function,GO:0042802,identical protein binding
+biological_process,GO:0006954,inflammatory response
+biological_process,GO:0008037,cell recognition
+biological_process,GO:0042147,"retrograde transport, endosome to Golgi"
+cellular_component,GO:0032580,Golgi cisterna membrane
+molecular_function,GO:0098782,mechanosensitive potassium channel activity
+cellular_component,GO:0000139,Golgi membrane
+cellular_component,GO:0001726,ruffle
+biological_process,GO:0050976,detection of mechanical stimulus involved in sensory perception of touch
+biological_process,GO:0071260,cellular response to mechanical stimulus
+molecular_function,GO:0005125,cytokine activity
+biological_process,GO:0061450,trophoblast cell migration
+biological_process,GO:0045662,negative regulation of myoblast differentiation
+biological_process,GO:0045893,positive regulation of DNA-templated transcription
+biological_process,GO:0046716,muscle cell cellular homeostasis
+biological_process,GO:0051898,negative regulation of phosphatidylinositol 3-kinase/protein kinase B signal transduction
+molecular_function,GO:0043539,protein serine/threonine kinase activator activity
+biological_process,GO:0007179,transforming growth factor beta receptor signaling pathway
+biological_process,GO:0009629,response to gravity
+biological_process,GO:0014732,skeletal muscle atrophy
+biological_process,GO:0014741,negative regulation of muscle hypertrophy
+biological_process,GO:0014816,skeletal muscle satellite cell differentiation
+biological_process,GO:0014850,response to muscle activity
+biological_process,GO:0022602,ovulation cycle process
+biological_process,GO:0033574,response to testosterone
+biological_process,GO:0043627,response to estrogen
+biological_process,GO:0045471,response to ethanol
+biological_process,GO:0046627,negative regulation of insulin receptor signaling pathway
+biological_process,GO:0051602,response to electrical stimulus
+biological_process,GO:0071456,cellular response to hypoxia
+biological_process,GO:0071549,cellular response to dexamethasone stimulus
+molecular_function,GO:0008083,growth factor activity
+molecular_function,GO:0008201,heparin binding
+biological_process,GO:0048632,negative regulation of skeletal muscle tissue growth
+biological_process,GO:0010592,positive regulation of lamellipodium assembly
+biological_process,GO:0010759,positive regulation of macrophage chemotaxis
+biological_process,GO:0014839,myoblast migration involved in skeletal muscle regeneration
+biological_process,GO:1902723,negative regulation of skeletal muscle satellite cell proliferation
+biological_process,GO:1902725,negative regulation of satellite cell differentiation
+biological_process,GO:2000818,negative regulation of myoblast proliferation
+biological_process,GO:0007517,muscle organ development
+molecular_function,GO:0016740,transferase activity
+biological_process,GO:0043066,negative regulation of apoptotic process
+biological_process,GO:0051726,regulation of cell cycle
+biological_process,GO:0060546,negative regulation of necroptotic process
+molecular_function,GO:0043027,cysteine-type endopeptidase inhibitor activity involved in apoptotic process
+biological_process,GO:1902523,positive regulation of protein K63-linked ubiquitination
+biological_process,GO:1902524,positive regulation of protein K48-linked ubiquitination
+biological_process,GO:1902527,positive regulation of protein monoubiquitination
+molecular_function,GO:0043130,ubiquitin binding
+biological_process,GO:0001666,response to hypoxia
+biological_process,GO:0001890,placenta development
+biological_process,GO:0051591,response to cAMP
+biological_process,GO:0070266,necroptotic process
+biological_process,GO:1901222,regulation of non-canonical NF-kappaB signal transduction
+biological_process,GO:1902443,negative regulation of ripoptosome assembly involved in necroptotic process
+biological_process,GO:2000377,regulation of reactive oxygen species metabolic process
+cellular_component,GO:0001741,XY body
+molecular_function,GO:0044877,protein-containing complex binding
+biological_process,GO:0043123,positive regulation of canonical NF-kappaB signal transduction
+biological_process,GO:0060544,regulation of necroptotic process
+molecular_function,GO:0003713,transcription coactivator activity
+molecular_function,GO:0098770,FBXO family protein binding
+cellular_component,GO:0009898,cytoplasmic side of plasma membrane
+cellular_component,GO:0035631,CD40 receptor complex
+biological_process,GO:0007249,canonical NF-kappaB signal transduction
+biological_process,GO:0033209,tumor necrosis factor-mediated signaling pathway
+biological_process,GO:0034121,regulation of toll-like receptor signaling pathway
+biological_process,GO:0038061,non-canonical NF-kappaB signal transduction
+biological_process,GO:0039535,regulation of RIG-I signaling pathway
+biological_process,GO:0042127,regulation of cell population proliferation
+biological_process,GO:0045088,regulation of innate immune response
+biological_process,GO:0045595,regulation of cell differentiation
+biological_process,GO:0050727,regulation of inflammatory response
+biological_process,GO:0070424,"regulation of nucleotide-binding domain, leucine rich repeat containing receptor signaling pathway"
+biological_process,GO:0031397,negative regulation of protein ubiquitination
+biological_process,GO:0051223,regulation of protein transport
+biological_process,GO:1903748,negative regulation of establishment of protein localization to mitochondrion
+biological_process,GO:1905259,negative regulation of nitrosative stress-induced intrinsic apoptotic signaling pathway
+cellular_component,GO:0015630,microtubule cytoskeleton
+biological_process,GO:0007283,spermatogenesis
+biological_process,GO:0030317,flagellated sperm motility
+biological_process,GO:0030521,androgen receptor signaling pathway
+biological_process,GO:0043065,positive regulation of apoptotic process
+biological_process,GO:0043508,negative regulation of JUN kinase activity
+biological_process,GO:0070585,protein localization to mitochondrion
+molecular_function,GO:0030957,Tat protein binding
+molecular_function,GO:0055131,C3HC4-type RING finger domain binding
+biological_process,GO:0006986,response to unfolded protein
+cellular_component,GO:0098554,cytoplasmic side of endoplasmic reticulum membrane
+cellular_component,GO:0005925,focal adhesion
+biological_process,GO:0070527,platelet aggregation
+cellular_component,GO:0001533,cornified envelope
+cellular_component,GO:0005819,spindle
+cellular_component,GO:1904115,axon cytoplasm
+biological_process,GO:0009615,response to virus
+biological_process,GO:0001932,regulation of protein phosphorylation
+biological_process,GO:0035556,intracellular signal transduction
+biological_process,GO:0035924,cellular response to vascular endothelial growth factor stimulus
+biological_process,GO:0043536,positive regulation of blood vessel endothelial cell migration
+biological_process,GO:0045766,positive regulation of angiogenesis
+biological_process,GO:0048010,vascular endothelial growth factor receptor signaling pathway
+biological_process,GO:0061077,chaperone-mediated protein folding
+biological_process,GO:0099641,anterograde axonal protein transport
+biological_process,GO:2001028,positive regulation of endothelial cell chemotaxis
+molecular_function,GO:0019901,protein kinase binding
+molecular_function,GO:0061629,RNA polymerase II-specific DNA-binding transcription factor binding
+biological_process,GO:0006469,negative regulation of protein kinase activity
+biological_process,GO:0032731,positive regulation of interleukin-1 beta production
+biological_process,GO:0032760,positive regulation of tumor necrosis factor production
+biological_process,GO:0043122,regulation of canonical NF-kappaB signal transduction
+biological_process,GO:1902176,negative regulation of oxidative stress-induced intrinsic apoptotic signaling pathway
+cellular_component,GO:0000502,proteasome complex
+molecular_function,GO:0005080,protein kinase C binding
+molecular_function,GO:0008426,protein kinase C inhibitor activity
+biological_process,GO:0010506,regulation of autophagy
+biological_process,GO:0006446,regulation of translational initiation
+cellular_component,GO:0005856,cytoskeleton
+molecular_function,GO:0004423,iduronate-2-sulfatase activity
+biological_process,GO:0006027,glycosaminoglycan catabolic process
+biological_process,GO:0030200,heparan sulfate proteoglycan catabolic process
+biological_process,GO:0030209,dermatan sulfate proteoglycan catabolic process
+cellular_component,GO:0043202,lysosomal lumen
+biological_process,GO:0019221,cytokine-mediated signaling pathway
+cellular_component,GO:0043235,receptor complex
+molecular_function,GO:0004896,cytokine receptor activity
+molecular_function,GO:0019955,cytokine binding
+biological_process,GO:0038043,interleukin-5-mediated signaling pathway
+molecular_function,GO:0004914,interleukin-5 receptor activity
+biological_process,GO:0002437,inflammatory response to antigenic stimulus
+biological_process,GO:0032674,regulation of interleukin-5 production
+biological_process,GO:0070665,positive regulation of leukocyte proliferation
+biological_process,GO:0002230,positive regulation of defense response to virus by host
+biological_process,GO:0002827,positive regulation of T-helper 1 type immune response
+biological_process,GO:0032729,positive regulation of type II interferon production
+biological_process,GO:0035722,interleukin-12-mediated signaling pathway
+biological_process,GO:0038155,interleukin-23-mediated signaling pathway
+biological_process,GO:0042104,positive regulation of activated T cell proliferation
+biological_process,GO:0071346,cellular response to type II interferon
+cellular_component,GO:0042022,interleukin-12 receptor complex
+cellular_component,GO:0072536,interleukin-23 receptor complex
+molecular_function,GO:0015026,coreceptor activity
+molecular_function,GO:0016517,interleukin-12 receptor activity
+molecular_function,GO:0042020,interleukin-23 receptor activity
+molecular_function,GO:0005143,interleukin-12 receptor binding
+molecular_function,GO:0042019,interleukin-23 binding
+biological_process,GO:0001916,positive regulation of T cell mediated cytotoxicity
+biological_process,GO:0043382,positive regulation of memory T cell differentiation
+biological_process,GO:2000318,positive regulation of T-helper 17 type immune response
+biological_process,GO:2000330,positive regulation of T-helper 17 cell lineage commitment
+biological_process,GO:0007155,cell adhesion
+cellular_component,GO:0031093,platelet alpha granule lumen
+biological_process,GO:0003073,regulation of systemic arterial blood pressure
+biological_process,GO:0031638,zymogen activation
+biological_process,GO:0008150,biological_process
+cellular_component,GO:0005575,cellular_component
+molecular_function,GO:0003674,molecular_function
+molecular_function,GO:0060090,molecular adaptor activity
+biological_process,GO:0090118,receptor-mediated endocytosis involved in cholesterol transport
+molecular_function,GO:0071813,lipoprotein particle binding
+molecular_function,GO:0005041,low-density lipoprotein particle receptor activity
+cellular_component,GO:0005905,clathrin-coated pit
+cellular_component,GO:0043231,intracellular membrane-bounded organelle
+molecular_function,GO:0030229,very-low-density lipoprotein particle receptor activity
+biological_process,GO:0001523,retinoid metabolic process
+biological_process,GO:0010628,positive regulation of gene expression
+biological_process,GO:0010629,negative regulation of gene expression
+biological_process,GO:0034384,high-density lipoprotein particle clearance
+biological_process,GO:0042159,lipoprotein catabolic process
+biological_process,GO:0046718,symbiont entry into host cell
+biological_process,GO:0048844,artery morphogenesis
+biological_process,GO:0050729,positive regulation of inflammatory response
+biological_process,GO:0071398,cellular response to fatty acid
+biological_process,GO:0090181,regulation of cholesterol metabolic process
+cellular_component,GO:0034362,low-density lipoprotein particle
+cellular_component,GO:0036477,somatodendritic compartment
+cellular_component,GO:0097443,sorting endosome
+molecular_function,GO:0001618,virus receptor activity
+biological_process,GO:0007616,long-term memory
+biological_process,GO:0051246,regulation of protein metabolic process
+biological_process,GO:0061771,response to caloric restriction
+biological_process,GO:0030299,intestinal cholesterol absorption
+biological_process,GO:0030301,cholesterol transport
+biological_process,GO:0034383,low-density lipoprotein particle clearance
+biological_process,GO:0070508,cholesterol import
+biological_process,GO:0071404,cellular response to low-density lipoprotein particle stimulus
+molecular_function,GO:0002020,protease binding
+biological_process,GO:0006898,receptor-mediated endocytosis
+biological_process,GO:0006909,phagocytosis
+biological_process,GO:0010867,positive regulation of triglyceride biosynthetic process
+biological_process,GO:0010899,regulation of phosphatidylcholine catabolic process
+biological_process,GO:0015914,phospholipid transport
+biological_process,GO:0034381,plasma lipoprotein particle clearance
+biological_process,GO:0051248,negative regulation of protein metabolic process
+biological_process,GO:0061889,negative regulation of astrocyte activation
+biological_process,GO:0097242,amyloid-beta clearance
+biological_process,GO:0150094,amyloid-beta clearance by cellular catabolic process
+biological_process,GO:1903979,negative regulation of microglial cell activation
+biological_process,GO:1905167,positive regulation of lysosomal protein catabolic process
+biological_process,GO:1905907,negative regulation of amyloid fibril formation
+cellular_component,GO:0016323,basolateral plasma membrane
+cellular_component,GO:0045177,apical part of cell
+biological_process,GO:0006629,lipid metabolic process
+biological_process,GO:0006897,endocytosis
+molecular_function,GO:0032050,clathrin heavy chain binding
+molecular_function,GO:0030414,peptidase inhibitor activity
+biological_process,GO:0007169,cell surface receptor protein tyrosine kinase signaling pathway
+biological_process,GO:0016477,cell migration
+biological_process,GO:0048701,embryonic cranial skeleton morphogenesis
+biological_process,GO:0010544,negative regulation of platelet activation
+biological_process,GO:0018108,peptidyl-tyrosine phosphorylation
+biological_process,GO:0030335,positive regulation of cell migration
+biological_process,GO:0034614,cellular response to reactive oxygen species
+biological_process,GO:0038091,positive regulation of cell proliferation by VEGF-activated platelet derived growth factor receptor signaling pathway
+biological_process,GO:0046777,protein autophosphorylation
+biological_process,GO:0048008,platelet-derived growth factor receptor signaling pathway
+biological_process,GO:0048146,positive regulation of fibroblast proliferation
+cellular_component,GO:0005929,cilium
+cellular_component,GO:0016604,nuclear body
+cellular_component,GO:0030054,cell junction
+cellular_component,GO:0032991,protein-containing complex
+molecular_function,GO:0004672,protein kinase activity
+molecular_function,GO:0004714,transmembrane receptor protein tyrosine kinase activity
+molecular_function,GO:0048407,platelet-derived growth factor binding
+biological_process,GO:0001701,in utero embryonic development
+biological_process,GO:0002244,hematopoietic progenitor cell differentiation
+biological_process,GO:0008210,estrogen metabolic process
+biological_process,GO:0023019,signal transduction involved in regulation of gene expression
+biological_process,GO:0030198,extracellular matrix organization
+biological_process,GO:0030324,lung development
+biological_process,GO:0030325,adrenal gland development
+biological_process,GO:0030539,male genitalia development
+biological_process,GO:0033327,Leydig cell differentiation
+biological_process,GO:0042475,odontogenesis of dentin-containing tooth
+biological_process,GO:0050872,white fat cell differentiation
+biological_process,GO:0060021,roof of mouth development
+biological_process,GO:0060325,face morphogenesis
+biological_process,GO:0060326,cell chemotaxis
+biological_process,GO:0071230,cellular response to amino acid stimulus
+cellular_component,GO:0005902,microvillus
+biological_process,GO:0050850,positive regulation of calcium-mediated signaling
+biological_process,GO:0050921,positive regulation of chemotaxis
+biological_process,GO:0070374,positive regulation of ERK1 and ERK2 cascade
+biological_process,GO:2000739,regulation of mesenchymal stem cell differentiation
+molecular_function,GO:0160185,phospholipase C activator activity
+cellular_component,GO:1990270,platelet-derived growth factor receptor-ligand complex
+molecular_function,GO:0005161,platelet-derived growth factor receptor binding
+molecular_function,GO:0038085,vascular endothelial growth factor binding
+biological_process,GO:0001553,luteinization
+biological_process,GO:0042060,wound healing
+biological_process,GO:0048557,embryonic digestive tract morphogenesis
+biological_process,GO:0048704,embryonic skeletal system morphogenesis
+biological_process,GO:0055003,cardiac myofibril assembly
+biological_process,GO:0061298,retina vasculature development in camera-type eye
+biological_process,GO:0072277,metanephric glomerular capillary formation
+biological_process,GO:0001775,cell activation
+biological_process,GO:0032956,regulation of actin cytoskeleton organization
+biological_process,GO:0051897,positive regulation of phosphatidylinositol 3-kinase/protein kinase B signal transduction
+biological_process,GO:0051604,protein maturation
+biological_process,GO:0032781,positive regulation of ATP-dependent activity
+biological_process,GO:0016556,mRNA modification
+biological_process,GO:0050768,negative regulation of neurogenesis
+biological_process,GO:0036498,IRE1-mediated unfolded protein response
+molecular_function,GO:0015035,protein-disulfide reductase activity
+molecular_function,GO:0016671,"oxidoreductase activity, acting on a sulfur group of donors, disulfide as acceptor"
+biological_process,GO:0001933,negative regulation of protein phosphorylation
+biological_process,GO:0034975,protein folding in endoplasmic reticulum
+biological_process,GO:0034976,response to endoplasmic reticulum stress
+biological_process,GO:0070059,intrinsic apoptotic signaling pathway in response to endoplasmic reticulum stress
+molecular_function,GO:0015036,disulfide oxidoreductase activity
+biological_process,GO:0007005,mitochondrion organization
+biological_process,GO:0047497,mitochondrion transport along microtubule
+molecular_function,GO:0003924,GTPase activity
+molecular_function,GO:0005525,GTP binding
+biological_process,GO:0010821,regulation of mitochondrion organization
+biological_process,GO:0019725,cellular homeostasis
+biological_process,GO:0097345,mitochondrial outer membrane permeabilization
+biological_process,GO:0002215,defense response to nematode
+biological_process,GO:0010936,negative regulation of macrophage cytokine production
+biological_process,GO:0032693,negative regulation of interleukin-10 production
+biological_process,GO:0032753,positive regulation of interleukin-4 production
+biological_process,GO:0042742,defense response to bacterium
+cellular_component,GO:1904813,ficolin-1-rich granule lumen
+biological_process,GO:0046512,sphingosine biosynthetic process
+biological_process,GO:0046513,ceramide biosynthetic process
+molecular_function,GO:0001729,ceramide kinase activity
+molecular_function,GO:0004143,ATP-dependent diacylglycerol kinase activity
+molecular_function,GO:0017050,D-erythro-sphingosine kinase activity
+molecular_function,GO:0047620,acylglycerol kinase activity
+biological_process,GO:0045039,protein insertion into mitochondrial inner membrane
+cellular_component,GO:0005758,mitochondrial intermembrane space
+cellular_component,GO:0031966,mitochondrial membrane
+cellular_component,GO:0042721,TIM22 mitochondrial import inner membrane insertion complex
+biological_process,GO:0046486,glycerolipid metabolic process
+biological_process,GO:0046834,lipid phosphorylation
+biological_process,GO:0018279,protein N-linked glycosylation via asparagine
+molecular_function,GO:0003980,UDP-glucose:glycoprotein glucosyltransferase activity
+biological_process,GO:0097359,UDP-glucosylation
+cellular_component,GO:0044322,endoplasmic reticulum quality control compartment
+cellular_component,GO:0005793,endoplasmic reticulum-Golgi intermediate compartment
+biological_process,GO:0051084,'de novo' post-translational protein folding
+biological_process,GO:1904380,endoplasmic reticulum mannose trimming
+biological_process,GO:0070166,enamel mineralization
+molecular_function,GO:0004674,protein serine/threonine kinase activity
+biological_process,GO:0006468,protein phosphorylation
+molecular_function,GO:0030145,manganese ion binding
+biological_process,GO:0006338,chromatin remodeling
+biological_process,GO:0030501,positive regulation of bone mineralization
+biological_process,GO:0036179,osteoclast maturation
+biological_process,GO:0040036,regulation of fibroblast growth factor receptor signaling pathway
+biological_process,GO:0045669,positive regulation of osteoblast differentiation
+biological_process,GO:0051174,regulation of phosphorus metabolic process
+biological_process,GO:0071895,odontoblast differentiation
+biological_process,GO:0097187,dentinogenesis
+molecular_function,GO:0004676,3-phosphoinositide-dependent protein kinase activity
+molecular_function,GO:0004677,DNA-dependent protein kinase activity
+molecular_function,GO:0004679,AMP-activated protein kinase activity
+molecular_function,GO:0004694,eukaryotic translation initiation factor 2alpha kinase activity
+molecular_function,GO:0004711,ribosomal protein S6 kinase activity
+molecular_function,GO:0035175,histone H3S10 kinase activity
+molecular_function,GO:0035402,histone H3T11 kinase activity
+molecular_function,GO:0035403,histone H3T6 kinase activity
+molecular_function,GO:0035979,histone H2AXS139 kinase activity
+molecular_function,GO:0044022,histone H3S28 kinase activity
+molecular_function,GO:0044023,histone H4S1 kinase activity
+molecular_function,GO:0044024,histone H2AS1 kinase activity
+molecular_function,GO:0044025,histone H2BS14 kinase activity
+molecular_function,GO:0072354,histone H3T3 kinase activity
+molecular_function,GO:0072371,histone H2AS121 kinase activity
+molecular_function,GO:0072518,Rho-dependent protein serine/threonine kinase activity
+molecular_function,GO:0106310,protein serine kinase activity
+molecular_function,GO:0140823,histone H2BS36 kinase activity
+molecular_function,GO:0140855,histone H3S57 kinase activity
+molecular_function,GO:0140857,histone H3T45 kinase activity
+molecular_function,GO:1990244,histone H2AT120 kinase activity
+biological_process,GO:0031214,biomineral tissue development
+biological_process,GO:0043687,post-translational protein modification
+biological_process,GO:0045879,negative regulation of smoothened signaling pathway
+molecular_function,GO:0008158,hedgehog receptor activity
+biological_process,GO:0010875,positive regulation of cholesterol efflux
+biological_process,GO:0072659,protein localization to plasma membrane
+cellular_component,GO:0005901,caveola
+molecular_function,GO:0015485,cholesterol binding
+biological_process,GO:0001658,branching involved in ureteric bud morphogenesis
+biological_process,GO:0001709,cell fate determination
+biological_process,GO:0001843,neural tube closure
+biological_process,GO:0003007,heart morphogenesis
+biological_process,GO:0007286,spermatid development
+biological_process,GO:0007346,regulation of mitotic cell cycle
+biological_process,GO:0009410,response to xenobiotic stimulus
+biological_process,GO:0009612,response to mechanical stimulus
+biological_process,GO:0009957,epidermal cell fate specification
+biological_process,GO:0010157,response to chlorate
+biological_process,GO:0010839,negative regulation of keratinocyte proliferation
+biological_process,GO:0021522,spinal cord motor neuron differentiation
+biological_process,GO:0021904,dorsal/ventral neural tube patterning
+biological_process,GO:0030850,prostate gland development
+biological_process,GO:0032355,response to estradiol
+biological_process,GO:0032526,response to retinoic acid
+biological_process,GO:0032880,regulation of protein localization
+biological_process,GO:0035137,hindlimb morphogenesis
+biological_process,GO:0042593,glucose homeostasis
+biological_process,GO:0043616,keratinocyte proliferation
+biological_process,GO:0045606,positive regulation of epidermal cell differentiation
+biological_process,GO:0048568,embryonic organ development
+biological_process,GO:0051782,negative regulation of cell division
+biological_process,GO:0060603,mammary gland duct morphogenesis
+biological_process,GO:0060644,mammary gland epithelial cell differentiation
+biological_process,GO:0061005,cell differentiation involved in kidney development
+biological_process,GO:0071679,commissural neuron axon guidance
+biological_process,GO:0072089,stem cell proliferation
+biological_process,GO:0072203,cell proliferation involved in metanephros development
+biological_process,GO:0097421,liver regeneration
+biological_process,GO:2000647,negative regulation of stem cell proliferation
+cellular_component,GO:0030496,midbody
+cellular_component,GO:0044294,dendritic growth cone
+cellular_component,GO:0044295,axonal growth cone
+cellular_component,GO:0045211,postsynaptic membrane
+molecular_function,GO:0005113,patched binding
+biological_process,GO:0048745,smooth muscle tissue development
+biological_process,GO:0072205,metanephric collecting duct development
+biological_process,GO:0000122,negative regulation of transcription by RNA polymerase II
+biological_process,GO:0021532,neural tube patterning
+biological_process,GO:0035108,limb morphogenesis
+biological_process,GO:0043433,negative regulation of DNA-binding transcription factor activity
+biological_process,GO:0045668,negative regulation of osteoblast differentiation
+biological_process,GO:0060037,pharyngeal system development
+biological_process,GO:0061053,somite development
+biological_process,GO:0071397,cellular response to cholesterol
+molecular_function,GO:0005119,smoothened binding
+molecular_function,GO:0030332,cyclin binding
+molecular_function,GO:0097108,hedgehog family protein binding
+biological_process,GO:0007224,smoothened signaling pathway
+biological_process,GO:0008589,regulation of smoothened signaling pathway
+biological_process,GO:0009887,animal organ morphogenesis
+biological_process,GO:0009953,dorsal/ventral pattern formation
+biological_process,GO:0021997,neural plate axis specification
+biological_process,GO:0030326,embryonic limb morphogenesis
+biological_process,GO:0040015,negative regulation of multicellular organism growth
+cellular_component,GO:0030666,endocytic vesicle membrane
+cellular_component,GO:0060170,ciliary membrane
+biological_process,GO:0043010,camera-type eye development
+cellular_component,GO:0022625,cytosolic large ribosomal subunit
+biological_process,GO:0002181,cytoplasmic translation
+cellular_component,GO:0022626,cytosolic ribosome
+cellular_component,GO:0036464,cytoplasmic ribonucleoprotein granule
+molecular_function,GO:0003735,structural constituent of ribosome
+biological_process,GO:0006412,translation
+biological_process,GO:0048240,sperm capacitation
+biological_process,GO:1901749,leukotriene D4 catabolic process
+molecular_function,GO:0016805,dipeptidase activity
+molecular_function,GO:0070573,metallodipeptidase activity
+biological_process,GO:0006691,leukotriene metabolic process
+biological_process,GO:0006843,mitochondrial citrate transmembrane transport
+molecular_function,GO:0071913,citrate secondary active transmembrane transporter activity
+molecular_function,GO:0015142,tricarboxylic acid transmembrane transporter activity
+molecular_function,GO:0015137,citrate transmembrane transporter activity
+biological_process,GO:0007007,inner mitochondrial membrane organization
+biological_process,GO:0035965,cardiolipin acyl-chain remodeling
+molecular_function,GO:0047184,1-acylglycerophosphocholine O-acyltransferase activity
+biological_process,GO:1900210,positive regulation of cardiolipin metabolic process
+biological_process,GO:2001171,positive regulation of ATP biosynthetic process
+biological_process,GO:0000423,mitophagy
+biological_process,GO:0042407,cristae formation
+molecular_function,GO:0003841,1-acylglycerol-3-phosphate O-acyltransferase activity
+molecular_function,GO:0008374,O-acyltransferase activity
+biological_process,GO:0001568,blood vessel development
+biological_process,GO:0007368,determination of left/right symmetry
+biological_process,GO:0007507,heart development
+biological_process,GO:0009952,anterior/posterior pattern specification
+biological_process,GO:0038092,nodal signaling pathway
+molecular_function,GO:0038100,nodal binding
+molecular_function,GO:0070697,activin receptor binding
+biological_process,GO:0009966,regulation of signal transduction
+biological_process,GO:0010595,positive regulation of endothelial cell migration
+biological_process,GO:0018105,peptidyl-serine phosphorylation
+biological_process,GO:0035729,cellular response to hepatocyte growth factor stimulus
+biological_process,GO:0043410,positive regulation of MAPK cascade
+biological_process,GO:0044344,cellular response to fibroblast growth factor stimulus
+biological_process,GO:0050731,positive regulation of peptidyl-tyrosine phosphorylation
+biological_process,GO:0071354,cellular response to interleukin-6
+biological_process,GO:0071356,cellular response to tumor necrosis factor
+biological_process,GO:0071364,cellular response to epidermal growth factor stimulus
+cellular_component,GO:0016324,apical plasma membrane
+biological_process,GO:0002042,cell migration involved in sprouting angiogenesis
+biological_process,GO:0008595,"anterior/posterior axis specification, embryo"
+cellular_component,GO:0019897,extrinsic component of plasma membrane
+biological_process,GO:0001763,morphogenesis of a branching structure
+biological_process,GO:0009792,embryo development ending in birth or egg hatching
+biological_process,GO:0030879,mammary gland development
+cellular_component,GO:0072562,blood microparticle
+biological_process,GO:0006958,"complement activation, classical pathway"
+biological_process,GO:0045087,innate immune response
+cellular_component,GO:0005581,collagen trimer
+cellular_component,GO:0062167,complement component C1q complex
+biological_process,GO:0098883,synapse pruning
+cellular_component,GO:0098794,postsynapse
+cellular_component,GO:0005602,complement component C1 complex
+biological_process,GO:0006956,complement activation
+biological_process,GO:0019953,sexual reproduction
+cellular_component,GO:1990604,IRE1-TRAF2-ASK1 complex
+molecular_function,GO:0035591,signaling adaptor activity
+biological_process,GO:0023035,CD40 signaling pathway
+biological_process,GO:0042110,T cell activation
+biological_process,GO:0043507,positive regulation of JUN kinase activity
+biological_process,GO:0051092,positive regulation of NF-kappaB transcription factor activity
+biological_process,GO:0160162,CD27 signaling pathway
+biological_process,GO:1905669,TORC1 complex assembly
+biological_process,GO:1905670,TORC2 complex disassembly
+cellular_component,GO:0002947,tumor necrosis factor receptor superfamily complex
+cellular_component,GO:0097057,TRAF2-GSTP1 complex
+molecular_function,GO:0046625,sphingolipid binding
+biological_process,GO:0002637,regulation of immunoglobulin production
+biological_process,GO:0030163,protein catabolic process
+biological_process,GO:0034351,negative regulation of glial cell apoptotic process
+biological_process,GO:0046328,regulation of JNK cascade
+biological_process,GO:0048255,mRNA stabilization
+biological_process,GO:0071732,cellular response to nitric oxide
+biological_process,GO:0097300,programmed necrotic cell death
+biological_process,GO:0097400,interleukin-17-mediated signaling pathway
+biological_process,GO:1903265,positive regulation of tumor necrosis factor-mediated signaling pathway
+cellular_component,GO:0005938,cell cortex
+cellular_component,GO:0012506,vesicle membrane
+molecular_function,GO:0031435,mitogen-activated protein kinase kinase kinase binding
+biological_process,GO:0002726,positive regulation of T cell cytokine production
+biological_process,GO:0032743,positive regulation of interleukin-2 production
+biological_process,GO:0043254,regulation of protein-containing complex assembly
+biological_process,GO:0051091,positive regulation of DNA-binding transcription factor activity
+biological_process,GO:2001238,positive regulation of extrinsic apoptotic signaling pathway
+molecular_function,GO:0005164,tumor necrosis factor receptor binding
+molecular_function,GO:0019903,protein phosphatase binding
+molecular_function,GO:0031996,thioesterase binding
+molecular_function,GO:0043120,tumor necrosis factor binding
+molecular_function,GO:0005174,CD40 receptor binding
+molecular_function,GO:0004089,carbonate dehydratase activity
+biological_process,GO:0001580,detection of chemical stimulus involved in sensory perception of bitter taste
+molecular_function,GO:0045296,cadherin binding
+biological_process,GO:0002753,cytoplasmic pattern recognition receptor signaling pathway
+biological_process,GO:0006979,response to oxidative stress
+biological_process,GO:0046596,regulation of viral entry into host cell
+biological_process,GO:0070936,protein K48-linked ubiquitination
+biological_process,GO:0140374,antiviral innate immune response
+biological_process,GO:0033280,response to vitamin D
+biological_process,GO:0044790,suppression of viral release by host
+biological_process,GO:0046597,host-mediated suppression of symbiont invasion
+biological_process,GO:1990830,cellular response to leukemia inhibitory factor
+molecular_function,GO:0016874,ligase activity
+biological_process,GO:0019076,viral release from host cell
+biological_process,GO:0039529,RIG-I signaling pathway
+molecular_function,GO:0039552,RIG-I binding
+biological_process,GO:0060271,cilium assembly
+biological_process,GO:1904491,protein localization to ciliary transition zone
+cellular_component,GO:0036038,MKS complex
+biological_process,GO:0001841,neural tube formation
+biological_process,GO:0021523,somatic motor neuron differentiation
+biological_process,GO:0021537,telencephalon development
+biological_process,GO:0021956,central nervous system interneuron axonogenesis
+biological_process,GO:0009611,response to wounding
+biological_process,GO:0043491,phosphatidylinositol 3-kinase/protein kinase B signal transduction
+biological_process,GO:2001013,epithelial cell proliferation involved in renal tubule morphogenesis
+biological_process,GO:0095500,acetylcholine receptor signaling pathway
+molecular_function,GO:0030548,acetylcholine receptor regulator activity
+molecular_function,GO:0033130,acetylcholine receptor binding
+biological_process,GO:0070373,negative regulation of ERK1 and ERK2 cascade
+biological_process,GO:0099601,regulation of neurotransmitter receptor activity
+molecular_function,GO:0003796,lysozyme activity
+biological_process,GO:0000226,microtubule cytoskeleton organization
+biological_process,GO:0000278,mitotic cell cycle
+cellular_component,GO:0005874,microtubule
+molecular_function,GO:0005200,structural constituent of cytoskeleton
+cellular_component,GO:0045171,intercellular bridge
+cellular_component,GO:0072686,mitotic spindle
+biological_process,GO:0001867,"complement activation, lectin pathway"
+molecular_function,GO:0097367,carbohydrate derivative binding
+biological_process,GO:0043654,recognition of apoptotic cell
+biological_process,GO:0051607,defense response to virus
+biological_process,GO:1902679,negative regulation of RNA biosynthetic process
+biological_process,GO:1903028,positive regulation of opsonization
+cellular_component,GO:1905370,serine-type endopeptidase complex
+biological_process,GO:0002752,cell surface pattern recognition receptor signaling pathway
+biological_process,GO:0015810,aspartate transmembrane transport
+biological_process,GO:0015813,L-glutamate transmembrane transport
+molecular_function,GO:0005313,L-glutamate transmembrane transporter activity
+molecular_function,GO:0015183,L-aspartate transmembrane transporter activity
+biological_process,GO:0051592,response to calcium ion
+molecular_function,GO:0000514,"3-sulfino-L-alanine: proton, glutamate antiporter activity"
+molecular_function,GO:0000515,"aspartate:glutamate, proton antiporter activity"
+biological_process,GO:0015804,neutral amino acid transport
+biological_process,GO:0070778,L-aspartate transmembrane transport
+biological_process,GO:1902600,proton transmembrane transport
+biological_process,GO:0043490,malate-aspartate shuttle
+biological_process,GO:0008584,male gonad development
+molecular_function,GO:0004222,metalloendopeptidase activity
+molecular_function,GO:0008237,metallopeptidase activity
+biological_process,GO:0046900,tetrahydrofolylpolyglutamate metabolic process
+cellular_component,GO:0005773,vacuole
+molecular_function,GO:0034722,gamma-glutamyl-peptidase activity
+cellular_component,GO:0042470,melanosome
+cellular_component,GO:0035578,azurophil granule lumen
+molecular_function,GO:0008238,exopeptidase activity
+molecular_function,GO:0008242,omega peptidase activity
+biological_process,GO:0006465,signal peptide processing
+cellular_component,GO:0005787,signal peptidase complex
+biological_process,GO:0008285,negative regulation of cell population proliferation
+cellular_component,GO:0005759,mitochondrial matrix
+cellular_component,GO:0005884,actin filament
+biological_process,GO:0006264,mitochondrial DNA replication
+biological_process,GO:0006924,activation-induced cell death of T cells
+biological_process,GO:0007264,small GTPase-mediated signal transduction
+biological_process,GO:0033077,T cell differentiation in thymus
+biological_process,GO:0042102,positive regulation of T cell proliferation
+biological_process,GO:0043069,negative regulation of programmed cell death
+biological_process,GO:0090398,cellular senescence
+molecular_function,GO:0030695,GTPase regulator activity
+biological_process,GO:0071340,skeletal muscle acetylcholine-gated channel clustering
+cellular_component,GO:0031594,neuromuscular junction
+biological_process,GO:0031666,positive regulation of lipopolysaccharide-mediated signaling pathway
+biological_process,GO:0031663,lipopolysaccharide-mediated signaling pathway
+cellular_component,GO:0031012,extracellular matrix
+biological_process,GO:0001501,skeletal system development
+biological_process,GO:0022617,extracellular matrix disassembly
+molecular_function,GO:0003756,protein disulfide isomerase activity
